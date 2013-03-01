@@ -17,4 +17,5 @@ alias ls='ls --color=auto'
 alias ll='ls -lh'
 alias la='ll -A'
 
-alias cdtests='cd /home/nicira/nox/src/nox/ext/testing/build_tests'
+alias gs='git status -s'
+
