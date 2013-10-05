@@ -12,6 +12,8 @@ PS1="$redbold\u$green@\h $black$whitebk\w\n$red\$$reset "
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
 
+stty -ixon
+
 #ALIAS
 alias ls='ls --color=auto'
 alias ll='ls -lh'
