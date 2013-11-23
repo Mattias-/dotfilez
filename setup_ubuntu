@@ -25,7 +25,8 @@ sudo apt-get install -y haskell-platform hlint
 # Yesod
 #cabal update
 ##add $HOME/.cabal/bin to path PATH
-#echo $PATH:$HOME/.cabal/bin >> $HOME/.bashrc
+#echo "export PATH=$PATH:$HOME/.cabal/bin" >> $HOME/.bashrc
+#export PATH=$PATH:$HOME/.cabal/bin
 #cabal install yesod yesod-bin cabal-dev
 
 
