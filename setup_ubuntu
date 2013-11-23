@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ `whoami` != root ]; then
+    echo "Please run this script as root or using sudo"
+    exit
+fi
+
 # Settings
 # Install python, ruby, haskell, networking
 
@@ -21,3 +26,7 @@ apt-get install -y avahi-daemon
 HOSTNAME=precise2
 echo $HOSTNAME > /etc/hostname
 hostname $HOSTNAME
+
+# Get my dotfiles
+git clone git@github.com:Mattias-/dotfilez.git
+sh ./dotfilez/install.sh
