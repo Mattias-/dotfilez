@@ -32,6 +32,12 @@ if [ $install ] ; then
     apt-get install -y curl git vim screen openssh-server build-essential
 fi
 
+# Dotfiles
+if [ $dotfiles ] ; then
+    run_as_user git clone https://github.com/Mattias-/dotfilez.git
+    bash ./dotfilez/install.sh
+fi
+
 # Python
 if [ $python ] ; then
     apt-get install -y python-virtualenv python-dev pychecker
@@ -78,10 +84,4 @@ if [ $hostname ] ; then
     echo $hostname > /etc/hostname
     sed -i "s/ubuntu/$hostname/g" /etc/hosts
     hostname $hostname
-fi
-
-# Dotfiles
-if [ $dotfiles ] ; then
-    run_as_user git clone https://github.com/Mattias-/dotfilez.git
-    bash ./dotfilez/install.sh
 fi
