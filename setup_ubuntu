@@ -39,9 +39,22 @@ if [ $python ] ; then
 fi
 
 # Ruby
-# Rails
+if [ $ruby ] || [ $rails ]; then
+    run_as_user curl -L https://get.rvm.io | bash -s stable
+    run_as_user source ~/.rvm/scripts/rvm
+    run_as_user rvm requirements
+    run_as_user rvm install ruby
+    run_as_user rvm use ruby --default
+    run_as_user rvm rubygems current
+    # Rails
+    if [ $rails ] ; then
+        run_as_user gem install rails
+    fi
+fi
+
 
 # Nodejs
+#TODO
 
 # Haskell
 if [ $haskell ] || [ $yesod ] ; then
@@ -49,7 +62,7 @@ if [ $haskell ] || [ $yesod ] ; then
     # Yesod
     if [ $yesod ] ; then
         run_as_user cabal update
-        run_as_user echo "export PATH=\$PATH:$HOME/.cabal/bin" >> $HOME/.bashrc
+        run_as_user echo "export PATH=\$PATH:\$HOME/.cabal/bin" >> $HOME/.bashrc
         run_as_user export PATH=$PATH:$HOME/.cabal/bin
         run_as_user cabal install yesod yesod-bin cabal-dev
     fi
