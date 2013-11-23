@@ -1,4 +1,4 @@
-#[ -f /etc/bashrc ] && . /etc/bashrc
+[[ -r ~/.bashrc ]] && . ~/.bashrc
 
 green='\[\e[0;32m\]'
 redbold='\[\e[1;31m\]'
