@@ -34,7 +34,7 @@ sudo apt-get install -y avahi-daemon
 # Set hostname
 HOSTNAME=precise2
 sudo echo $HOSTNAME > /etc/hostname
-# replace ubuntu with hostname in /etc/hosts
+sudo sed -i 's/ubuntu/$HOSTNAME/g' /etc/hosts
 sudo hostname $HOSTNAME
 
 # Get my dotfiles
