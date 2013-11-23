@@ -21,8 +21,8 @@ set foldlevel=20
 
 
 "Over 80
-autocmd FileType python,javascript highlight OverLength ctermbg=darkred ctermfg=white guibg=#FFD9D9
-autocmd FileType python,javascript  match OverLength /\%81v.*/
+autocmd FileType python,javascript,haskell highlight OverLength ctermbg=darkred ctermfg=white guibg=#FFD9D9
+autocmd FileType python,javascript,haskell match OverLength /\%81v.*/
 
 let python_highlight_all=1
 
