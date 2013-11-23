@@ -1,4 +1,5 @@
 dotfilez
 ========
 For ubuntu install script:
-wget http://git.io/h2gSvw
+
+    wget --trust-server-names git.io/h2gSvw
