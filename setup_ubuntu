@@ -65,7 +65,7 @@ fi
 # Hostname
 if [ $hostname ] ; then
     echo $hostname > /etc/hostname
-    sed -i 's/ubuntu/$hostname/g' /etc/hosts
+    sed -i "s/ubuntu/$hostname/g" /etc/hosts
     hostname $hostname
 fi
 
