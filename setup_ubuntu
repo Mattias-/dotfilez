@@ -34,8 +34,8 @@ fi
 
 # Python
 if [ $python ] ; then
-    apt-get install -y python-virtualenv python-dev
-    # pychecker, pep8, pylint, pyflakes
+    apt-get install -y python-virtualenv python-dev pychecker
+    pip install pep8 pylint pyflakes
 fi
 
 # Ruby
