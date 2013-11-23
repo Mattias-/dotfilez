@@ -48,12 +48,10 @@ if [ $haskell ] || [ $yesod ] ; then
     apt-get install -y haskell-platform hlint
     # Yesod
     if [ $yesod ] ; then
-        #run_as_user cabal update
-        ##add $HOME/.cabal/bin to path PATH
-        #run_as_user echo "export PATH=$PATH:$HOME/.cabal/bin" >> $HOME/.bashrc
-        #run_as_user export PATH=$PATH:$HOME/.cabal/bin
-        #run_as_user cabal install yesod yesod-bin cabal-dev
-        echo "Do something"
+        run_as_user cabal update
+        run_as_user echo "export PATH=\$PATH:$HOME/.cabal/bin" >> $HOME/.bashrc
+        run_as_user export PATH=$PATH:$HOME/.cabal/bin
+        run_as_user cabal install yesod yesod-bin cabal-dev
     fi
 fi
 
@@ -71,7 +69,6 @@ fi
 
 # Dotfiles
 if [ $dotfiles ] ; then
-    # TODO not run git clone as root
     run_as_user git clone https://github.com/Mattias-/dotfilez.git
     bash ./dotfilez/install.sh
 fi
