@@ -1,32 +1,43 @@
 #!/bin/bash
 
-if [ `whoami` != root ]; then
-    echo "Please run this script as root or using sudo"
+if [ `whoami` = root ]; then
+    echo "Please do not run this script as root or using sudo"
     exit
 fi
 
 # Settings
 # Install python, ruby, haskell, networking
 
-# Essentials
-apt-get update -y
-apt-get install -y git vim screen openssh curl wget build-essential
+sudo apt-get update -y
+sudo apt-get install -y curl git vim screen openssh-server build-essential
 
 # Python
-apt-get install -y python-virtualenv python-dev
+sudo apt-get install -y python-virtualenv python-dev
+# pychecker, pep8, pylint, pyflakes
 
 # Ruby
+# Rails
+
+# Nodejs
 
 # Haskell
+sudo apt-get install -y haskell-platform hlint
+# Yesod
+#cabal update
+##add $HOME/.cabal/bin to path PATH
+#echo $PATH:$HOME/.cabal/bin >> $HOME/.bashrc
+#cabal install yesod yesod-bin cabal-dev
 
 
 # Networking & Hostname
-apt-get install -y avahi-daemon
+sudo apt-get install -y avahi-daemon
 # Set hostname
 HOSTNAME=precise2
-echo $HOSTNAME > /etc/hostname
-hostname $HOSTNAME
+sudo echo $HOSTNAME > /etc/hostname
+# replace ubuntu with hostname in /etc/hosts
+sudo hostname $HOSTNAME
 
 # Get my dotfiles
-git clone git@github.com:Mattias-/dotfilez.git
-sh ./dotfilez/install.sh
+# TODO not run git clone as root
+git clone https://github.com/Mattias-/dotfilez.git
+sudo bash ./dotfilez/install.sh
