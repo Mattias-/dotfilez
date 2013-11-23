@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Settings
+# Install python, ruby, haskell, networking
+
+# Essentials
+apt-get update -y
+apt-get install -y git vim screen openssh curl wget build-essential
+
+# Python
+apt-get install -y python-virtualenv python-dev
+
+# Ruby
+
+# Haskell
+
+
+# Networking & Hostname
+apt-get install -y avahi-daemon
+# Set hostname
+HOSTNAME=precise2
+echo $HOSTNAME > /etc/hostname
+hostname $HOSTNAME
