@@ -1,19 +1,35 @@
 #!/bin/bash
 
-if [ `whoami` = root ]; then
-    echo "Please do not run this script as root or using sudo"
+if [ `whoami` != root ]; then
+    echo "Please run this script using sudo"
     exit
 fi
 
-# Settings
-# Install python, ruby, haskell, networking
+function run_as_user {
+    sudo -u $SUDO_USER $1
+}
 
-sudo apt-get update -y
-sudo apt-get install -y curl git vim screen openssh-server build-essential
+python=true
+ruby=true
+rails=true
+nodejs=true
+haskell=true
+yesod=true
+networking=true
+dotfiles=true
+
+# Settings
+hostname=precise3
+
+##############
+apt-get update -y
+apt-get install -y curl git vim screen openssh-server build-essential
 
 # Python
-sudo apt-get install -y python-virtualenv python-dev
-# pychecker, pep8, pylint, pyflakes
+if [ $python ] ; then
+    apt-get install -y python-virtualenv python-dev
+    # pychecker, pep8, pylint, pyflakes
+fi
 
 # Ruby
 # Rails
@@ -21,24 +37,33 @@ sudo apt-get install -y python-virtualenv python-dev
 # Nodejs
 
 # Haskell
-sudo apt-get install -y haskell-platform hlint
-# Yesod
-#cabal update
-##add $HOME/.cabal/bin to path PATH
-#echo "export PATH=$PATH:$HOME/.cabal/bin" >> $HOME/.bashrc
-#export PATH=$PATH:$HOME/.cabal/bin
-#cabal install yesod yesod-bin cabal-dev
+if [ $haskell ] || [ $yesod ] ; then
+    apt-get install -y haskell-platform hlint
+    # Yesod
+    if [ $yesod ] ; then
+        #run_as_user cabal update
+        ##add $HOME/.cabal/bin to path PATH
+        #run_as_user echo "export PATH=$PATH:$HOME/.cabal/bin" >> $HOME/.bashrc
+        #run_as_user export PATH=$PATH:$HOME/.cabal/bin
+        #run_as_user cabal install yesod yesod-bin cabal-dev
+    fi
+fi
 
+# Networking
+if [ $networking ] ; then
+    apt-get install -y avahi-daemon
+fi
 
-# Networking & Hostname
-sudo apt-get install -y avahi-daemon
-# Set hostname
-HOSTNAME=precise2
-sudo echo $HOSTNAME > /etc/hostname
-sudo sed -i 's/ubuntu/$HOSTNAME/g' /etc/hosts
-sudo hostname $HOSTNAME
+# Hostname
+if [ $hostname ] ; then
+    echo $hostname > /etc/hostname
+    sed -i 's/ubuntu/$hostname/g' /etc/hosts
+    hostname $hostname
+fi
 
-# Get my dotfiles
-# TODO not run git clone as root
-git clone https://github.com/Mattias-/dotfilez.git
-sudo bash ./dotfilez/install.sh
+# Dotfiles
+if [ $dotfiles ] ; then
+    # TODO not run git clone as root
+    run_as_user git clone https://github.com/Mattias-/dotfilez.git
+    bash ./dotfilez/install.sh
+fi
