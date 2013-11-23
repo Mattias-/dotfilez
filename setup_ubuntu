@@ -6,9 +6,11 @@ if [ `whoami` != root ]; then
 fi
 
 function run_as_user {
-    sudo -u $SUDO_USER $1
+    sudo -u $SUDO_USER $@
 }
 
+update=true
+install=true
 python=true
 ruby=true
 rails=true
@@ -22,8 +24,13 @@ dotfiles=true
 hostname=precise3
 
 ##############
-apt-get update -y
-apt-get install -y curl git vim screen openssh-server build-essential
+if [ $update ] ; then
+    apt-get update -y
+fi
+
+if [ $install ] ; then
+    apt-get install -y curl git vim screen openssh-server build-essential
+fi
 
 # Python
 if [ $python ] ; then
@@ -46,6 +53,7 @@ if [ $haskell ] || [ $yesod ] ; then
         #run_as_user echo "export PATH=$PATH:$HOME/.cabal/bin" >> $HOME/.bashrc
         #run_as_user export PATH=$PATH:$HOME/.cabal/bin
         #run_as_user cabal install yesod yesod-bin cabal-dev
+        echo "Do something"
     fi
 fi
 
