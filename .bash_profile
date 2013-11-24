@@ -21,3 +21,5 @@ alias la='ll -A'
 
 alias gs='git status -s'
 
+export VISUAL=vi
+export EDITOR=$VISUAL
