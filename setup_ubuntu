@@ -13,10 +13,9 @@ update=true
 install=true
 python=true
 ruby=true
-rails=true
-nodejs=true
+#rails=true
 haskell=true
-yesod=true
+#yesod=true
 networking=true
 dotfiles=true
 
@@ -52,10 +51,6 @@ if [ $ruby ] || [ $rails ]; then
         curl -L https://get.rvm.io | run_as_user bash -s stable --ruby
     fi
 fi
-
-
-# Nodejs
-#TODO
 
 # Haskell
 if [ $haskell ] || [ $yesod ] ; then
