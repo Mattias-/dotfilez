@@ -24,11 +24,11 @@ hostname=precise3
 
 ##############
 if [ $update ] ; then
-    apt-get update -y
+    apt-get --yes --quiet update
 fi
 
 if [ $install ] ; then
-    apt-get install -y curl git vim screen openssh-server build-essential
+    apt-get --yes --quiet install curl git vim screen openssh-server build-essential
 fi
 
 # Dotfiles
@@ -39,7 +39,7 @@ fi
 
 # Python
 if [ $python ] ; then
-    apt-get install -y python-virtualenv python-dev pychecker
+    apt-get --yes --quiet install python-virtualenv python-dev pychecker
     pip install pep8 pylint pyflakes
 fi
 
@@ -54,7 +54,7 @@ fi
 
 # Haskell
 if [ $haskell ] || [ $yesod ] ; then
-    apt-get install -y haskell-platform hlint
+    apt-get --yes --quiet install haskell-platform hlint
     # Yesod
     if [ $yesod ] ; then
         run_as_user cabal update
@@ -66,7 +66,7 @@ fi
 
 # Networking
 if [ $networking ] ; then
-    apt-get install -y avahi-daemon
+    apt-get --yes --quiet install avahi-daemon
 fi
 
 # Hostname
