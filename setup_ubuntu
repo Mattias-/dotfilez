@@ -46,15 +46,15 @@ fi
 
 # Ruby
 if [ $ruby ] || [ $rails ]; then
-    run_as_user curl -L https://get.rvm.io | bash -s stable
-    run_as_user source ~/.rvm/scripts/rvm
-    run_as_user rvm requirements
-    run_as_user rvm install ruby
-    run_as_user rvm use ruby --default
-    run_as_user rvm rubygems current
+    curl -L https://get.rvm.io | bash -s stable
+    source /etc/profile.d/rvm.sh
+    rvm requirements
+    rvm install ruby
+    rvm use ruby --default
+    rvm rubygems current
     # Rails
     if [ $rails ] ; then
-        run_as_user gem install rails
+        gem install rails
     fi
 fi
 
