@@ -19,12 +19,13 @@ set softtabstop=4   " makes the spaces feel like real tabs
 set foldmethod=indent
 set foldlevel=20
 
+"Highlight trailing whitespace
+highlight ExtraWhitespace ctermbg=red ctermfg=white guibg=red
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 
-"Over 80
-autocmd FileType python,javascript,haskell highlight OverLength ctermbg=darkred ctermfg=white guibg=#FFD9D9
-autocmd FileType python,javascript,haskell match OverLength /\%81v.*/
-
-let python_highlight_all=1
+let python_highlight_all=1    
+set colorcolumn=81
 
 filetype indent on
 filetype plugin on
