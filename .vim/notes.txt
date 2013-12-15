@@ -2,3 +2,6 @@
 
 Fix intents for javascript and html
 http://www.vim.org/scripts/script.php?script_id=3081
+
+Improved syntax highlighting for python
+http://www.vim.org/scripts/script.php?script_id=790
