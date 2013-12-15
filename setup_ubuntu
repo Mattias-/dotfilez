@@ -12,7 +12,7 @@ function run_as_user {
 update=true
 install=true
 python=true
-ruby=true
+#ruby=true
 #rails=true
 haskell=true
 #yesod=true
@@ -64,6 +64,15 @@ if [ $haskell ] || [ $yesod ] ; then
         run_as_user cabal install yesod yesod-bin cabal-dev
     fi
 fi
+
+# Node
+#if [ $node ] ; then
+#    git clone https://github.com/joyent/node.git
+#    cd node
+#    ./configure
+#    make
+#    make install
+#fi
 
 # Networking
 if [ $networking ] ; then
