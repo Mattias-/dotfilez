@@ -1,25 +1,21 @@
 [[ -r ~/.bashrc ]] && . ~/.bashrc
 
+# Set prompt
 green='\[\e[0;32m\]'
-redbold='\[\e[1;31m\]'
-black='\[\e[0;30m\]'
 red='\[\e[0;31m\]'
 reset='\[\e[0m\]'
-whitebk='\[\e[47m\]'
-whitebold='\[\e[1;37m\]'
-PS1="$redbold\u$green@\h $black$whitebk\w\n$red\$$reset "
-
-export CLICOLOR=1
-export LSCOLORS=ExFxCxDxBxegedabagacad
+export GIT_PS1_SHOWDIRTYSTATE=1
+PS1="$red\u$reset@$green\h $reset\w $red\$(__git_ps1)\n$red\$$reset "
 
 stty -ixon
+
+export GREP_OPTIONS='--color=auto'
 
 #ALIAS
 alias ls='ls --color=auto'
 alias ll='ls -lh'
 alias la='ll -A'
-
-alias gs='git status -s'
+alias gs='git status'
 
 export VISUAL=vi
 export EDITOR=$VISUAL
