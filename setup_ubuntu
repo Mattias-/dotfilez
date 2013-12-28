@@ -29,7 +29,7 @@ if [ $update ] ; then
 fi
 
 if [ $install ] ; then
-    apt-get --yes --quiet install curl git vim screen openssh-server build-essential
+    apt-get --yes --quiet install curl git vim screen ntp openssh-server build-essential
 fi
 
 # Dotfiles

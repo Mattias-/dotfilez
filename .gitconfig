@@ -1,5 +1,5 @@
 [user]
-	name = Mattias-
+	name = Mattias Appelgren
 	email = mattias@ppelgren.se
 [credential]
 	helper = cache --timeout=3600
