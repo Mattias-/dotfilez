@@ -3,5 +3,5 @@ dotfilez
 For ubuntu install script:
 
     wget --trust-server-names git.io/h2gSvw
-    sudo chmod +x setup_ubuntu
-    sudo ./setup_ubuntu
+    # or https://raw.github.com/Mattias-/dotfilez/master/setup_ubuntu
+    sudo bash setup_ubuntu
