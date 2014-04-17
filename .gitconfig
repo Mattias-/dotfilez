@@ -8,8 +8,10 @@
     s = status
 [core]
 	editor = vim
+    excludesfile = .gitignore_global
 [color]
     branch = auto
     diff = auto
     status = auto
     ui = auto
+
