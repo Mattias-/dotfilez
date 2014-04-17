@@ -21,7 +21,7 @@ export GREP_OPTIONS='--color=auto'
 
 #ALIAS
 alias ls='ls --color=auto'
-alias ll='ls -lh'
+alias ll='ls -ltrh'
 alias la='ll -A'
 alias gs='git status'
 # Ask before overwriting
