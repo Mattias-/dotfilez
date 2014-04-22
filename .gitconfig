@@ -7,11 +7,13 @@
 	lg = log --graph --pretty=format:'%Cred%h%C(yellow)%d%Creset %s %Cgreen(%cr) %an %Creset'
     s = status
 [core]
-	editor = vim
+    editor = vim
     excludesfile = .gitignore_global
 [color]
     branch = auto
     diff = auto
     status = auto
     ui = auto
+[push]
+    default = simple
 
