@@ -9,19 +9,19 @@ function run_as_user {
     sudo -u $SUDO_USER $@
 }
 
-update=true
-install=true
-python=true
+#update=true
+#install=true
+#python=true
 #ruby=true
 #rails=true
-haskell=true
+#haskell=true
 #yesod=true
 networking=true
-dotfiles=true
-datetime=true
+#dotfiles=true
+#datetime=true
 
 # Settings
-hostname=precise3
+hostname=trusty-one
 
 ##############
 if [ $update ] ; then
