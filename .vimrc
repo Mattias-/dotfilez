@@ -4,9 +4,11 @@ colorscheme desert256
 
 set number
 set ruler
-set wildmenu
 set laststatus=2
 set showcmd
+" Autocomplete filenames
+set wildmenu
+set wildignore=*.o,*.hi,*.pyc
 
 " Searching
 set hlsearch
