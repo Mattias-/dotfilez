@@ -9,23 +9,21 @@ function run_as_user {
     sudo -u $SUDO_USER $@
 }
 
-#update=true
-#install=true
-#python=true
-#ruby=true
-#rails=true
-#haskell=true
-#yesod=true
-networking=true
+update=true
+install=true
+python=true
+haskell=true
+#networking=true
 #dotfiles=true
 #datetime=true
 
 # Settings
-hostname=trusty-one
+#hostname=trusty-one
 
 ##############
 if [ $update ] ; then
     apt-get --yes --quiet update
+    apt-get --yes --quiet upgrade
 fi
 
 if [ $install ] ; then
@@ -35,7 +33,7 @@ fi
 # Dotfiles
 if [ $dotfiles ] ; then
     run_as_user git clone https://github.com/Mattias-/dotfilez.git
-    bash ./dotfilez/install.sh
+    bash ./dotfilez/setup_dotfiles
 fi
 
 # Python
@@ -44,35 +42,10 @@ if [ $python ] ; then
     pip install pep8 pylint virtualenv
 fi
 
-# Ruby
-if [ $ruby ] || [ $rails ]; then
-    if [ $rails ] ; then
-        curl -L https://get.rvm.io | run_as_user bash -s stable --rails
-    else
-        curl -L https://get.rvm.io | run_as_user bash -s stable --ruby
-    fi
-fi
-
 # Haskell
 if [ $haskell ] || [ $yesod ] ; then
     apt-get --yes --quiet install haskell-platform hlint
-    # Yesod
-    if [ $yesod ] ; then
-        run_as_user cabal update
-        run_as_user echo "export PATH=\$PATH:\$HOME/.cabal/bin" >> $HOME/.bashrc
-        run_as_user export PATH=$PATH:$HOME/.cabal/bin
-        run_as_user cabal install yesod yesod-bin cabal-dev
-    fi
 fi
-
-# Node
-#if [ $node ] ; then
-#    git clone https://github.com/joyent/node.git
-#    cd node
-#    ./configure
-#    make
-#    make install
-#fi
 
 # Networking
 if [ $networking ] ; then
