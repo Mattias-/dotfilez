@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-files=(.bashrc .bash_profile .gitconfig .screenrc .vimrc .vim bin .gitignore_global)
+files=(.bashrc .bash_profile .gitconfig .screenrc .vim bin .gitignore_global)
 SCRIPTPATH=$( cd $(dirname $0) ; pwd -P )
 for file in "${files[@]}"
 do
