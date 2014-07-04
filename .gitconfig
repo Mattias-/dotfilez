@@ -1,19 +1,21 @@
 [user]
-	name = Mattias Appelgren
-	email = mattias@ppelgren.se
-[credential]
-	helper = cache --timeout=3600
-[alias]
-	lg = log --graph --pretty=format:'%Cred%h%C(yellow)%d%Creset %s %Cgreen(%cr) %an %Creset'
-    s = status
+    name = Mattias Appelgren
+    email = mattias@ppelgren.se
 [core]
     editor = vim
-    excludesfile = .gitignore_global
+    excludesfile = ~/.gitignore_global
+[credential]
+    helper = cache --timeout=3600
+[push]
+    default = simple
+[diff]
+    algorithm = patience
 [color]
     branch = auto
     diff = auto
     status = auto
     ui = auto
-[push]
-    default = simple
+[alias]
+    s = status
+    lg = log --graph --pretty=format:'%Cred%h%C(yellow)%d%Creset %s %Cgreen(%cr) %an %Creset'
 
