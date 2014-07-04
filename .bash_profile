@@ -31,6 +31,8 @@ alias mv='mv -i'
 # The Matrix screensaver, like a true hacker
 alias screensaver='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
 
-# Add own bin to path
-export PATH="$HOME/bin":$PATH
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
 
