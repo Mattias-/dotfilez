@@ -32,7 +32,7 @@ highlight ExtraWhitespace ctermbg=red ctermfg=white guibg=red
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 
-set colorcolumn=81
+set colorcolumn=80
 
 filetype indent on
 filetype plugin on
