@@ -18,4 +18,4 @@
 [alias]
     s = status
     lg = log --graph --pretty=format:'%Cred%h%C(yellow)%d%Creset %s %Cgreen(%cr) %an %Creset'
-
+    lgh = !git lg | head
