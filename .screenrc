@@ -11,3 +11,5 @@ escape "^  "
 autodetach on
 shell -$SHELL
 shelltitle "$ |bash"
+
+setenv SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
