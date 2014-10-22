@@ -1,5 +1,10 @@
 [[ -r ~/.bashrc ]] && . ~/.bashrc
 
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
 # Set prompt
 green="\e[0;32m"
 red="\e[0;31m"
@@ -40,9 +45,3 @@ alias cp='cp -i'
 alias mv='mv -i'
 # The Matrix screensaver, like a true hacker
 alias screensaver='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-
