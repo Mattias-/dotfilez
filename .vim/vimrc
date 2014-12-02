@@ -6,6 +6,8 @@ set number
 set ruler
 set laststatus=2
 set showcmd
+set cursorline
+
 " Autocomplete filenames
 set wildmenu
 set wildignore=*.o,*.hi,*.pyc
