@@ -1,15 +1,38 @@
-[[ -r ~/.bashrc ]] && . ~/.bashrc
 
-# set PATH so it includes user's private bin if it exists
+# Add user's bin to PATH
 if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
+    export PATH="$HOME/bin:$PATH"
 fi
+
+# Enable tab completion
+if [ -f /etc/bash_completion ]; then
+    source /etc/bash_completion
+fi
+
+export EDITOR="vi";
+export VISUAL=$EDITOR
+
+export GREP_OPTIONS="--color=auto"
+
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+
+# ignoredups and ignorespace
+export HISTCONTROL=ignoreboth
+
+# Append to the history file, don't overwrite it
+shopt -s histappend
+
+# Update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# Unbind stupid bindings
+stty -ixon -ixoff
 
 # Set prompt
 green="\e[0;32m"
 red="\e[0;31m"
 reset="\e[0m"
-
 me=$(whoami)
 userc1=$(hashmod $me 0 1)
 userc2=$(hashmod $me 31 37)
@@ -18,23 +41,16 @@ host=$(hostname)
 hostc1=$(hashmod $host 0 1)
 hostc2=$(hashmod $host 31 37)
 hostcolor="\e[${hostc1};${hostc2}m"
-
 export GIT_PS1_SHOWDIRTYSTATE=1
 export PS1="${SCREENTITLE}$usercolor\u$reset@$hostcolor\h $reset\w $red\$(__git_ps1)\n$red\$$reset "
 
-# Fancy screen titles
+# Fancy titles in GNU Screen
 if [ $TERM == 'screen' ]; then
     SCREENTITLE='\[\ek\e\\\]\[\ek\W\e\\\]'
     export PS1=${SCREENTITLE}${PS1}
 fi
 
-stty -ixon
-export VISUAL=vi
-export EDITOR=$VISUAL
-
-export GREP_OPTIONS='--color=auto'
-
-#ALIAS
+### ALIAS
 alias ls='ls --color=auto'
 alias ll='ls -ltrh'
 alias la='ll -A'
@@ -45,3 +61,5 @@ alias cp='cp -i'
 alias mv='mv -i'
 # The Matrix screensaver, like a true hacker
 alias screensaver='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
+
+export PATH=~/.cabal/bin:/opt/cabal/1.20/bin:/opt/ghc/7.8.2/bin:/opt/happy/1.19.3/bin:/opt/alex/3.1.3/bin:$PATH
