@@ -61,5 +61,3 @@ alias cp='cp -i'
 alias mv='mv -i'
 # The Matrix screensaver, like a true hacker
 alias screensaver='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
-
-export PATH=~/.cabal/bin:/opt/cabal/1.20/bin:/opt/ghc/7.8.2/bin:/opt/happy/1.19.3/bin:/opt/alex/3.1.3/bin:$PATH
