@@ -1,0 +1,28 @@
+#!/bin/bash
+
+function hashmod() {
+    str=$1
+    lower=$2
+    upper=$3
+    res=$(echo $1 | sum | cut -c1-5)
+    res2=$(echo "$res % ($upper-$lower+1) + $lower" | bc)
+    echo $res2
+}
+
+function hash2color() {
+    a=$(hashmod $1 0 1)
+    b=$(hashmod $1 31 37)
+    c="\e[${a};${b}m"
+    echo $c
+}
+
+function dotimes() {
+    num=$1
+    shift
+    RES=()
+    for ((i=0; i<$num; i++)) do
+        $@
+        RES+="$? "
+    done
+    echo $RES
+}

@@ -4,6 +4,10 @@ if [ -d "$HOME/bin" ] ; then
     export PATH="$HOME/bin:$PATH"
 fi
 
+if [ -r "$HOME/.functions" ] && [ -f "$HOME/.functions" ] ; then
+    source "$HOME/.functions"
+fi
+
 # Enable tab completion
 if [ -f /etc/bash_completion ]; then
     source /etc/bash_completion
@@ -30,19 +34,16 @@ shopt -s checkwinsize
 stty -ixon -ixoff
 
 # Set prompt
+
+
 green="\e[0;32m"
 red="\e[0;31m"
 reset="\e[0m"
-me=$(whoami)
-userc1=$(hashmod $me 0 1)
-userc2=$(hashmod $me 31 37)
-usercolor="\e[${userc1};${userc2}m"
-host=$(hostname)
-hostc1=$(hashmod $host 0 1)
-hostc2=$(hashmod $host 31 37)
-hostcolor="\e[${hostc1};${hostc2}m"
+usercolor=$(hash2color $(whoami))
+hostcolor=$(hash2color $(hostname))
+
 export GIT_PS1_SHOWDIRTYSTATE=1
-export PS1="${SCREENTITLE}$usercolor\u$reset@$hostcolor\h $reset\w $red\$(__git_ps1)\n$red\$$reset "
+export PS1="$usercolor\u$reset@$hostcolor\h $reset\w $red\$(__git_ps1)\n$red\$$reset "
 
 # Fancy titles in GNU Screen
 if [ $TERM == 'screen' ]; then

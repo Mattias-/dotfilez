@@ -10,10 +10,10 @@ FILES = ['.bashrc',
         '.screenrc',
         '.gitignore_global',
         '.gitconfig',
-        '.vim']
+        '.vim',
+        '.functions']
 
-DIRS = ['.ssh',
-        'bin']
+DIRS = ['.ssh']
 
 base_dir = os.path.dirname(os.path.realpath(__file__))
 home_dir = os.path.expanduser('~')
