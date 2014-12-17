@@ -1,0 +1,50 @@
+#!/bin/bash
+
+xcode-select --install
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+brew update
+brew upgrade
+
+# Get some useful stuff
+brew install wget
+brew install git
+brew install bash-completion
+brew install nmap
+
+# Get some dupes
+brew tap homebrew/dupes
+
+brew install vim --override-system-vi
+brew install screen
+brew install tcpdump
+
+# Sweet completion for vagrant
+brew tap homebrew/completions
+
+brew install vagrant-completion
+
+# Install apps with cask
+brew install caskroom/cask/brew-cask
+
+brew cask install iterm2
+brew cask install google-chrome
+brew cask install virtualbox
+brew cask install vagrant
+brew cask install vagrant-manager
+brew cask install bettertouchtool
+brew cask install atom
+brew cask install gpgtools
+brew cask install keepingyouawake
+
+brew cask install spotify
+brew cask install skype
+#brew cask install dropbox
+#brew cask install google-drive
+#brew cask install vlc
+
+# Done, time to clean up
+brew cask cleanup
+brew cleanup
+
+git clone https://github.com/Mattias-/dotfilez.git
+python ./dotfilez/setup_dotfiles.py

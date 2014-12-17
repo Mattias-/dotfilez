@@ -1,4 +1,7 @@
 
+# Add /usr/local/sbin to PATH as some homebrew things are there
+export PATH="/usr/local/sbin:$PATH"
+
 # Add user's bin to PATH
 export PATH="$HOME/bin:$PATH"
 
@@ -8,8 +11,8 @@ if [ -r "$HOME/.functions" ] && [ -f "$HOME/.functions" ] ; then
 fi
 
 # Add better tab completion
-if [ -f /etc/bash_completion ]; then
-    source /etc/bash_completion
+if which brew > /dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
+    source "$(brew --prefix)/etc/bash_completion";
 fi
 
 # For virtualenvwrapper
@@ -57,7 +60,7 @@ fi
 alias gs='git status'
 alias newscreen='screen -S $(basename $(pwd))'
 
-alias ls='ls --color=auto'
+alias ls='ls -G'
 alias ll='ls -ltrh'
 alias la='ll -A'
 
