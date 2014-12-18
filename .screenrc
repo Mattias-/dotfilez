@@ -1,8 +1,10 @@
+
+backtick 1 240 240 echo $STY
 hardstatus alwayslastline
-hardstatus string '%{= kG}%{G}%H %{g}%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}%{B} %d/%m %{W}%c %{g}'
+hardstatus string '%{= kb}%1`@%H%{= kw} %= %-w%{kr}%n%f %t%{-}%+w %= %{= kb}%Y-%m-%d %c'
 
 caption splitonly
-caption string "%{wk}%3n %t"
+caption string "%{= kw}%?%F%{= kr}%?%n %t"
 
 defscrollback 5000
 startup_message off

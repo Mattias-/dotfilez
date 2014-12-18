@@ -7,6 +7,7 @@ set ruler
 set laststatus=2
 set showcmd
 set cursorline
+set backspace=2
 
 " Autocomplete filenames
 set wildmenu
