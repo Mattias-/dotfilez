@@ -1,7 +1,7 @@
 
-backtick 1 240 240 echo $STY
+backtick 1 240 240 date +%Z
 hardstatus alwayslastline
-hardstatus string '%{= kb}%1`@%H%{= kw} %= %-w%{kr}%n%f %t%{-}%+w %= %{= kb}%Y-%m-%d %c'
+hardstatus string '%{= kb}%S@%H%{= kw} %= %-Lw%{kr}%n*%f %t%{-}%+Lw %= %{= kb}%Y-%m-%d %c %1`'
 
 caption splitonly
 caption string "%{= kw}%?%F%{= kr}%?%n %t"
@@ -13,5 +13,3 @@ escape "^  "
 autodetach on
 shell -$SHELL
 shelltitle "$ |bash"
-
-setenv SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
