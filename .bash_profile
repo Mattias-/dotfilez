@@ -33,9 +33,9 @@ shopt -s checkwinsize
 stty -ixon -ixoff
 
 # Set prompt
-green="\e[0;32m"
-red="\e[0;31m"
-reset="\e[0m"
+green="\[\e[0;32m\]"
+red="\[\e[0;31m\]"
+reset="\[\e[0m\]"
 uc=$(hash2color $(whoami))
 hc=$(hash2color $(hostname))
 export GIT_PS1_SHOWDIRTYSTATE=1
