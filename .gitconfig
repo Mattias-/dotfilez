@@ -3,11 +3,10 @@
     email = mattias@ppelgren.se
 [core]
     editor = vim
+    pager = less --QUIT-AT-EOF
     excludesfile = ~/.gitignore_global
 [credential]
     helper = cache --timeout=3600
-[push]
-    default = simple
 [diff]
     algorithm = patience
 [color]
@@ -15,7 +14,13 @@
     diff = auto
     status = auto
     ui = auto
+[push]
+    default = simple
+[merge]
+    ff = no
+[pull]
+    rebase = true
 [alias]
     s = status
     lg = log --graph --pretty=format:'%Cred%h%C(yellow)%d%Creset %s %Cgreen(%cr) %an %Creset'
-    lgh = !git lg | head
+    lgh = log -10 --graph --pretty=format:'%Cred%h%C(yellow)%d%Creset %s %Cgreen(%cr) %an %Creset'
