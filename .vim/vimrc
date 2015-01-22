@@ -8,6 +8,9 @@ set laststatus=2
 set showcmd
 set cursorline
 set backspace=2
+set scrolloff=5
+
+set noswapfile
 
 " Autocomplete filenames
 set wildmenu
@@ -28,7 +31,7 @@ set autoindent " Keep indentation from previous line
 
 " Folding
 set foldmethod=indent
-set foldlevel=20
+set foldlevelstart=20
 
 "Highlight trailing whitespace
 highlight ExtraWhitespace ctermbg=red ctermfg=white guibg=red
@@ -41,3 +44,8 @@ filetype indent on
 filetype plugin on
 
 let python_highlight_all=1
+
+map <leader>w :set wrap!<cr>
+map <leader>p :set paste!<cr>
+map <leader><space> za
+map <leader>s :setlocal spell! spelllang=en_us<cr>
