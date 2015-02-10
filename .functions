@@ -10,10 +10,9 @@ function hashmod() {
 }
 
 function hash2color() {
-    a=$(hashmod $1 0 1)
-    b=$(hashmod $1 31 37)
-    c="\[\e[${a};${b}m\]"
-    echo $c
+    color=$(hashmod $1 17 231)
+    c="\e[38;5;${color}m"
+    echo "\[${c}\]"
 }
 
 function dotimes() {
