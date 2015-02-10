@@ -3,7 +3,7 @@
     email = mattias@ppelgren.se
 [core]
     editor = vim
-    pager = less --QUIT-AT-EOF
+    pager = less --quit-if-one-screen
     excludesfile = ~/.gitignore_global
 [credential]
     helper = cache --timeout=3600
