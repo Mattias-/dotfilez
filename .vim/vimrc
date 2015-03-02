@@ -17,7 +17,7 @@ set splitbelow
 
 " Autocomplete filenames
 set wildmenu
-set wildignore=*.o,*.hi,*.pyc
+set wildignore=*.o,*.hi,*.pyc,*.pdf
 
 " Searching
 set hlsearch
@@ -48,6 +48,7 @@ filetype plugin on
 
 let python_highlight_all=1
 
+let mapleader = "\<Space>"
 map <leader>w :set wrap!<cr>
 map <leader>p :set paste!<cr>
 map <leader><space> za
