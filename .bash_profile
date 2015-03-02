@@ -16,6 +16,7 @@ export EDITOR="vi";
 export VISUAL=$EDITOR
 
 export GREP_OPTIONS="--color=auto"
+export TERM="xterm-256color"
 
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
@@ -42,13 +43,14 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 export PS1="$uc\u$reset@$hc\h $reset\w $red\$(__git_ps1)\n$red\$$reset "
 
 # Fancy titles in GNU Screen
-if [ $TERM == 'screen' ]; then
+if [[ $TERM =~ 'screen' || $TERMCAP =~ 'screen' ]]; then
     SCREENTITLE='\[\ek\e\\\]\[\ek\W\e\\\]'
     export PS1=${SCREENTITLE}${PS1}
 fi
 
 ### ALIAS
 alias gs='git status'
+alias newscreen='screen -S $(basename $(pwd))'
 
 alias ls='ls --color=auto'
 alias ll='ls -ltrh'
