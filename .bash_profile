@@ -12,6 +12,11 @@ if [ -f /etc/bash_completion ]; then
     source /etc/bash_completion
 fi
 
+# For virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/projects
+source /usr/local/bin/virtualenvwrapper.sh
+
 export EDITOR="vi";
 export VISUAL=$EDITOR
 
