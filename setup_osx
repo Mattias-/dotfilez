@@ -10,7 +10,6 @@ brew install wget
 brew install git
 brew install bash-completion
 brew install nmap
-brew install keybase
 
 # Get some dupes
 brew tap homebrew/dupes
@@ -19,7 +18,7 @@ brew install vim --override-system-vi
 brew install screen
 brew install tcpdump
 
-# Sweet completion for vagrant
+# Completion for vagrant
 brew tap homebrew/completions
 
 brew install vagrant-completion
@@ -33,18 +32,23 @@ brew cask install virtualbox
 brew cask install vagrant
 brew cask install vagrant-manager
 brew cask install bettertouchtool
-#brew cask install atom
 brew cask install gpgtools
+brew install keybase # install after gpg
 brew cask install keepingyouawake
+brew cask install flux
+#brew cask install atom
 
 brew cask install spotify
 brew cask install skype
+brew cask install vlc
 #brew cask install dropbox
 #brew cask install google-drive
-#brew cask install vlc
 #brew cask install garmin-express
 
+
+# Fonts
 brew tap caskroom/fonts
+
 brew cask install font-inconsolata
 brew cask install font-inconsolata-g-for-powerline
 
