@@ -10,6 +10,7 @@ brew install wget
 brew install git
 brew install bash-completion
 brew install nmap
+brew install keybase
 
 # Get some dupes
 brew tap homebrew/dupes
@@ -32,7 +33,7 @@ brew cask install virtualbox
 brew cask install vagrant
 brew cask install vagrant-manager
 brew cask install bettertouchtool
-brew cask install atom
+#brew cask install atom
 brew cask install gpgtools
 brew cask install keepingyouawake
 
@@ -41,6 +42,11 @@ brew cask install skype
 #brew cask install dropbox
 #brew cask install google-drive
 #brew cask install vlc
+#brew cask install garmin-express
+
+brew tap caskroom/fonts
+brew cask install font-inconsolata
+brew cask install font-inconsolata-g-for-powerline
 
 # Done, time to clean up
 brew cask cleanup
