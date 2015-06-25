@@ -19,6 +19,8 @@
     ff = no
 [pull]
     rebase = true
+[rerere]
+    enabled = true
 [alias]
     lg = log --graph --pretty=format:'%Cred%h%C(yellow)%d%Creset %s %Cgreen(%cr) %an %Creset'
     lgh = log -10 --graph --pretty=format:'%Cred%h%C(yellow)%d%Creset %s %Cgreen(%cr) %an %Creset'
