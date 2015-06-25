@@ -16,9 +16,11 @@ if which brew > /dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
 fi
 
 # For virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/projects
-source /usr/local/bin/virtualenvwrapper.sh
+if which virtualenvwrapper.sh > /dev/null ; then
+    export WORKON_HOME=$HOME/.virtualenvs
+    export PROJECT_HOME=$HOME/projects
+    source /usr/local/bin/virtualenvwrapper.sh
+fi
 
 export EDITOR="vi";
 export VISUAL=$EDITOR
