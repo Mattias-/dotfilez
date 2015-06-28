@@ -10,6 +10,7 @@ brew install wget
 brew install git
 brew install bash-completion
 brew install nmap
+brew install awscli
 
 # Get some dupes
 brew tap homebrew/dupes

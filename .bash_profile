@@ -73,3 +73,5 @@ alias mv='mv -i'
 
 # The Matrix screensaver, like a true hacker
 alias screensaver='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
+
+complete -C aws_completer aws
