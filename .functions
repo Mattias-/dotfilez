@@ -1,18 +1,12 @@
 #!/bin/bash
 
 function hashmod() {
-    str=$1
-    lower=$2
-    upper=$3
-    res=$(echo $1 | sum | cut -c1-5)
+    lower=$1
+    upper=$2
+    str=$3
+    res=$(echo $str | sum | cut -c1-5)
     res2=$(echo "$res % ($upper-$lower+1) + $lower" | bc)
     echo $res2
-}
-
-function hash2color() {
-    color=$(hashmod $1 17 231)
-    c="\e[38;5;${color}m"
-    echo "\[${c}\]"
 }
 
 function dotimes() {

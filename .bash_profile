@@ -44,13 +44,14 @@ shopt -s checkwinsize
 stty -ixon -ixoff
 
 # Set prompt
-green="\[\e[0;32m\]"
-red="\[\e[0;31m\]"
-reset="\[\e[0m\]"
-uc=$(hash2color $(whoami))
-hc=$(hash2color $(hostname))
+reset=$(tput sgr0)
+red=$(tput setaf 1)
+uc=$(tput setaf $(hashmod 1 6 $(whoami)))
+hc=$(tput setaf $(hashmod 1 6 $(hostname -s)))
 export GIT_PS1_SHOWDIRTYSTATE=1
-export PS1="$uc\u$reset@$hc\h $reset\w $red\$(__git_ps1)\n$red\$$reset "
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUPSTREAM="auto"
+export PS1="$uc\u$reset @ $hc\h $reset\w$red\$(__git_ps1)\n$red\$$reset "
 
 # Fancy titles in GNU Screen
 if [[ $TERM =~ 'screen' || $TERMCAP =~ 'screen' ]]; then
