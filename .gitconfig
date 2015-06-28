@@ -24,7 +24,7 @@
     enabled = true
     autoupdate = true
 [alias]
-    lg = log --graph --pretty=format:'%Cred%h%C(yellow)%d%Creset %s %Cgreen(%cr) %an %Creset'
-    lgh = log -10 --graph --pretty=format:'%Cred%h%C(yellow)%d%Creset %s %Cgreen(%cr) %an %Creset'
+    lg = log --graph --pretty=format:'%C(auto)%h%d %s %Cgreen(%cr) %Cblue%an%Creset'
+    lgh = log -10 --graph --pretty=format:'%C(auto)%h%d %s %Cgreen(%cr) %Cblue%an%Creset'
 [pager]
     lgh = less --QUIT-AT-EOF
