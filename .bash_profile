@@ -53,7 +53,12 @@ hc=$(tput setaf $(hashmod 1 6 $(hostname -s)))
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUPSTREAM="auto"
-export PS1="$uc\u$reset @ $hc\h $reset\w$red\$(__git_ps1)\n$red\$$reset "
+PS1="\[$uc\]\u\[$reset\] @ "
+PS1+="\[$hc\]\h "
+PS1+="\[$reset\]\w"
+PS1+="\[$red\]\$(__git_ps1)\n"
+PS1+="\[$red\]\$\[$reset\] "
+export PS1
 
 # Fancy titles in GNU Screen
 if [[ $TERM =~ 'screen' || $TERMCAP =~ 'screen' ]]; then
