@@ -13,6 +13,8 @@ fi
 # Add better tab completion
 if which brew > /dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
     source "$(brew --prefix)/etc/bash_completion";
+elif [ -f /etc/bash_completion ]; then
+    source /etc/bash_completion;
 fi
 
 # For virtualenvwrapper
@@ -63,7 +65,13 @@ fi
 alias gs='git status'
 alias newscreen='screen -S $(basename $(pwd))'
 
-alias ls='ls -G'
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+    colorflag="--color"
+else # OS X `ls`
+    colorflag="-G"
+fi
+
+alias ls='ls ${colorflag}'
 alias ll='ls -ltrh'
 alias la='ll -A'
 
