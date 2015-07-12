@@ -26,5 +26,7 @@
 [alias]
     lg = log --graph --pretty=format:'%C(auto)%h%d %s %Cgreen(%cr) %Cblue%an%Creset'
     lgh = log -10 --graph --pretty=format:'%C(auto)%h%d %s %Cgreen(%cr) %Cblue%an%Creset'
+    assume = update-index --assume-unchanged
+    unassume = update-index --no-assume-unchanged
 [pager]
     lgh = less --QUIT-AT-EOF
