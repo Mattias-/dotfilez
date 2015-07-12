@@ -1,7 +1,8 @@
 
 backtick 1 240 240 date +%Z
+backtick 2 0 0 date -u +"%R %Z"
 hardstatus alwayslastline
-hardstatus string '%{= kb}%S@%H%{= kw} %= %-Lw%{kr}%n*%f %t%{-}%+Lw %= %{= kb}%Y-%m-%d %c %1`'
+hardstatus string '%{= kb}%S@%H%{= kw} %= %-Lw%{kr}%n*%f %t%{-}%+Lw %= %{= kb}%Y-%m-%d %c %1`, %2`'
 
 caption splitonly
 caption string "%{= kw}%?%F%{= kr}%?%n %t"
