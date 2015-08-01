@@ -2,7 +2,7 @@
     name = Mattias Appelgren
     email = mattias@ppelgren.se
 [core]
-    editor = vim
+    editor = vi
     excludesfile = ~/.gitignore_global
 [credential]
     helper = cache --timeout=3600

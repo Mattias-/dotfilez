@@ -1,10 +1,28 @@
 execute pathogen#infect()
+
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+
 map <C-n> :NERDTreeToggle<CR>
+let NERDTreeIgnore = ['\.pyc$']
+
+set rtp+=/usr/local/Cellar/fzf/HEAD
+map <C-p> :FZF<CR>
 
 syntax on
-set t_Co=256
-colorscheme desert256
+set background=dark
+
+if has("nvim") && match($TERM, "screen") == -1
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  colorscheme base16-default
+  " The default comment hl is really really bad
+  highlight! link Comment Special
+else
+  set t_Co=256
+  colorscheme desert256
+endif
 
 set number
 set ruler
@@ -40,11 +58,9 @@ set autoindent " Keep indentation from previous line
 set foldmethod=indent
 set foldlevelstart=20
 
-"Highlight trailing whitespace
-highlight ExtraWhitespace ctermbg=red ctermfg=white guibg=red
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-
+" Highlight whitespace errors and line length
+autocmd BufWinEnter * match Error /\s\+$/
+autocmd InsertLeave * match Error /\s\+$/
 set colorcolumn=80
 
 filetype indent on
@@ -58,3 +74,7 @@ map <leader>p :set paste!<cr>
 map <leader>l :set number!<cr>
 map <leader>s :setlocal spell! spelllang=en_us<cr>
 map <leader><space> za
+
+if has("nvim")
+    tnoremap <Esc> <C-\><C-n>
+endif
