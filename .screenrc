@@ -1,15 +1,17 @@
 
 backtick 1 240 240 date +%Z
-backtick 2 0 0 date -u +"%R %Z"
+backtick 2 60 60 date -u +"%R %Z"
 hardstatus alwayslastline
-hardstatus string '%{= kb}%S@%H%{= kw} %= %-Lw%{kr}%n*%f %t%{-}%+Lw %= %{= kb}%Y-%m-%d %c %1`, %2`'
+hardstatus string '%{= .b}%S@%H%{= .w} %= %-Lw%{.r}%n*%f %t%{-}%+Lw %= %{= .b}%Y-%m-%d %{= .y}%c %1` %{= .b}%2`'
 
 caption splitonly
-caption string "%{= kw}%?%F%{= kr}%?%n %t"
+caption string "%{= .w}%?%F%{= .r}%?%n %t"
 
 defscrollback 5000
 startup_message off
+maptimeout 5
 
+term screen-256color
 escape "^  "
 autodetach on
 shell -$SHELL

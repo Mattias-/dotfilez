@@ -28,10 +28,10 @@ export EDITOR="vi";
 export VISUAL=$EDITOR
 
 export GREP_OPTIONS="--color=auto"
-export TERM="xterm-256color"
 
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
 
 # ignoredups and ignorespace
 export HISTCONTROL=ignoreboth
