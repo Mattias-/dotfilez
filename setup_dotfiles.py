@@ -14,7 +14,7 @@ HOME_DIR = os.path.expanduser('~')
 
 
 def lin(rel_path, dest):
-    if os.path.exists(dest):
+    if os.path.lexists(dest):
         if os.path.islink(dest):
             os.unlink(dest)
         else:
@@ -24,7 +24,7 @@ def lin(rel_path, dest):
 
 
 for file_name in FILES:
-    rel_path = os.path.relpath(BASE_DIR + '/' + file_name)
+    rel_path = os.path.relpath(BASE_DIR + '/' + file_name, start=HOME_DIR)
     dest = HOME_DIR + '/' + file_name
     lin(rel_path, dest)
 
