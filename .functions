@@ -19,3 +19,11 @@ function dotimes() {
     done
     echo $RES
 }
+
+function psgrep() {
+    ps -fp $(pgrep -f $1)
+}
+
+function nmaph() {
+   nmap -n -sn "$1" -oG - | awk '/Up$/{print $2}'
+}
