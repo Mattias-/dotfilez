@@ -18,6 +18,8 @@
 [merge]
     ff = no
     tool = vimdiff
+[rebase]
+    autoSquash = true
 [pull]
     rebase = true
 [rerere]
