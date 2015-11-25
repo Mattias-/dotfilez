@@ -85,7 +85,6 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
-# The Matrix screensaver, like a true hacker
-alias screensaver='tr -c "[:digit:]" " " < /dev/urandom | dd cbs=$COLUMNS conv=unblock | GREP_COLOR="1;32" grep --color "[^ ]"'
+alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 
 complete -C aws_completer aws
