@@ -5,7 +5,7 @@ import os
 import shutil
 
 FILES = ['.bashrc', '.bash_profile', '.screenrc', '.gitignore_global',
-         '.gitconfig', '.vim', '.functions', '.nvim']
+         '.gitattributes_global', '.gitconfig', '.vim', '.functions', '.nvim']
 
 DIRS = ['.ssh']
 

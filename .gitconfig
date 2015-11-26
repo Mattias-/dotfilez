@@ -4,6 +4,7 @@
 [core]
     editor = vi
     excludesfile = ~/.gitignore_global
+    attributesfile = ~/.gitattributes_global
 [credential]
     helper = cache --timeout=3600
 [diff]

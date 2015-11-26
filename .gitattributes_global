@@ -1,0 +1,3 @@
+**/compiled/*.css binary
+**/dist/app.js binary
+**/dist/lib.js binary
