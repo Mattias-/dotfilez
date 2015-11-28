@@ -4,10 +4,18 @@ import datetime
 import os
 import shutil
 
-FILES = ['.bashrc', '.bash_profile', '.screenrc', '.gitignore_global',
-         '.gitattributes_global', '.gitconfig', '.vim', '.functions', '.nvim']
+FILES = [
+    '.bashrc',
+    '.bash_profile',
+    '.functions',
+    '.gitconfig',
+    '.gitignore_global',
+    '.gitattributes_global',
+    '.vim',
+    '.screenrc',
+]
 
-DIRS = ['.ssh']
+DIRS = ['.ssh', '.config']
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 HOME_DIR = os.path.expanduser('~')
