@@ -17,31 +17,35 @@ FILES = [
 
 DIRS = ['.ssh', '.config']
 
-BASE_DIR = os.path.dirname(os.path.realpath(__file__))
-HOME_DIR = os.path.expanduser('~')
+def main():
+    BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+    HOME_DIR = os.path.expanduser('~')
+
+    for file_name in FILES:
+        source_dir = BASE_DIR
+        target_dir = HOME_DIR
+        link(source_dir, target_dir, file_name)
+
+    for d in DIRS:
+        source_dir = os.path.join(BASE_DIR, d)
+        target_dir = os.path.join(HOME_DIR, d)
+        for file_name in os.listdir(source_dir):
+            link(source_dir, target_dir, file_name)
 
 
-def lin(rel_path, dest):
-    if os.path.lexists(dest):
-        if os.path.islink(dest):
-            os.unlink(dest)
+def link(source_dir, target_dir, file_name):
+    source_file = os.path.join(source_dir, file_name)
+    target_file = os.path.join(target_dir, file_name)
+    if not os.path.exists(target_dir):
+        os.makedirs(target_dir)
+    elif os.path.lexists(target_file):
+        if os.path.islink(target_file):
+            os.unlink(target_file)
         else:
-            bak = dest + '.bak.' + datetime.datetime.now().isoformat()
-            shutil.move(dest, bak)
-    os.symlink(rel_path, dest)
+            bak = target_file + '.bak.' + datetime.datetime.now().isoformat()
+            shutil.move(target_file, bak)
+    os.symlink(os.path.relpath(source_file, start=target_dir), target_file)
 
 
-for file_name in FILES:
-    rel_path = os.path.relpath(BASE_DIR + '/' + file_name, start=HOME_DIR)
-    dest = HOME_DIR + '/' + file_name
-    lin(rel_path, dest)
-
-for d in DIRS:
-    files = os.listdir(BASE_DIR + '/' + d)
-    if not os.path.exists(HOME_DIR + '/' + d):
-        os.makedirs(HOME_DIR + '/' + d)
-    for file_name in files:
-        rel_path = os.path.relpath(BASE_DIR + '/' + d + '/' + file_name,
-                                   start=HOME_DIR + '/' + d)
-        dest = HOME_DIR + '/' + d + '/' + file_name
-        lin(rel_path, dest)
+if __file__ == '__main__':
+    main()
