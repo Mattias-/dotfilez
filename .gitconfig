@@ -16,9 +16,13 @@
     ui = auto
 [push]
     default = simple
+[mergetool]
+    keepBackup = false
+[mergetool "nvimdiff"]
+    cmd = nvim -d $LOCAL $REMOTE $MERGED
 [merge]
     ff = no
-    tool = vimdiff
+    tool = nvimdiff
 [rebase]
     autoSquash = true
 [pull]
