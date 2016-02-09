@@ -58,9 +58,11 @@ set foldmethod=indent
 set foldlevelstart=20
 
 " Highlight whitespace errors and line length
-autocmd BufWinEnter * match Error /\s\+$/
-autocmd InsertLeave * match Error /\s\+$/
+autocmd BufWinEnter * match Error /\s\+$\|\s\t\|\t\s/
+autocmd InsertLeave * match Error /\s\+$\|\s\t\|\t\s/
 set colorcolumn=80
+
+set listchars=space:·,trail:·,precedes:«,extends:»,eol:↲,tab:▸\ 
 
 filetype indent on
 filetype plugin on
