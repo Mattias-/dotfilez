@@ -1,3 +1,5 @@
 **/compiled/*.css binary
 **/dist/app.js binary
 **/dist/lib.js binary
+*.min.js binary
+*.min.css binary
