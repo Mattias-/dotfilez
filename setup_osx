@@ -5,51 +5,57 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 brew update
 brew upgrade
 
-# Get some useful stuff
 brew install wget
 brew install git
 brew install bash-completion
 brew install nmap
 brew install awscli
+brew install aspell
+brew install shellcheck
+brew install pssh
+brew install jq
+brew install fpp
+brew install fzf
+brew install the_silver_searcher
+brew install httpie
 
-# Get some dupes
 brew tap homebrew/dupes
-
 brew install vim --override-system-vi
 brew install screen
 brew install tcpdump
 
-# Completion for vagrant
 brew tap homebrew/completions
-
 brew install vagrant-completion
 
-# Install apps with cask
-brew install caskroom/cask/brew-cask
+brew tap neovim/neovim
+brew install --HEAD neovim
+ln -s -f nvim "$(brew --prefix)/bin/vi"
+ln -s -f nvim "$(brew --prefix)/bin/vim"
 
-brew cask install iterm2
+# Install apps with cask
+brew tap caskroom/cask
 brew cask install google-chrome
 brew cask install virtualbox
 brew cask install vagrant
 brew cask install vagrant-manager
-brew cask install bettertouchtool
 brew cask install gpgtools
 brew install keybase # install after gpg
 brew cask install keepingyouawake
+brew cask install spectacle
 brew cask install flux
-#brew cask install atom
-
-brew cask install spotify
-brew cask install skype
 brew cask install vlc
+brew cask install tunnelblick
+
+#brew cask install spotify
+#brew cask install skype
 #brew cask install dropbox
 #brew cask install google-drive
 #brew cask install garmin-express
 
+brew tap caskroom/versions
+brew cask install iterm2-nightly
 
-# Fonts
 brew tap caskroom/fonts
-
 brew cask install font-inconsolata
 brew cask install font-inconsolata-g-for-powerline
 
