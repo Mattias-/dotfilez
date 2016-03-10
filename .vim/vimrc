@@ -7,8 +7,9 @@ let g:airline_right_sep=''
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$']
 
-set rtp+=/usr/local/Cellar/fzf/HEAD
+set rtp+=/usr/local/opt/fzf
 map <C-p> :FZF<CR>
+autocmd QuickFixCmdPost *grep* cwindow
 
 syntax on
 set background=dark
@@ -75,6 +76,7 @@ map <leader>p :set paste!<cr>
 map <leader>l :set number!<cr>
 map <leader>s :setlocal spell! spelllang=en_us<cr>
 map <leader><space> za
+map <leader># *<cr>:Ggrep '\b<cword>\b' *<cr>
 
 if has("nvim")
     tnoremap <Esc> <C-\><C-n>
