@@ -22,3 +22,6 @@
 [submodule ".vim/bundle/vim-grepper"]
 	path = .vim/bundle/vim-grepper
 	url = https://github.com/mhinz/vim-grepper.git
+[submodule ".vim/bundle/apiblueprint.vim"]
+	path = .vim/bundle/apiblueprint.vim
+	url = https://github.com/kylef/apiblueprint.vim.git
