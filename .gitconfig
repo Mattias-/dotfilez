@@ -35,6 +35,6 @@
     lgh = log -10 --graph --pretty=format:'%C(auto)%h%d %s %Cgreen(%cr) %Cblue%an%Creset'
     assume = update-index --assume-unchanged
     unassume = update-index --no-assume-unchanged
-    shw = "!f() { PAT=$1 && shift && git show $(git rev-list HEAD --max-count=20 | grep -m1 ^$PAT) $@; }; f"
+    shw = "!f() { git show $(git rev-list HEAD --max-count=20 | grep -m1 ^$1) ${@:2}; }; f"
 [pager]
     lgh = less --QUIT-AT-EOF
