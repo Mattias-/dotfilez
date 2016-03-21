@@ -13,29 +13,34 @@ FILES = [
     '.gitattributes_global',
     '.vim',
     '.screenrc',
+    '.ssh/*',
+    '.config/*',
 ]
 
-DIRS = ['.ssh', '.config']
 
 def main():
-    BASE_DIR = os.path.dirname(os.path.realpath(__file__))
-    HOME_DIR = os.path.expanduser('~')
+    base_dir = os.path.dirname(os.path.realpath(__file__))
+    home_dir = os.path.expanduser('~')
 
-    for file_name in FILES:
-        source_dir = BASE_DIR
-        target_dir = HOME_DIR
-        link(source_dir, target_dir, file_name)
+    files = []
+    for name in FILES:
+        if name.endswith('/*'):
+            dir_name = os.path.dirname(name)
+            for file_name in os.listdir(os.path.join(base_dir, dir_name)):
+                files.append(os.path.join(dir_name, file_name))
+        else:
+            files.append(name)
 
-    for d in DIRS:
-        source_dir = os.path.join(BASE_DIR, d)
-        target_dir = os.path.join(HOME_DIR, d)
-        for file_name in os.listdir(source_dir):
-            link(source_dir, target_dir, file_name)
+    for file_name in files:
+        source_file = os.path.join(base_dir, file_name)
+        target_file = os.path.join(home_dir, file_name)
+        link(source_file, target_file)
 
 
-def link(source_dir, target_dir, file_name):
-    source_file = os.path.join(source_dir, file_name)
-    target_file = os.path.join(target_dir, file_name)
+def link(source_file, target_file):
+    if not os.path.lexists(source_file):
+        return
+    target_dir = os.path.dirname(target_file)
     if not os.path.exists(target_dir):
         os.makedirs(target_dir)
     elif os.path.lexists(target_file):
@@ -47,5 +52,5 @@ def link(source_dir, target_dir, file_name):
     os.symlink(os.path.relpath(source_file, start=target_dir), target_file)
 
 
-if __file__ == '__main__':
+if __name__ == '__main__':
     main()
