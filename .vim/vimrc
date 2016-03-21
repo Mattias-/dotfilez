@@ -10,6 +10,10 @@ let NERDTreeIgnore = ['\.pyc$']
 set rtp+=/usr/local/opt/fzf
 map <C-p> :FZF<CR>
 autocmd QuickFixCmdPost *grep* cwindow
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers = ['flake8', 'py3kwarn']
+let g:syntastic_aggregate_errors = 1
 
 syntax on
 set background=dark
@@ -76,7 +80,7 @@ map <leader>p :set paste!<cr>
 map <leader>l :set number!<cr>
 map <leader>s :setlocal spell! spelllang=en_us<cr>
 map <leader><space> za
-map <leader># *<cr>:Ggrep '\b<cword>\b' *<cr>
+map <leader># :vs \| silent Ggrep '\b<cword>\b'<cr>
 
 if has("nvim")
     tnoremap <Esc> <C-\><C-n>
