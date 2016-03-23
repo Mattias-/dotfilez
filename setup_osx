@@ -63,5 +63,7 @@ brew cask install font-inconsolata-g-for-powerline
 brew cask cleanup
 brew cleanup
 
+ln -s "$HOME/Library/Mobile Documents/com~apple~CloudDocs/" "$HOME/applecloud"
+
 git clone https://github.com/Mattias-/dotfilez.git
 python ./dotfilez/setup_dotfiles.py
