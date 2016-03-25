@@ -4,16 +4,19 @@ let g:airline_powerline_fonts = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 
-map <C-n> :NERDTreeToggle<CR>
-let NERDTreeIgnore = ['\.pyc$']
-
-set rtp+=/usr/local/opt/fzf
-map <C-p> :FZF<CR>
-autocmd QuickFixCmdPost *grep* cwindow
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['flake8', 'py3kwarn']
 let g:syntastic_aggregate_errors = 1
+
+let NERDTreeIgnore = ['\.pyc$']
+map <C-n> :NERDTreeToggle<CR>
+
+set rtp+=/usr/local/opt/fzf
+map <C-p> :FZF<CR>
+
+let g:grepper = { 'tools': ['git', 'ag', 'grep'] }
+map <C-g> :Grepper<CR>
 
 syntax on
 set background=dark
@@ -63,11 +66,11 @@ set foldmethod=indent
 set foldlevelstart=20
 
 " Highlight whitespace errors and line length
-autocmd BufWinEnter * match Error /\s\+$\|\s\t\|\t\s/
+autocmd BufWinEnter * if &l:buftype != 'help' | match Error /\s\+$\|\s\t\|\t\s/
 autocmd InsertLeave * match Error /\s\+$\|\s\t\|\t\s/
 set colorcolumn=80
 
-set listchars=space:·,trail:·,precedes:«,extends:»,eol:↲,tab:▸\ 
+set listchars=space:·,trail:·,tab:▸\ ,nbsp:_,precedes:«,extends:»,eol:↲
 
 filetype indent on
 filetype plugin on
@@ -77,10 +80,11 @@ let python_highlight_all=1
 let mapleader = "\<Space>"
 map <leader>w :set wrap!<cr>
 map <leader>p :set paste!<cr>
-map <leader>l :set number!<cr>
+map <leader>n :set number!<cr>
+map <leader>l :set list!<cr>
 map <leader>s :setlocal spell! spelllang=en_us<cr>
 map <leader><space> za
-map <leader># :vs \| silent Ggrep '\b<cword>\b'<cr>
+map <leader># :Grepper -cword -noprompt -highlight<cr>
 
 if has("nvim")
     tnoremap <Esc> <C-\><C-n>

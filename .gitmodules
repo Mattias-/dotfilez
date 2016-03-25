@@ -19,3 +19,6 @@
 [submodule ".vim/bundle/nerdtree-git-plugin"]
 	path = .vim/bundle/nerdtree-git-plugin
 	url = https://github.com/Xuyuanp/nerdtree-git-plugin.git
+[submodule ".vim/bundle/vim-grepper"]
+	path = .vim/bundle/vim-grepper
+	url = https://github.com/mhinz/vim-grepper.git
