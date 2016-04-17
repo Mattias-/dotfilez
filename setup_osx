@@ -20,14 +20,14 @@ brew install the_silver_searcher
 brew install httpie
 brew install ssh-copy-id
 brew install hub
+brew install python
+pip install --upgrade pip setuptools
 
 brew tap homebrew/dupes
 brew install vim --override-system-vi
 brew install screen
 brew install tcpdump
 
-brew tap homebrew/completions
-brew install vagrant-completion
 
 brew tap neovim/neovim
 brew install --HEAD neovim
@@ -37,23 +37,28 @@ ln -s -f nvim "$(brew --prefix)/bin/vim"
 # Install apps with cask
 brew tap caskroom/cask
 brew cask install google-chrome
-brew cask install virtualbox
-brew cask install vagrant
-brew cask install vagrant-manager
-brew cask install gpgtools
-brew install keybase # install after gpg
+brew cask install spotify
+brew cask install skype
+brew cask install vlc
+brew cask install flux
 brew cask install keepingyouawake
 brew cask install spectacle
-brew cask install flux
-brew cask install vlc
-brew cask install tunnelblick
 brew cask install bitbar
 
-#brew cask install spotify
-#brew cask install skype
 #brew cask install dropbox
 #brew cask install google-drive
 #brew cask install garmin-express
+#brew cask install transmission
+
+brew cask install virtualbox
+brew cask install vagrant
+brew cask install vagrant-manager
+brew cask install tunnelblick
+brew cask install gpgtools
+brew install keybase # install after gpgtools
+
+brew tap homebrew/completions
+brew install vagrant-completion
 
 brew tap caskroom/versions
 brew cask install iterm2-nightly
@@ -68,5 +73,5 @@ brew cleanup
 
 ln -s "$HOME/Library/Mobile Documents/com~apple~CloudDocs/" "$HOME/applecloud"
 
-git clone https://github.com/Mattias-/dotfilez.git
+git clone --recursive https://github.com/Mattias-/dotfilez.git
 python ./dotfilez/setup_dotfiles.py
