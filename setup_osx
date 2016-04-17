@@ -18,6 +18,8 @@ brew install fpp
 brew install fzf
 brew install the_silver_searcher
 brew install httpie
+brew install ssh-copy-id
+brew install hub
 
 brew tap homebrew/dupes
 brew install vim --override-system-vi
@@ -45,6 +47,7 @@ brew cask install spectacle
 brew cask install flux
 brew cask install vlc
 brew cask install tunnelblick
+brew cask install bitbar
 
 #brew cask install spotify
 #brew cask install skype
