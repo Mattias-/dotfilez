@@ -23,6 +23,7 @@ set background=dark
 
 if has("nvim") && match($TERM, "screen") == -1
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  set termguicolors
   colorscheme base16-default
   " The default comment hl is really really bad
   highlight! link Comment Special
