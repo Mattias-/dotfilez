@@ -89,3 +89,5 @@ alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 
 complete -C aws_completer aws
 export FZF_DEFAULT_COMMAND='(git ls-tree -r --full-tree --name-only HEAD || ag -g "") 2> /dev/null'
+
+alias gitp='python /Users/mattias/projects/gitp/run.py'
