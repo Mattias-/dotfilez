@@ -21,7 +21,9 @@ brew install httpie
 brew install ssh-copy-id
 brew install hub
 brew install python
-pip install --upgrade pip setuptools
+brew install tree
+brew install ctags
+pip install --upgrade pip setuptools ipython flake8 py3kwarn
 
 brew tap homebrew/dupes
 brew install vim --override-system-vi
@@ -53,12 +55,14 @@ brew cask install bitbar
 brew cask install virtualbox
 brew cask install vagrant
 brew cask install vagrant-manager
+brew cask install docker
 brew cask install tunnelblick
 brew cask install gpgtools
 brew install keybase # install after gpgtools
 
 brew tap homebrew/completions
 brew install vagrant-completion
+brew install docker-completion
 
 brew tap caskroom/versions
 brew cask install iterm2-nightly
