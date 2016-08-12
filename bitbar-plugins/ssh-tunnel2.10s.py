@@ -6,7 +6,7 @@ import os.path
 import subprocess
 
 Process = namedtuple('Process', ['pid', 'time', 'command'])
-SSH_COMMAND = 'ssh -fN'
+SSH_COMMAND = '/usr/bin/ssh -fN'
 SSH_CONFIG_PATH = os.path.expanduser('~/.ssh/config')
 
 
@@ -66,7 +66,7 @@ def main():
         print('---')
 
     for host in conf_hosts:
-        print("{h} | bash=ssh param1='-fN' param2={h} terminal=false refresh=true".format(h=host))
+        print("{h} | bash=/usr/bin/ssh param1='-fN' param2={h} terminal=false refresh=true".format(h=host))
 
 if __name__ == '__main__':
     main()
