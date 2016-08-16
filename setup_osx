@@ -1,7 +1,15 @@
 #!/bin/bash
 
-xcode-select --install
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+if ! xcode-select -p > /dev/null ; then
+    xcode-select --install
+    echo "Install Xcode command line tools and run script again"
+    return
+fi
+
+if ! which brew > /dev/null ; then
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
+
 brew update
 brew upgrade
 
@@ -29,7 +37,6 @@ brew tap homebrew/dupes
 brew install vim --override-system-vi
 brew install screen
 brew install tcpdump
-
 
 brew tap neovim/neovim
 brew install --HEAD neovim
@@ -77,5 +84,5 @@ brew cleanup
 
 ln -s "$HOME/Library/Mobile Documents/com~apple~CloudDocs/" "$HOME/applecloud"
 
-git clone --recursive https://github.com/Mattias-/dotfilez.git
-python ./dotfilez/setup_dotfiles.py
+git clone --recursive https://github.com/Mattias-/dotfilez.git "$HOME/dotfilez" || true
+python "$HOME/dotfilez/setup_dotfiles.py"
