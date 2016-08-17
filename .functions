@@ -1,12 +1,8 @@
 #!/bin/bash
 
 function hashmod() {
-    lower=$1
-    upper=$2
-    str=$3
-    res=$(echo $str | sum | cut -c1-5)
-    res2=$(echo "$res % ($upper-$lower+1) + $lower" | bc)
-    echo $res2
+    # $1 is lower, $2 is upper, $3 is string to hash
+    echo "$(echo "$3" | sum | cut -d ' ' -f 1) % ($2-$1+1) + $1" | bc
 }
 
 function dotimes() {
@@ -21,7 +17,7 @@ function dotimes() {
 }
 
 function psgrep() {
-    ps -fp $(pgrep -f $1)
+    ps -fp $(pgrep -f "$@")
 }
 
 function nmaph() {
