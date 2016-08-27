@@ -37,6 +37,7 @@ set ruler
 set laststatus=2
 set showcmd
 set cursorline
+set lazyredraw
 set backspace=2
 set scrolloff=5
 
@@ -83,6 +84,7 @@ map <leader>w :set wrap!<cr>
 map <leader>p :set paste!<cr>
 map <leader>n :set number!<cr>
 map <leader>l :set list!<cr>
+map <leader>x :set cursorline!<cr>
 map <leader>s :setlocal spell! spelllang=en_us<cr>
 map <leader><space> za
 map <leader># :Grepper -cword -noprompt -highlight<cr>
