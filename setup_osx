@@ -31,6 +31,7 @@ brew install hub
 brew install python
 brew install tree
 brew install ctags
+brew install htop
 pip install --upgrade pip setuptools ipython flake8 py3kwarn
 
 brew tap homebrew/dupes
@@ -66,6 +67,9 @@ brew cask install docker
 brew cask install tunnelblick
 brew cask install gpgtools
 brew install keybase # install after gpgtools
+
+brew cask install yubikey-personalization-gui
+brew cask install yubikey-neo-manager
 
 brew tap homebrew/completions
 brew install vagrant-completion
