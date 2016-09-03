@@ -48,17 +48,17 @@ stty -ixon -ixoff
 # Set prompt
 reset=$(tput sgr0)
 red=$(tput setaf 1)
-uc=$(tput setaf $(hashmod 1 6 $(whoami)))
-hc=$(tput setaf $(hashmod 1 6 $(hostname -s)))
+yellow=$(tput setaf 3)
+blue=$(tput setaf 4)
+prompt_start="\[$yellow\]\u\[$reset\] @ "
+prompt_start+="\[$blue\]\h\[$reset\] \w"
+prompt_end="\n\[$red\]\\\$\[$reset\] "
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
-export GIT_PS1_SHOWUPSTREAM="auto"
-PS1="\[$uc\]\u\[$reset\] @ "
-PS1+="\[$hc\]\h "
-PS1+="\[$reset\]\w"
-PS1+="\[$red\]\$(__git_ps1)\n"
-PS1+="\[$red\]\$\[$reset\] "
-export PS1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWCOLORHINTS=1
+export GIT_PS1_SHOWUPSTREAM="auto verbose"
+PROMPT_COMMAND='__git_ps1 "$prompt_start" "$prompt_end"'
 
 # Fancy titles in GNU Screen
 if [[ $TERM =~ 'screen' || $TERMCAP =~ 'screen' ]]; then
