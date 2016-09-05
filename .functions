@@ -23,3 +23,15 @@ function psgrep() {
 function nmaph() {
    nmap -n -sn "$1" -oG - | awk '/Up$/{print $2}'
 }
+
+function iterm2_set() {
+    printf "\e]1337;%s=%s\a" $@
+}
+
+function iterm2_set_badge() {
+    iterm2_set "SetBadgeFormat" $(echo -n "$@" | base64)
+}
+
+function iterm2_set_user_var() {
+    iterm2_set "SetUserVar" "$1=$(echo -n "$2" | base64)"
+}
