@@ -90,3 +90,6 @@ ln -s "$HOME/Library/Mobile Documents/com~apple~CloudDocs/" "$HOME/applecloud"
 
 git clone --recursive https://github.com/Mattias-/dotfilez.git "$HOME/dotfilez" || true
 python "$HOME/dotfilez/setup_dotfiles.py"
+
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 12
