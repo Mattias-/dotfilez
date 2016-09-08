@@ -6,10 +6,6 @@
 	path = .vim/bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree
     branch = master
-[submodule ".vim/bundle/syntastic"]
-	path = .vim/bundle/syntastic
-	url = https://github.com/scrooloose/syntastic
-    branch = master
 [submodule ".vim/bundle/vim-airline"]
 	path = .vim/bundle/vim-airline
 	url = https://github.com/bling/vim-airline
@@ -37,4 +33,8 @@
 [submodule ".vim/bundle/salt-vim"]
 	path = .vim/bundle/salt-vim
 	url = git@github.com:saltstack/salt-vim.git
+	branch = master
+[submodule ".vim/bundle/neomake"]
+	path = .vim/bundle/neomake
+	url = git@github.com:neomake/neomake.git
 	branch = master

@@ -4,10 +4,11 @@ let g:airline_powerline_fonts = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['flake8', 'py3kwarn']
-let g:syntastic_aggregate_errors = 1
+let g:neomake_python_py3kwarn_maker = {
+    \ 'errorformat': '%W%f:%l:%c: %m',
+    \ }
+let g:neomake_python_enabled_makers = ['flake8', 'py3kwarn']
+autocmd! BufEnter,BufWritePost * Neomake
 
 let NERDTreeIgnore = ['\.pyc$']
 map <C-n> :NERDTreeToggle<CR>
