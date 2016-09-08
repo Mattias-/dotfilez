@@ -34,3 +34,7 @@
 	path = .vim/bundle/apiblueprint.vim
 	url = https://github.com/kylef/apiblueprint.vim.git
     branch = master
+[submodule ".vim/bundle/salt-vim"]
+	path = .vim/bundle/salt-vim
+	url = git@github.com:saltstack/salt-vim.git
+	branch = master
