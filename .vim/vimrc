@@ -18,12 +18,12 @@ map <C-p> :FZF<CR>
 
 let g:grepper = { 'tools': ['git', 'ag', 'grep'] }
 map <C-g> :Grepper<CR>
+map <leader># :Grepper -cword -noprompt -highlight<cr>
 
 syntax on
 set background=dark
 
 if has("nvim") && match($TERM, "screen") == -1
-  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   set termguicolors
   colorscheme base16-default
   " The default comment hl is really really bad
@@ -81,14 +81,14 @@ filetype plugin on
 let python_highlight_all=1
 
 let mapleader = "\<Space>"
-map <leader>w :set wrap!<cr>
+map <leader>w :set wrap! wrap?<cr>
 map <leader>p :set paste!<cr>
-map <leader>n :set number!<cr>
-map <leader>l :set list!<cr>
+map <silent> <leader>n :set number!<cr>
+map <leader>l :set list! list?<cr>
 map <leader>x :set cursorline!<cr>
 map <leader>s :setlocal spell! spelllang=en_us<cr>
 map <leader><space> za
-map <leader># :Grepper -cword -noprompt -highlight<cr>
+nmap <silent> <leader>h :noh<cr>
 
 if has("nvim")
     tnoremap <Esc> <C-\><C-n>
