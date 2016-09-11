@@ -40,7 +40,7 @@ brew install screen
 brew install tcpdump
 
 brew tap neovim/neovim
-brew install --HEAD neovim
+brew install neovim
 ln -s -f nvim "$(brew --prefix)/bin/vi"
 ln -s -f nvim "$(brew --prefix)/bin/vim"
 
@@ -75,8 +75,7 @@ brew tap homebrew/completions
 brew install vagrant-completion
 brew install docker-completion
 
-brew tap caskroom/versions
-brew cask install iterm2-nightly
+brew cask install iterm2
 
 brew tap caskroom/fonts
 brew cask install font-inconsolata
