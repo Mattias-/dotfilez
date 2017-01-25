@@ -85,6 +85,7 @@ brew cleanup
 ln -s "$HOME/Library/Mobile Documents/com~apple~CloudDocs/" "$HOME/applecloud"
 
 git clone --recursive https://github.com/Mattias-/dotfilez.git "$HOME/dotfilez" || true
+git submodule update --recursive --remote
 python "$HOME/dotfilez/setup_dotfiles.py"
 
 defaults write NSGlobalDomain KeyRepeat -int 1
