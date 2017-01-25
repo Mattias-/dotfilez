@@ -29,6 +29,7 @@ brew install httpie
 brew install ssh-copy-id
 brew install hub
 brew install python
+brew install python3
 brew install tree
 brew install ctags
 brew install htop
@@ -46,6 +47,7 @@ ln -s -f nvim "$(brew --prefix)/bin/vim"
 
 # Install apps with cask
 brew tap caskroom/cask
+brew cask install iterm2
 brew cask install google-chrome
 brew cask install spotify
 brew cask install skype
@@ -63,19 +65,14 @@ brew cask install bitbar
 brew cask install virtualbox
 brew cask install vagrant
 brew cask install vagrant-manager
+brew install vagrant-completion
+
 brew cask install docker
-brew cask install tunnelblick
+brew install docker-completion
+brew install docker-compose-completion
+
 brew cask install gpgtools
 brew install keybase # install after gpgtools
-
-brew cask install yubikey-personalization-gui
-brew cask install yubikey-neo-manager
-
-brew tap homebrew/completions
-brew install vagrant-completion
-brew install docker-completion
-
-brew cask install iterm2
 
 brew tap caskroom/fonts
 brew cask install font-inconsolata
