@@ -32,9 +32,9 @@
     branch = master
 [submodule ".vim/bundle/salt-vim"]
 	path = .vim/bundle/salt-vim
-	url = git@github.com:saltstack/salt-vim.git
+	url = https://github.com/saltstack/salt-vim.git
 	branch = master
 [submodule ".vim/bundle/neomake"]
 	path = .vim/bundle/neomake
-	url = git@github.com:neomake/neomake.git
+	url = https://github.com/neomake/neomake.git
 	branch = master
