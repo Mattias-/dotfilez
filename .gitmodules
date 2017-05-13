@@ -46,3 +46,7 @@
 	path = .vim/bundle/vim-vagrant
 	url = https://github.com/hashivim/vim-vagrant.git
 	branch = master
+[submodule ".vim/bundle/vim-terraform"]
+	path = .vim/bundle/vim-terraform
+	url = https://github.com/hashivim/vim-terraform.git
+	branch = master
