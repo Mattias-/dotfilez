@@ -42,3 +42,7 @@
 	path = .vim/bundle/Dockerfile
 	url = https://github.com/ekalinin/Dockerfile.vim.git
 	branch = master
+[submodule ".vim/bundle/vim-vagrant"]
+	path = .vim/bundle/vim-vagrant
+	url = https://github.com/hashivim/vim-vagrant.git
+	branch = master
