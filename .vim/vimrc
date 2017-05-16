@@ -10,6 +10,7 @@ autocmd! BufEnter,BufWritePost * Neomake
 
 let NERDTreeIgnore = ['\.pyc$']
 map <C-n> :NERDTreeToggle<CR>
+map <C-m> :NERDTreeFind<CR>
 
 set rtp+=/usr/local/opt/fzf
 map <C-p> :FZF<CR>
