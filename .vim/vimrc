@@ -39,7 +39,7 @@ set showcmd
 set cursorline
 set lazyredraw
 set backspace=2
-set scrolloff=5
+set scrolloff=10
 
 set noswapfile
 
