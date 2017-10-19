@@ -26,6 +26,7 @@
     tool = nvimdiff
 [rebase]
     autoSquash = true
+    autoStash = true
 [pull]
     rebase = true
 [rerere]
