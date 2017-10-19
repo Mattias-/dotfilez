@@ -45,34 +45,35 @@ brew install neovim
 ln -s -f nvim "$(brew --prefix)/bin/vi"
 ln -s -f nvim "$(brew --prefix)/bin/vim"
 
+brew tap coinbase/assume-role
+brew install assume-role
+
 # Install apps with cask
 brew tap caskroom/cask
 brew cask install iterm2
 brew cask install google-chrome
 brew cask install spotify
-brew cask install skype
 brew cask install vlc
 brew cask install flux
 brew cask install keepingyouawake
 brew cask install spectacle
-brew cask install bitbar
+brew cask install google-cloud-sdk
 
+#brew cask install skype
 #brew cask install dropbox
 #brew cask install google-drive
 #brew cask install garmin-express
 #brew cask install transmission
+#brew cask install gpgtools
+#brew install keybase # install after gpgtools
 
 brew cask install virtualbox
 brew cask install vagrant
-brew cask install vagrant-manager
 brew install vagrant-completion
 
 brew cask install docker
 brew install docker-completion
 brew install docker-compose-completion
-
-brew cask install gpgtools
-brew install keybase # install after gpgtools
 
 brew tap caskroom/fonts
 brew cask install font-inconsolata
