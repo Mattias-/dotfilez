@@ -12,7 +12,7 @@ let NERDTreeIgnore = ['\.pyc$']
 map <C-n> :NERDTreeToggle<CR>
 map <C-m> :NERDTreeFind<CR>
 
-set rtp+=/usr/local/opt/fzf
+set rtp+=~/.fzf
 map <C-p> :FZF<CR>
 
 let g:grepper = { 'tools': ['git', 'ag', 'grep'] }
@@ -22,9 +22,11 @@ map <leader># :Grepper -cword -noprompt -highlight<cr>
 syntax on
 set background=dark
 
-if has("nvim") && match($TERM, "screen") == -1
+if v:version >= 800 || has("nvim") && match($TERM, "screen") == -1
   set termguicolors
-  colorscheme base16-default
+  set t_Co=256
+  "colorscheme base16-default
+  colorscheme base16-default-dark
   " The default comment hl is really really bad
   highlight! link Comment Special
 else

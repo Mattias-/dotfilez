@@ -50,3 +50,11 @@
 	path = .vim/bundle/vim-terraform
 	url = https://github.com/hashivim/vim-terraform.git
 	branch = master
+[submodule ".vim/bundle/vim-go"]
+	path = .vim/bundle/vim-go
+	url = https://github.com/fatih/vim-go.git
+	branch = master
+[submodule ".vim/bundle/vim-rhubarb"]
+	path = .vim/bundle/vim-rhubarb
+	url = https://github.com/tpope/vim-rhubarb.git
+	branch = master
