@@ -17,6 +17,10 @@ elif [ -f /etc/bash_completion ]; then
     source /etc/bash_completion;
 fi
 
+if which assume-role > /dev/null; then
+    source $(which assume-role)
+fi
+
 # For virtualenvwrapper
 if which virtualenvwrapper.sh > /dev/null ; then
     export WORKON_HOME=$HOME/.virtualenvs
@@ -58,7 +62,12 @@ export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWCOLORHINTS=1
 export GIT_PS1_SHOWUPSTREAM="auto verbose"
-PROMPT_COMMAND='__git_ps1 "$prompt_start" "$prompt_end"'
+
+function aws_account_info {
+    [ "$AWS_ACCOUNT_NAME" ] && [ "$AWS_ACCOUNT_ROLE" ] && echo " (${yellow}${AWS_ACCOUNT_ROLE}${reset} @ ${blue}${AWS_ACCOUNT_NAME}${reset})"
+}
+
+PROMPT_COMMAND='__git_ps1 "$prompt_start" "$(aws_account_info)$prompt_end"'
 
 # Fancy titles in GNU Screen
 if [[ $TERM =~ 'screen' || $TERMCAP =~ 'screen' ]]; then
