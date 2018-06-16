@@ -15,6 +15,7 @@ FILES = [
     '.screenrc',
     '.ssh/*',
     '.config/*',
+    '.fonts',
 ]
 
 
