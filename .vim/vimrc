@@ -19,6 +19,17 @@ let g:grepper = { 'tools': ['git', 'ag', 'grep'] }
 map <C-g> :Grepper<CR>
 map <leader># :Grepper -cword -noprompt -highlight<cr>
 
+let g:lightline = {
+      \ 'colorscheme': 'one',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_fujnction': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
+
 syntax on
 set background=dark
 
