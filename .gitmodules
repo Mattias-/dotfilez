@@ -54,3 +54,7 @@
 	path = .vim/bundle/lightline.vim
 	url = https://github.com/itchyny/lightline.vim
 	branch = master
+[submodule ".vim/bundle/editorconfig-vim"]
+	path = .vim/bundle/editorconfig-vim
+	url = https://github.com/editorconfig/editorconfig-vim.git
+	branch = master
