@@ -1,0 +1,221 @@
+#!/bin/bash
+set -euo pipefail
+
+sudo apt-get update -y >/dev/null
+sudo apt-get install -y curl jq
+
+install_helm () {
+    tput setf 3 && echo "${FUNCNAME[0]}" && tput sgr0
+    # helm
+    # https://github.com/kubernetes/helm/releases
+    HELM_VERSION="v2.9.1"
+    if helm version --client --short  2>/dev/null | grep -w "${HELM_VERSION}" >/dev/null; then
+        echo "helm ${HELM_VERSION} already installed"
+    else
+        curl -Lo helm.tar.gz https://storage.googleapis.com/kubernetes-helm/helm-${HELM_VERSION}-linux-amd64.tar.gz
+        tar -zxf helm.tar.gz && rm "$_"
+        chmod +x linux-amd64/helm
+        sudo mv linux-amd64/helm /usr/local/bin/
+        rm -r linux-amd64
+    fi
+    latest_tag=$(curl -s https://api.github.com/repos/kubernetes/helm/tags | jq -r .[0].name)
+    if [ "$latest_tag" != "$HELM_VERSION" ] ; then
+        echo "$latest_tag available"
+    fi
+}
+install_helm
+
+install_go () {
+    tput setf 3 && echo "${FUNCNAME[0]}" && tput sgr0
+    # go
+    # https://golang.org/dl/
+    GO_VERSION="go1.10.3"
+    if go version 2>/dev/null | grep -w "${GO_VERSION}" >/dev/null; then
+        echo "go ${GO_VERSION} already installed"
+    else
+        curl -LO "https://dl.google.com/go/${GO_VERSION}.linux-amd64.tar.gz"
+        sudo tar -C /usr/local -xzf "${GO_VERSION}.linux-amd64.tar.gz" && rm "$_"
+        # export PATH=$PATH:/usr/local/go/bin
+    fi
+    #latest_tag=$(curl -s https://api.github.com/repos/golang/go/tags | jq -r .[0].name)
+    latest_version=$(curl -s https://golang.org/dl/ | grep -oP "https://dl.google.com/go/\Kgo[0-9.]+.linux-amd64.tar.gz" | head -1 | sed -n 's/\(go.*\).linux-.*/\1/p')
+    if [ "$latest_version" != "$GO_VERSION" ] ; then
+        echo "$latest_version available"
+    fi
+}
+install_go
+
+install_dep () {
+    tput setf 3 && echo "${FUNCNAME[0]}" && tput sgr0
+    # dep
+    # https://github.com/golang/dep/releases
+    DEP_VERSION="v0.4.1"
+    if dep version 2>/dev/null | grep -E "^ version\s+:\s+${DEP_VERSION}" >/dev/null; then
+        echo "dep ${DEP_VERSION} already installed"
+    else
+        curl -Lo dep https://github.com/golang/dep/releases/download/${DEP_VERSION}/dep-linux-amd64
+        chmod +x dep
+        sudo mv dep /usr/local/bin/
+    fi
+    latest_tag=$(curl -s https://api.github.com/repos/golang/dep/tags | jq -r .[0].name)
+    if [ "$latest_tag" != "$DEP_VERSION" ] ; then
+        echo "$latest_tag available"
+    fi
+}
+install_dep
+
+install_minikube () {
+    tput setf 3 && echo "${FUNCNAME[0]}" && tput sgr0
+    # minikube
+    # https://github.com/kubernetes/minikube/releases
+    MINIKUBE_VERSION="v0.28.0"
+    if minikube version 2>/dev/null | grep -w "${MINIKUBE_VERSION}" >/dev/null; then
+        echo "minikube ${MINIKUBE_VERSION} already installed"
+    else
+        curl -Lo minikube "https://storage.googleapis.com/minikube/releases/${MINIKUBE_VERSION}/minikube-linux-amd64"
+        chmod +x minikube
+        sudo mv minikube /usr/local/bin/
+        minikube completion bash | sudo tee /etc/bash_completion.d/minikube >/dev/null
+
+        # KVM2 driver
+        curl -LO "https://storage.googleapis.com/minikube/releases/${MINIKUBE_VERSION}/docker-machine-driver-kvm2"
+        chmod +x docker-machine-driver-kvm2
+        sudo mv docker-machine-driver-kvm2 /usr/bin/
+    fi
+    latest_tag=$(curl -s https://api.github.com/repos/kubernetes/minikube/tags | jq -r .[0].name)
+    if [ "$latest_tag" != "$MINIKUBE_VERSION" ] ; then
+        echo "$latest_tag available"
+    fi
+}
+install_minikube
+
+install_kubectl () {
+    tput setf 3 && echo "${FUNCNAME[0]}" && tput sgr0
+    # kubectl
+    KUBECTL_VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+    if kubectl version --client --short  2>/dev/null | grep -w "${KUBECTL_VERSION}" >/dev/null; then
+        echo "kubectl ${KUBECTL_VERSION} already installed"
+    else
+        curl -LO "https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl"
+        chmod +x kubectl
+        sudo mv kubectl /usr/local/bin/
+        kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl >/dev/null
+    fi
+}
+install_kubectl
+
+install_rclone () {
+    tput setf 3 && echo "${FUNCNAME[0]}" && tput sgr0
+    # rclone
+    RCLONE_VERSION=$(curl -s https://downloads.rclone.org/version.txt)
+    if rclone --version  2>/dev/null | head -1 | grep -w "${RCLONE_VERSION}" >/dev/null; then
+        echo "${RCLONE_VERSION} is already installed"
+    else
+        tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'rclone-install')
+        pushd "$tmp_dir"
+        export XDG_CONFIG_HOME=config
+        curl -Lo rclone.zip "https://downloads.rclone.org/rclone-current-linux-amd64.zip"
+        unzip_dir="tmp_unzip_dir_for_rclone"
+        unzip -a rclone.zip -d $unzip_dir
+        cd $unzip_dir/*
+
+        chmod +x rclone
+        sudo chown root:root rclone
+        sudo mv rclone /usr/local/bin/
+        #manuals
+        sudo mkdir -p /usr/local/share/man/man1
+        sudo cp rclone.1 /usr/local/share/man/man1/
+        mandb
+        popd
+        rm -r "$tmp_dir"
+    fi
+}
+install_rclone
+
+install_hub () {
+    tput setf 3 && echo "${FUNCNAME[0]}" && tput sgr0
+    # hub
+    HUB_VERSION="2.4.0"
+    if hub version 2>/dev/null | tail -1 | grep -w "$HUB_VERSION" >/dev/null; then
+        echo "hub ${HUB_VERSION} already installed"
+    else
+        curl -Lo hub.tgz "https://github.com/github/hub/releases/download/v${HUB_VERSION}/hub-linux-amd64-${HUB_VERSION}.tgz"
+        tar -xzf hub.tgz && rm "$_"
+        pushd "hub-linux-amd64-${HUB_VERSION}"
+        sudo cp etc/hub.bash_completion.sh /etc/bash_completion.d/hub
+        sudo cp bin/hub /usr/local/bin/
+        popd
+        rm -r "hub-linux-amd64-${HUB_VERSION}"
+    fi
+    latest_tag=$(curl -s https://api.github.com/repos/github/hub/tags | jq -r .[0].name)
+    if [ "$latest_tag" != "v$HUB_VERSION" ] ; then
+        echo "$latest_tag available"
+    fi
+}
+install_hub
+
+install_neovim () {
+    tput setf 3 && echo "${FUNCNAME[0]}" && tput sgr0
+    NEOVIM_VERSION="v0.3.0"
+    if nvim --version 2>/dev/null | head -1 | grep -w "$NEOVIM_VERSION" >/dev/null; then
+        echo "neovim ${NEOVIM_VERSION} already installed"
+    else
+        sudo curl -Lo /usr/local/bin/nvim "https://github.com/neovim/neovim/releases/download/${NEOVIM_VERSION}/nvim.appimage"
+        sudo chmod +x /usr/local/bin/nvim
+    fi
+    latest_tag=$(curl -s https://api.github.com/repos/neovim/neovim/tags | jq -r .[0].name)
+    if [ "$latest_tag" != "$NEOVIM_VERSION" ] ; then
+        echo "$latest_tag available"
+    fi
+}
+install_neovim
+
+install_google_cloud_sdk () {
+    tput setf 3 && echo "${FUNCNAME[0]}" && tput sgr0
+    curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - &>/dev/null
+    echo "deb https://packages.cloud.google.com/apt cloud-sdk-$(lsb_release -cs) main" \
+        | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list >/dev/null
+    sudo apt-get update -y >/dev/null
+    sudo apt-get install -y google-cloud-sdk
+}
+install_google_cloud_sdk
+
+install_docker () {
+    tput setf 3 && echo "${FUNCNAME[0]}" && tput sgr0
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - &>/dev/null
+    echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
+        | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+    sudo apt-get update -y >/dev/null
+    sudo apt-get install -y docker-ce
+    sudo usermod -aG docker "$USER"
+}
+install_docker
+
+install_qemu_kvm () {
+    tput setf 3 && echo "${FUNCNAME[0]}" && tput sgr0
+    sudo apt-get install -y libvirt-bin qemu-kvm virt-manager
+    #sudo usermod -a -G libvirtd "$(whoami)"
+}
+install_qemu_kvm || true
+
+# keepassxc
+sudo add-apt-repository -y ppa:phoerious/keepassxc &>/dev/null
+
+# vim
+sudo add-apt-repository -y ppa:jonathonf/vim &>/dev/null
+
+# git
+sudo add-apt-repository -y ppa:git-core/ppa &>/dev/null
+
+sudo apt-get update -y >/dev/null
+sudo apt-get install -y \
+    keepassxc \
+    vim \
+    git \
+    htop \
+    jq \
+    shellcheck \
+    traceroute \
+    nmap \
+    tree \
+    tilix \
