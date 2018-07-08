@@ -16,6 +16,7 @@ FILES = [
     '.ssh/*',
     '.config/*',
     '.fonts',
+    '.tmux.conf',
 ]
 
 
