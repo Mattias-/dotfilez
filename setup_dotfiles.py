@@ -17,6 +17,7 @@ FILES = [
     '.config/*',
     '.fonts',
     '.tmux.conf',
+    'bin/*',
 ]
 
 
