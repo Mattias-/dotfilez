@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eo pipefail
+set -o pipefail
 
 echo "Running APT update and upgrade..."
 sudo apt-get update -y >/dev/null
@@ -111,7 +111,7 @@ installed_version_minikube () {
     minikube version 2>/dev/null | cut -d' ' -f3
 }
 
-manage_version "minikube" "v0.28.2"
+manage_version "minikube"
 
 install_kubectl () {
     curl -LO "https://storage.googleapis.com/kubernetes-release/release/${version}/bin/linux/amd64/kubectl"
@@ -128,7 +128,7 @@ installed_version_kubectl () {
     kubectl version --client --short  2>/dev/null | cut -d' ' -f3
 }
 
-manage_version "kubectl" "v1.11.2"
+manage_version "kubectl"
 
 
 install_rclone () {
@@ -196,6 +196,23 @@ installed_version_neovim () {
 
 manage_version "neovim" "v0.3.1"
 
+install_terraform () {
+    curl -Lo terraform.zip "https://releases.hashicorp.com/terraform/${version}/terraform_${version}_linux_amd64.zip"
+    unzip terraform.zip
+    sudo mv terraform /usr/local/bin/terraform
+    rm -r terraform.zip
+}
+
+latest_version_terraform () {
+    curl -s https://releases.hashicorp.com/terraform/ | grep '<a href="/terraform' | head -1 | cut -d '/' -f3
+}
+
+installed_version_terraform () {
+    terraform -version 2>/dev/null | head -1 | cut -d ' ' -f2 | cut -c2-
+}
+
+manage_version "terraform" "0.11.8"
+
 echo "Installing repos"
 install_google_cloud_sdk () {
     curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - &>/dev/null
@@ -237,6 +254,7 @@ sudo apt-get install -y \
     git \
     htop \
     jq \
+    silversearcher-ag \
     shellcheck \
     traceroute \
     nmap \
