@@ -14,6 +14,10 @@
 	<integer>0</integer>
 	<key>BadgeTopMargin</key>
 	<integer>0</integer>
+	<key>Coprocess MRU</key>
+	<array>
+		<string>echo y</string>
+	</array>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>base16-default.dark</key>
@@ -578,12 +582,14 @@
 	</data>
 	<key>NSTableView Supports v2 KeyBingingTable</key>
 	<true/>
+	<key>NSWindow Frame SessionsPreferences</key>
+	<string>269 93 599 502 0 0 1920 1178 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>269 189 796 473 0 0 1920 1178 </string>
+	<string>269 281 770 381 0 0 1920 1200 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>2150 867 592 584 1920 33 2560 1418 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1 0 1914 1178 0 0 1920 1178 </string>
+	<string>0 14 1915 1164 0 0 1920 1178 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>247 132 570 452 0 0 1920 1178 </string>
 	<key>New Bookmarks</key>
