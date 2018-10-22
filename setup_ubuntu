@@ -6,7 +6,7 @@ sudo apt-get update -y >/dev/null
 sudo apt-get upgrade -y >/dev/null
 sudo apt-get install -y curl jq >/dev/null
 
-manage_version () {
+manage_version() {
     local name="$1"
     local version="$2"
     local latest_version
@@ -40,7 +40,7 @@ manage_version () {
     echo "$status"
 }
 
-install_helm () {
+install_helm() {
     local version="$1"
     curl -Lo helm.tar.gz "https://storage.googleapis.com/kubernetes-helm/helm-${version}-linux-amd64.tar.gz"
     tar -zxf helm.tar.gz && rm "$_"
@@ -49,49 +49,49 @@ install_helm () {
     rm -r linux-amd64
 }
 
-latest_version_helm () {
+latest_version_helm() {
     curl -Ls https://api.github.com/repos/kubernetes/helm/tags | jq -r .[0].name
 }
 
-installed_version_helm () {
-    helm version --client --short  2>/dev/null | cut -d' ' -f2- | cut -d'+' -f1
+installed_version_helm() {
+    helm version --client --short 2>/dev/null | cut -d' ' -f2- | cut -d'+' -f1
 }
 
 manage_version "helm"
 
-install_go () {
+install_go() {
     curl -LO "https://dl.google.com/go/${version}.linux-amd64.tar.gz"
     sudo tar -C /usr/local -xzf "${version}.linux-amd64.tar.gz" && rm "$_"
     # export PATH=$PATH:/usr/local/go/bin
 }
 
-latest_version_go () {
+latest_version_go() {
     curl -Ls https://golang.org/dl/ | grep -oP "https://dl.google.com/go/\Kgo[0-9.]+.linux-amd64.tar.gz" | head -1 | sed -n 's/\(go.*\).linux-.*/\1/p'
 }
 
-installed_version_go () {
+installed_version_go() {
     go version 2>/dev/null | cut -d' ' -f3
 }
 
 manage_version "go" "go1.11.1"
 
-install_dep () {
+install_dep() {
     curl -Lo dep "https://github.com/golang/dep/releases/download/${version}/dep-linux-amd64"
     chmod +x dep
     sudo mv dep /usr/local/bin/
 }
 
-latest_version_dep () {
+latest_version_dep() {
     curl -Ls https://api.github.com/repos/golang/dep/tags | jq -r .[0].name
 }
 
-installed_version_dep () {
+installed_version_dep() {
     dep version 2>/dev/null | grep -oP "^ version\s+:\s+\K(.*)"
 }
 
 manage_version "dep" "v0.5.0"
 
-install_minikube () {
+install_minikube() {
     curl -Lo minikube "https://storage.googleapis.com/minikube/releases/${version}/minikube-linux-amd64"
     chmod +x minikube
     sudo mv minikube /usr/local/bin/
@@ -103,35 +103,34 @@ install_minikube () {
     sudo mv docker-machine-driver-kvm2 /usr/bin/
 }
 
-latest_version_minikube () {
+latest_version_minikube() {
     curl -Ls https://api.github.com/repos/kubernetes/minikube/tags | jq -r .[0].name
 }
 
-installed_version_minikube () {
+installed_version_minikube() {
     minikube version 2>/dev/null | cut -d' ' -f3
 }
 
 manage_version "minikube"
 
-install_kubectl () {
+install_kubectl() {
     curl -LO "https://storage.googleapis.com/kubernetes-release/release/${version}/bin/linux/amd64/kubectl"
     chmod +x kubectl
     sudo mv kubectl /usr/local/bin/
     kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl >/dev/null
 }
 
-latest_version_kubectl () {
+latest_version_kubectl() {
     curl -Ls https://storage.googleapis.com/kubernetes-release/release/stable.txt
 }
 
-installed_version_kubectl () {
-    kubectl version --client --short  2>/dev/null | cut -d' ' -f3
+installed_version_kubectl() {
+    kubectl version --client --short 2>/dev/null | cut -d' ' -f3
 }
 
 manage_version "kubectl"
 
-
-install_rclone () {
+install_rclone() {
     tmp_dir=$(mktemp -d 2>/dev/null || mktemp -d -t 'rclone-install')
     pushd "$tmp_dir"
     export XDG_CONFIG_HOME=config
@@ -151,17 +150,17 @@ install_rclone () {
     rm -r "$tmp_dir"
 }
 
-latest_version_rclone () {
+latest_version_rclone() {
     curl -Ls https://downloads.rclone.org/version.txt | cut -d' ' -f2
 }
 
-installed_version_rclone () {
-    rclone --version  2>/dev/null | head -1 | cut -d' ' -f2
+installed_version_rclone() {
+    rclone --version 2>/dev/null | head -1 | cut -d' ' -f2
 }
 
 manage_version "rclone"
 
-install_hub () {
+install_hub() {
     curl -Lo hub.tgz "https://github.com/github/hub/releases/download/v${version}/hub-linux-amd64-${version}.tgz"
     tar -xzf hub.tgz && rm "$_"
     pushd "hub-linux-amd64-${version}"
@@ -171,98 +170,98 @@ install_hub () {
     rm -r "hub-linux-amd64-${version}"
 }
 
-latest_version_hub () {
+latest_version_hub() {
     curl -Ls https://api.github.com/repos/github/hub/tags | jq -r .[0].name | tr -d 'v'
 }
 
-installed_version_hub () {
+installed_version_hub() {
     hub version 2>/dev/null | tail -1 | cut -d' ' -f3
 }
 
 manage_version "hub"
 
-install_neovim () {
+install_neovim() {
     sudo curl -Lo /usr/local/bin/nvim "https://github.com/neovim/neovim/releases/download/${version}/nvim.appimage"
     sudo chmod +x /usr/local/bin/nvim
 }
 
-latest_version_neovim () {
+latest_version_neovim() {
     curl -Ls https://api.github.com/repos/neovim/neovim/tags | jq -r .[0].name
 }
 
-installed_version_neovim () {
+installed_version_neovim() {
     nvim --version 2>/dev/null | head -1 | grep -oP '\s+\K[v0-9.]*'
 }
 
 manage_version "neovim" "v0.3.1"
 
-install_terraform () {
+install_terraform() {
     curl -Lo terraform.zip "https://releases.hashicorp.com/terraform/${version}/terraform_${version}_linux_amd64.zip"
     unzip terraform.zip
     sudo mv terraform /usr/local/bin/terraform
     rm -r terraform.zip
 }
 
-latest_version_terraform () {
+latest_version_terraform() {
     curl -s https://releases.hashicorp.com/terraform/ | grep '<a href="/terraform' | head -1 | cut -d '/' -f3
 }
 
-installed_version_terraform () {
+installed_version_terraform() {
     terraform -version 2>/dev/null | head -1 | cut -d ' ' -f2 | cut -c2-
 }
 
 manage_version "terraform" "0.11.8"
 
-install_vagrant () {
+install_vagrant() {
     curl -Lo vagrant.zip "https://releases.hashicorp.com/vagrant/${version}/vagrant_${version}_linux_amd64.zip"
     unzip vagrant.zip
     sudo mv vagrant /usr/local/bin/vagrant
     rm -r vagrant.zip
 }
 
-latest_version_vagrant () {
+latest_version_vagrant() {
     curl -s https://releases.hashicorp.com/vagrant/ | grep '<a href="/vagrant' | head -1 | cut -d '/' -f3
 }
 
-installed_version_vagrant () {
+installed_version_vagrant() {
     vagrant -v 2>/dev/null | cut -d ' ' -f2
 }
 
 manage_version "vagrant"
 
 echo "Installing repos"
-install_google_cloud_sdk () {
+install_google_cloud_sdk() {
     curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - &>/dev/null
-    echo "deb https://packages.cloud.google.com/apt cloud-sdk-$(lsb_release -cs) main" \
-        | sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list >/dev/null
+    echo "deb https://packages.cloud.google.com/apt cloud-sdk-$(lsb_release -cs) main" |
+        sudo tee /etc/apt/sources.list.d/google-cloud-sdk.list >/dev/null
 }
 install_google_cloud_sdk &
 
-install_docker () {
+install_docker() {
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - &>/dev/null
-    echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" \
-        | sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+    echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" |
+        sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 }
 install_docker &
 
-install_spotify () {
+install_spotify() {
     sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90 &>/dev/null
-    echo "deb http://repository.spotify.com stable non-free" \
-        | sudo tee /etc/apt/sources.list.d/spotify.list >/dev/null
+    echo "deb http://repository.spotify.com stable non-free" |
+        sudo tee /etc/apt/sources.list.d/spotify.list >/dev/null
 }
 install_spotify &
 
-install_virtualbox () {
+install_virtualbox() {
     curl -fsSL https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo apt-key add - &>/dev/null
-    echo "deb https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib" \
-        | sudo tee /etc/apt/sources.list.d/virtualbox.list >/dev/null
+    echo "deb https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib" |
+        sudo tee /etc/apt/sources.list.d/virtualbox.list >/dev/null
 }
 install_virtualbox &
 
-install_bazel () {
+install_bazel() {
     curl -fsSL https://bazel.build/bazel-release.pub.gpg | sudo apt-key add - &>/dev/null
-    echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" \
-        | sudo tee /etc/apt/sources.list.d/bazel.list >/dev/null
+    echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" |
+        sudo tee /etc/apt/sources.list.d/bazel.list >/dev/null
 }
 install_bazel &
 
@@ -296,8 +295,7 @@ sudo apt-get install -y \
     google-cloud-sdk \
     libvirt-bin qemu-kvm virt-manager \
     virtualbox-5.2 \
-    bazel \
-
+    bazel
 
 #install_qemu_kvm || true
 sudo usermod -aG docker "$USER"
