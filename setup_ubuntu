@@ -73,7 +73,7 @@ installed_version_go () {
     go version 2>/dev/null | cut -d' ' -f3
 }
 
-manage_version "go" "go1.11"
+manage_version "go" "go1.11.1"
 
 install_dep () {
     curl -Lo dep "https://github.com/golang/dep/releases/download/${version}/dep-linux-amd64"
@@ -213,6 +213,23 @@ installed_version_terraform () {
 
 manage_version "terraform" "0.11.8"
 
+install_vagrant () {
+    curl -Lo vagrant.zip "https://releases.hashicorp.com/vagrant/${version}/vagrant_${version}_linux_amd64.zip"
+    unzip vagrant.zip
+    sudo mv vagrant /usr/local/bin/vagrant
+    rm -r vagrant.zip
+}
+
+latest_version_vagrant () {
+    curl -s https://releases.hashicorp.com/vagrant/ | grep '<a href="/vagrant' | head -1 | cut -d '/' -f3
+}
+
+installed_version_vagrant () {
+    vagrant -v 2>/dev/null | cut -d ' ' -f2
+}
+
+manage_version "vagrant"
+
 echo "Installing repos"
 install_google_cloud_sdk () {
     curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - &>/dev/null
@@ -234,6 +251,20 @@ install_spotify () {
         | sudo tee /etc/apt/sources.list.d/spotify.list >/dev/null
 }
 install_spotify &
+
+install_virtualbox () {
+    curl -fsSL https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo apt-key add - &>/dev/null
+    echo "deb https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib" \
+        | sudo tee /etc/apt/sources.list.d/virtualbox.list >/dev/null
+}
+install_virtualbox &
+
+install_bazel () {
+    curl -fsSL https://bazel.build/bazel-release.pub.gpg | sudo apt-key add - &>/dev/null
+    echo "deb [arch=amd64] http://storage.googleapis.com/bazel-apt stable jdk1.8" \
+        | sudo tee /etc/apt/sources.list.d/bazel.list >/dev/null
+}
+install_bazel &
 
 # keepassxc
 sudo add-apt-repository -yn ppa:phoerious/keepassxc &>/dev/null &
@@ -264,6 +295,9 @@ sudo apt-get install -y \
     spotify-client \
     google-cloud-sdk \
     libvirt-bin qemu-kvm virt-manager \
+    virtualbox-5.2 \
+    bazel \
+
 
 #install_qemu_kvm || true
 sudo usermod -aG docker "$USER"
