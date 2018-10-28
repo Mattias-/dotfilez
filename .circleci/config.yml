@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  shfmt:
+    docker:
+      - image: golang:latest
+    steps:
+      - checkout
+      - run: go get -u mvdan.cc/sh/cmd/shfmt
+      - run: shfmt -f .
+      - run: shfmt -i 4 -d .
+workflows:
+  version: 2
+  test:
+    jobs:
+      - shfmt
