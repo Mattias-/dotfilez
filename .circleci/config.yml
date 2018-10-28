@@ -8,8 +8,16 @@ jobs:
       - run: go get -u mvdan.cc/sh/cmd/shfmt
       - run: shfmt -f .
       - run: shfmt -i 4 -d .
+  python:
+    docker:
+      - image: python:3
+    steps:
+      - checkout
+      - run: pip install black
+      - run: black . --diff --check
 workflows:
   version: 2
   test:
     jobs:
       - shfmt
+      - python
