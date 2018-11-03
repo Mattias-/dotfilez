@@ -183,6 +183,8 @@ manage_version "hub"
 install_neovim() {
     sudo curl -Lo /usr/local/bin/nvim "https://github.com/neovim/neovim/releases/download/${version}/nvim.appimage"
     sudo chmod +x /usr/local/bin/nvim
+    sudo ln -s /usr/local/bin/nvim /usr/local/bin/vi
+
 }
 
 latest_version_neovim() {
@@ -215,6 +217,7 @@ manage_version "terraform" "0.11.8"
 install_vagrant() {
     curl -Lo vagrant.deb "https://releases.hashicorp.com/vagrant/${version}/vagrant_${version}_x86_64.deb"
     sudo dpkg -i vagrant.deb
+    rm -f vagrant.deb
 }
 
 latest_version_vagrant() {
@@ -308,7 +311,10 @@ sudo apt-get install -y \
     traceroute \
     nmap \
     tree \
+    tmux \
     tilix \
+    python-pip \
+    python3-pip \
     docker-ce \
     spotify-client \
     google-cloud-sdk \
@@ -319,7 +325,7 @@ sudo apt-get install -y \
 #install_qemu_kvm || true
 sudo usermod -aG docker "$USER"
 
-pip install \
+pip3 install \
     pip \
     neovim \
     black \
