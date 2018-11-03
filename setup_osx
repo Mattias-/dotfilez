@@ -1,89 +1,35 @@
 #!/bin/bash
 
-if ! xcode-select -p >/dev/null; then
-    xcode-select --install
+if ! xcode-select -p > /dev/null ; then
     echo "Install Xcode command line tools and run script again"
-    return
+    echo "xcode-select --install"
+    exit 1
 fi
 
-if ! which brew >/dev/null; then
+if ! command -v brew > /dev/null ; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
 brew update
 brew upgrade
 
-brew install wget
-brew install git
-brew install bash-completion
-brew install nmap
-brew install awscli
-brew install aspell
-brew install shellcheck
-brew install pssh
-brew install jq
-brew install fpp
-brew install fzf
-brew install the_silver_searcher
-brew install httpie
-brew install ssh-copy-id
-brew install hub
-brew install python
-brew install python3
-brew install tree
-brew install ctags
-brew install htop
-pip install --upgrade pip setuptools ipython flake8 py3kwarn
+brew bundle
 
-brew tap homebrew/dupes
-brew install vim --override-system-vi
-brew install screen
-brew install tcpdump
-
-brew tap neovim/neovim
-brew install neovim
-ln -s -f nvim "$(brew --prefix)/bin/vi"
-ln -s -f nvim "$(brew --prefix)/bin/vim"
-
-brew tap coinbase/assume-role
-brew install assume-role
-
-# Install apps with cask
-brew tap caskroom/cask
-brew cask install iterm2
-brew cask install google-chrome
-brew cask install spotify
-brew cask install vlc
-brew cask install flux
-brew cask install keepingyouawake
-brew cask install spectacle
-brew cask install google-cloud-sdk
-
-#brew cask install skype
-#brew cask install dropbox
 #brew cask install google-drive
 #brew cask install garmin-express
-#brew cask install transmission
 #brew cask install gpgtools
 #brew install keybase # install after gpgtools
 
-brew cask install virtualbox
-brew cask install vagrant
-brew install vagrant-completion
-
-brew cask install docker
-brew install docker-completion
-brew install docker-compose-completion
-
-brew tap caskroom/fonts
-brew cask install font-inconsolata
-brew cask install font-inconsolata-g-for-powerline
-
-# Done, time to clean up
-brew cask cleanup
 brew cleanup
 
-ln -s "$HOME/Library/Mobile Documents/com~apple~CloudDocs/" "$HOME/applecloud"
+ln -shf "$(brew --prefix)/opt/fzf" "$HOME/.fzf"
+ln -s -f nvim "$(brew --prefix)/bin/vi"
+ln -s -f nvim "$(brew --prefix)/bin/vim"
+
+pip install --upgrade pip setuptools ipython flake8 py3kwarn
+
+ln -shf "$HOME/Library/Mobile Documents/com~apple~CloudDocs" "$HOME/applecloud"
+ln -shf "/Volumes/GoogleDrive/My Drive" "$HOME/gdrive"
 
 git clone --recursive https://github.com/Mattias-/dotfilez.git "$HOME/dotfilez" || true
 git submodule update --recursive --remote
