@@ -297,3 +297,19 @@ sudo apt-get install -y \
 
 #install_qemu_kvm || true
 sudo usermod -aG docker "$USER"
+
+pip install \
+    pip \
+    neovim \
+    black \
+    flake8 \
+    py3kwarn \
+    pipenv \
+    --upgrade --user
+
+pip2 install \
+    pip \
+    awscli \
+    --upgrade --user
+
+go get -u mvdan.cc/sh/cmd/shfmt
