@@ -1,0 +1,46 @@
+#!/bin/bash
+set -e
+
+account=$(jq -r 'keys[]' ~/.aws/accounts | fzf)
+account_id=$(jq -r ".\"$account\"" ~/.aws/accounts)
+role=$(fzf <~/.aws/roles)
+
+get_color() {
+    account=$1
+    role=$2
+    red=F2B0A9
+    orange=FBBF93
+    # shellcheck disable=2034
+    yellow=FAD791
+    green=B7CA9D
+    blue=99BCE3
+
+    if [[ "$role" == *Admin* ]]; then
+        if [[ "$account" == *production* ]]; then
+            color=$red
+        else
+            color=$orange
+        fi
+    else
+        if [[ "$account" == *production* ]]; then
+            color=$green
+        else
+            color=$blue
+        fi
+    fi
+    echo "$color"
+}
+
+
+color=$(get_color "$account" "$role")
+url="https://signin.aws.amazon.com/switchrole?account=${account_id}&roleName=${role}&displayName=${role}@${account}&color=${color}"
+
+if [ "$1" == "assume" ]; then
+    echo "${account}" "${role}"
+    # With this output you can use a bash alias like:
+    # alias fa='assume-role $(fuzzy-assume assume)'
+elif [ "$1" == "open" ]; then
+    open "$url"
+else
+    echo "$url"
+fi

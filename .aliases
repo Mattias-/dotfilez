@@ -2,6 +2,8 @@
 
 alias gs='git status'
 alias newscreen='screen -S $(basename $(pwd))'
+alias ta='assume-role $(fuzzy-assume assume)'
+alias fa='assume-role $(fuzzy-assume assume)'
 
 if ls --color > /dev/null 2>&1; then # GNU `ls`
     colorflag="--color"
