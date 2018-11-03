@@ -227,6 +227,27 @@ installed_version_vagrant() {
 
 manage_version "vagrant"
 
+install_fzf() {
+    curl -Lso fzf.tgz "https://github.com/junegunn/fzf-bin/releases/download/${version}/fzf-${version}-linux_amd64.tgz"
+    sudo tar -C /usr/local/bin -xzf fzf.tgz
+    rm -f fxf.tgz
+    rm -rf ~/.fzf
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+}
+
+latest_version_fzf() {
+    curl -Ls https://api.github.com/repos/junegunn/fzf-bin/tags |
+        jq -r .[].name |
+        grep -E "[0-9.]+" |
+        head -1
+}
+
+installed_version_fzf() {
+    fzf --version | cut -d ' ' -f1
+}
+
+manage_version "fzf"
+
 echo "Installing repos"
 install_google_cloud_sdk() {
     curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - &>/dev/null

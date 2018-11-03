@@ -97,7 +97,7 @@ alias mv='mv -i'
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 
 complete -C aws_completer aws
-export FZF_DEFAULT_COMMAND='(set -o pipefail; git ls-tree -r --full-tree --name-only HEAD | sed "s:^:$(git rev-parse --show-toplevel)/:p" || ag -g "") 2> /dev/null'
+export FZF_DEFAULT_COMMAND='(set -o pipefail; git ls-tree -r --full-tree --name-only HEAD | sed "s:^:$(git rev-parse --show-toplevel)/:" || ag -g "") 2> /dev/null'
 
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
