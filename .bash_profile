@@ -2,8 +2,7 @@
 # Add /usr/local/sbin to PATH as some homebrew things are there
 export PATH="/usr/local/sbin:$PATH"
 
-# Add user's bin to PATH
-export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # Source the ~/.functions file if there is one
 if [ -r "$HOME/.functions" ] && [ -f "$HOME/.functions" ] ; then
@@ -31,7 +30,6 @@ fi
 export EDITOR="vi";
 export VISUAL=$EDITOR
 
-export GREP_OPTIONS="--color=auto"
 
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
@@ -95,9 +93,11 @@ alias cp='cp -i'
 alias mv='mv -i'
 
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias grep='grep --color=auto'
 
 complete -C aws_completer aws
 export FZF_DEFAULT_COMMAND='(set -o pipefail; git ls-tree -r --full-tree --name-only HEAD | sed "s:^:$(git rev-parse --show-toplevel)/:" || ag -g "") 2> /dev/null'
 
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
+export PATH=$PATH:/usr/local/go/bin
