@@ -312,6 +312,7 @@ sudo apt-get install -y \
     nmap \
     tree \
     tmux \
+    ufw \
     tilix \
     python-pip \
     python3-pip \
