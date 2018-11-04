@@ -313,6 +313,10 @@ sudo apt-get install -y \
     tree \
     tmux \
     ufw \
+    ssh \
+    iperf3 \
+    xclip \
+    xserver-xorg-input-synaptics \
     tilix \
     python-pip \
     python3-pip \
