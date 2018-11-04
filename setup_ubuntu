@@ -233,7 +233,7 @@ manage_version "vagrant"
 install_fzf() {
     curl -Lso fzf.tgz "https://github.com/junegunn/fzf-bin/releases/download/${version}/fzf-${version}-linux_amd64.tgz"
     sudo tar -C /usr/local/bin -xzf fzf.tgz
-    rm -f fxf.tgz
+    rm -f fzf.tgz
     rm -rf ~/.fzf
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 }
