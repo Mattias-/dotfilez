@@ -1,12 +1,12 @@
 #!/bin/bash
 
-if ! xcode-select -p > /dev/null ; then
+if ! xcode-select -p >/dev/null; then
     echo "Install Xcode command line tools and run script again"
     echo "xcode-select --install"
     exit 1
 fi
 
-if ! command -v brew > /dev/null ; then
+if ! command -v brew >/dev/null; then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
