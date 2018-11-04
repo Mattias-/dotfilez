@@ -218,6 +218,7 @@ install_vagrant() {
     curl -Lo vagrant.deb "https://releases.hashicorp.com/vagrant/${version}/vagrant_${version}_x86_64.deb"
     sudo dpkg -i vagrant.deb
     rm -f vagrant.deb
+    sudo curl -fsSLo /etc/bash_completion.d/vagrant https://raw.githubusercontent.com/hashicorp/vagrant/master/contrib/bash/completion.sh
 }
 
 latest_version_vagrant() {
