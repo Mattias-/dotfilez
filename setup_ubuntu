@@ -252,6 +252,21 @@ installed_version_fzf() {
 
 manage_version "fzf"
 
+install_assume-role() {
+    sudo curl -Lso /usr/local/bin/assume-role https://raw.githubusercontent.com/coinbase/assume-role/${version}/assume-role
+    sudo chmod +x /usr/local/bin/assume-role
+}
+
+latest_version_assume-role() {
+    echo "master"
+}
+
+installed_version_assume-role() {
+    which assume-role >/dev/null && echo "master"
+}
+
+manage_version "assume-role"
+
 echo "Installing repos"
 install_google_cloud_sdk() {
     curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - &>/dev/null
