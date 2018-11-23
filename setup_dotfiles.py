@@ -8,6 +8,7 @@ FILES = [
     ".bashrc",
     ".bash_profile",
     ".functions",
+    ".aliases",
     ".gitconfig",
     ".gitignore_global",
     ".gitattributes_global",

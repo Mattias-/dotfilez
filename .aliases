@@ -1,0 +1,22 @@
+#!/bin/bash
+
+alias gs='git status'
+alias newscreen='screen -S $(basename $(pwd))'
+
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+    colorflag="--color"
+else # OS X `ls`
+    colorflag="-G"
+fi
+
+alias ls='ls ${colorflag}'
+alias ll='ls -ltrh'
+alias la='ll -A'
+
+# Ask before overwriting
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias grep='grep --color=auto'

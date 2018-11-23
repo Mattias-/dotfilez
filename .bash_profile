@@ -4,9 +4,12 @@ export PATH="/usr/local/sbin:$PATH"
 
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
-# Source the ~/.functions file if there is one
 if [ -r "$HOME/.functions" ] && [ -f "$HOME/.functions" ] ; then
     source "$HOME/.functions"
+fi
+
+if [ -r "$HOME/.aliases" ] && [ -f "$HOME/.aliases" ] ; then
+    source "$HOME/.aliases"
 fi
 
 # Add better tab completion
@@ -73,27 +76,6 @@ if [[ $TERM =~ 'screen' || $TERMCAP =~ 'screen' ]]; then
     export PS1=${SCREENTITLE}${PS1}
 fi
 
-### ALIAS
-alias gs='git status'
-alias newscreen='screen -S $(basename $(pwd))'
-
-if ls --color > /dev/null 2>&1; then # GNU `ls`
-    colorflag="--color"
-else # OS X `ls`
-    colorflag="-G"
-fi
-
-alias ls='ls ${colorflag}'
-alias ll='ls -ltrh'
-alias la='ll -A'
-
-# Ask before overwriting
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
-
-alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
-alias grep='grep --color=auto'
 
 complete -C aws_completer aws
 export FZF_DEFAULT_COMMAND='(set -o pipefail; git ls-tree -r --full-tree --name-only HEAD | sed "s:^:$(git rev-parse --show-toplevel)/:" || ag -g "") 2> /dev/null'
