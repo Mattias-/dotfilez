@@ -73,7 +73,7 @@ installed_version_go() {
     go version 2>/dev/null | cut -d' ' -f3
 }
 
-manage_version "go" "go1.11.1"
+manage_version "go" "go1.11.2"
 
 install_dep() {
     curl -Lo dep "https://github.com/golang/dep/releases/download/${version}/dep-linux-amd64"
