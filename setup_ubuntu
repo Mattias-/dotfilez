@@ -73,7 +73,7 @@ installed_version_go() {
     go version 2>/dev/null | cut -d' ' -f3
 }
 
-manage_version "go" "go1.11.2"
+manage_version "go" "go1.11.5"
 
 install_dep() {
     curl -Lo dep "https://github.com/golang/dep/releases/download/${version}/dep-linux-amd64"
@@ -195,7 +195,7 @@ installed_version_neovim() {
     nvim --version 2>/dev/null | head -1 | grep -oP '\s+\K[v0-9.]*'
 }
 
-manage_version "neovim" "v0.3.1"
+manage_version "neovim" "v0.3.4"
 
 install_terraform() {
     curl -Lo terraform.zip "https://releases.hashicorp.com/terraform/${version}/terraform_${version}_linux_amd64.zip"
