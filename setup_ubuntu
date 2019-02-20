@@ -308,7 +308,7 @@ install_spotify &
 
 install_virtualbox() {
     curl -fsSL https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo apt-key add - &>/dev/null
-    echo "deb https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib" |
+    echo "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib" |
         sudo tee /etc/apt/sources.list.d/virtualbox.list >/dev/null
 }
 install_virtualbox &
