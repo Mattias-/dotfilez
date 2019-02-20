@@ -214,6 +214,23 @@ installed_version_terraform() {
 
 manage_version "terraform" "0.11.8"
 
+install_packer() {
+    curl -Lo packer.zip "https://releases.hashicorp.com/packer/${version}/packer_${version}_linux_amd64.zip"
+    unzip packer.zip
+    sudo mv packer /usr/local/bin/packer
+    rm -r packer.zip
+}
+
+latest_version_packer() {
+    curl -s https://releases.hashicorp.com/packer/ | grep '<a href="/packer' | head -1 | cut -d '/' -f3
+}
+
+installed_version_packer() {
+    packer -version 2>/dev/null
+}
+
+manage_version "packer" "1.3.4"
+
 install_vagrant() {
     curl -Lo vagrant.deb "https://releases.hashicorp.com/vagrant/${version}/vagrant_${version}_x86_64.deb"
     sudo dpkg -i vagrant.deb
