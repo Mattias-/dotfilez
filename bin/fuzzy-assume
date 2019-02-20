@@ -31,7 +31,6 @@ get_color() {
     echo "$color"
 }
 
-
 color=$(get_color "$account" "$role")
 url="https://signin.aws.amazon.com/switchrole?account=${account_id}&roleName=${role}&displayName=${role}@${account}&color=${color}"
 
