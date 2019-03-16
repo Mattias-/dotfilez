@@ -13,26 +13,22 @@ if [ -r "$HOME/.aliases" ] && [ -f "$HOME/.aliases" ] ; then
 fi
 
 # Add better tab completion
-if which brew > /dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
+if which brew &> /dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
     source "$(brew --prefix)/etc/bash_completion";
-elif [ -f /etc/bash_completion ]; then
+fi
+if [ -f /etc/bash_completion ]; then
     source /etc/bash_completion;
 fi
-
-if which assume-role > /dev/null; then
-    source $(which assume-role)
+if [ -f /usr/share/bash-completion/bash_completion ]; then
+    source /usr/share/bash-completion/bash_completion;
 fi
 
-# For virtualenvwrapper
-if which virtualenvwrapper.sh > /dev/null ; then
-    export WORKON_HOME=$HOME/.virtualenvs
-    export PROJECT_HOME=$HOME/projects
-    source /usr/local/bin/virtualenvwrapper.sh
+if which assume-role &> /dev/null; then
+    source $(which assume-role)
 fi
 
 export EDITOR="vi";
 export VISUAL=$EDITOR
-
 
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
@@ -68,6 +64,9 @@ function aws_account_info {
     [ "$AWS_ACCOUNT_NAME" ] && [ "$AWS_ACCOUNT_ROLE" ] && echo " (${yellow}${AWS_ACCOUNT_ROLE}${reset} @ ${blue}${AWS_ACCOUNT_NAME}${reset})"
 }
 
+if [ -f /usr/share/git/completion/git-prompt.sh ]; then
+    source /usr/share/git/completion/git-prompt.sh
+fi
 PROMPT_COMMAND='__git_ps1 "$prompt_start" "$(aws_account_info)$prompt_end"'
 
 # Fancy titles in GNU Screen
