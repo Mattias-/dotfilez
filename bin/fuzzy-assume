@@ -39,7 +39,7 @@ if [ "$1" == "assume" ]; then
     # With this output you can use a bash alias like:
     # alias fa='assume-role $(fuzzy-assume assume)'
 elif [ "$1" == "open" ]; then
-    open "$url"
+    xdg-open "$url" || open "$url"
 else
     echo "$url"
 fi
