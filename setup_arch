@@ -1,9 +1,7 @@
 #!/bin/bash
-set -o pipefail
+set -euo pipefail
 
-echo "Running pacman"
 sudo pacman -Syu
-
 sudo pacman -S --needed \
     curl \
     jq \
@@ -39,29 +37,37 @@ sudo pacman -S --needed \
     python2 \
     python2-pip \
     python2-pipenv \
+    xorg-server-xwayland \
     sway \
     swayidle \
     swaylock \
     grim \
     slurp \
-    wl-clipboard
+    wl-clipboard \
+    ttf-inconsolata \
+    ttf-dejavu \
+    ttf-liberation \
+    ttf-roboto \
+    pavucontrol
 
 # Install yay
+if ! which yay &>/dev/null; then
+    git clone https://aur.archlinux.org/yay.git "$HOME/projects/yay"
+    cd "$_"
+    makepkg -si
+fi
 
 yay -S \
     yay \
-    aur-utils \
     google-chrome \
     google-cloud-sdk \
     kubernetes-helm-bin \
     kubectl-bin \
     minikube-bin \
     spotify \
-    cfssl
-
-
-    #xserver-xorg-input-synaptics \
-    #libvirt-bin qemu-kvm virt-manager \
+    cfssl \
+    waybar \
+    ttf-font-awesome-4
 
 #sudo usermod -aG docker "$USER"
 
@@ -118,4 +124,4 @@ installed_version_assume-role() {
     which assume-role >/dev/null && echo "master"
 }
 
-manage_version "assume-role"
+manage_version "assume-role" "master"

@@ -1,11 +1,4 @@
-# Default config for sway
-#
-# Copy this to ~/.config/sway/config and edit it to your liking.
-#
-# Read `man 5 sway` for a complete reference.
-
 ### Variables
-#
 # Logo key. Use Mod1 for Alt.
 set $mod Mod4
 # Home row direction keys, like vim
@@ -44,35 +37,22 @@ exec swayidle -w \
          before-sleep '$lockcmd'
 
 bindsym Alt+Ctrl+l exec $lockcmd
-#
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
 
 ### Input configuration
-#
-# Example configuration:
-#
-input "1739:30383:DELL07E6:00_06CB:76AF_Touchpad" {
+
+input * {
     dwt enabled
     tap enabled
     natural_scroll enabled
     middle_emulation enabled
-}
 
-
-input * {
     repeat_delay 200
     repeat_rate 50
     xkb_layout us,se
     xkb_options grp:alt_shift_toggle,ctrl:nocaps
 }
-#
-# You can get the names of your inputs by running: swaymsg -t get_inputs
-# Read `man 5 sway-input` for more information about this section.
 
 ### Key bindings
-
 # Pulse Audio controls
 #increase sound volume
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
@@ -251,11 +231,7 @@ set $base0F #a16946
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    #status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
-    status_command i3blocks
+    swaybar_command waybar
 
     colors {
         background $base00
