@@ -48,6 +48,7 @@ sudo pacman -S --needed \
     ttf-dejavu \
     ttf-liberation \
     ttf-roboto \
+    dmenu \
     pavucontrol
 
 # Install yay
