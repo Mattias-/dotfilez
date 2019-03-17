@@ -17,7 +17,9 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
-output eDP-1 scale 1.8
+# Dell XPS 13 4k
+output "Sharp Corporation 0x148B 0x00000000" scale 1.8
+
 #
 # Example configuration:
 #
@@ -45,6 +47,7 @@ input * {
     tap enabled
     natural_scroll enabled
     middle_emulation enabled
+    tap_button_map lrm
 
     repeat_delay 200
     repeat_rate 50
