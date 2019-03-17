@@ -82,3 +82,5 @@ export FZF_DEFAULT_COMMAND='(set -o pipefail; git ls-tree -r --full-tree --name-
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
+
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
