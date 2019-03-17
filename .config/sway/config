@@ -33,10 +33,10 @@ output "Sharp Corporation 0x148B 0x00000000" scale 1.8
 #
 set $lockcmd 'swaylock -f --show-failed-attempts --ignore-empty-password --image /home/mattias/background.png'
 exec swayidle -w \
-         timeout 300 '$lockcmd' \
-         timeout 600 'swaymsg "output * dpms off"' \
+         timeout 120 $lockcmd \
+         timeout 1200 'swaymsg "output * dpms off"' \
               resume 'swaymsg "output * dpms on"' \
-         before-sleep '$lockcmd'
+         before-sleep $lockcmd
 
 bindsym Alt+Ctrl+l exec $lockcmd
 
