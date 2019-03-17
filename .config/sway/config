@@ -57,13 +57,15 @@ input * {
 
 ### Key bindings
 # Pulse Audio controls
-#increase sound volume
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
-#decrease sound volume
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
-# mute sound
 bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
 
+# Screen brightness
+bindsym XF86MonBrightnessUp exec "light -A -b 10"
+bindsym XF86MonBrightnessDown exec "light -U -b 10"
+
+# Printscreen
 bindsym --release Print exec grim -g \"$(slurp)" - | wl-copy
 
 
