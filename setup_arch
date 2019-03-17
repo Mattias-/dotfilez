@@ -51,6 +51,8 @@ sudo pacman -S --needed \
     dmenu \
     pavucontrol
 
+sudo usermod -aG docker "$USER"
+
 # Install yay
 if ! which yay &>/dev/null; then
     git clone https://aur.archlinux.org/yay.git "$HOME/projects/yay"
@@ -69,8 +71,6 @@ yay -S \
     cfssl \
     waybar \
     ttf-font-awesome-4
-
-#sudo usermod -aG docker "$USER"
 
 pip3 install --user \
     neovim \
