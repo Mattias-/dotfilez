@@ -74,8 +74,7 @@ yay -S \
 
 pip3 install --user \
     neovim \
-    black \
-
+    black
 
 manage_version() {
     local name="$1"
@@ -110,7 +109,6 @@ manage_version() {
 
     echo "$status"
 }
-
 
 install_assume-role() {
     sudo curl -Lso /usr/local/bin/assume-role https://raw.githubusercontent.com/coinbase/assume-role/${version}/assume-role

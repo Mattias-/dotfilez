@@ -7,7 +7,7 @@ DISK=/dev/sda
 BOOT_PARTITION=${DISK}1
 ROOT_PARTITION=${DISK}2
 
-make_partitions(){
+make_partitions() {
     fdisk ${DISK}
 
     cryptsetup -y -v luksFormat --type luks2 ${ROOT_PARTITION}
@@ -20,7 +20,7 @@ make_partitions(){
     mount ${BOOT_PARTITION} /mnt/boot
 }
 
-setup_boot(){
+setup_boot() {
     sed -i "s/^HOOKS=.*/HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck)/" /mnt/etc/mkinitcpio.conf
     arch-chroot /mnt mkinitcpio -p linux
 
@@ -32,24 +32,24 @@ setup_boot(){
     sed -i "s@^options .*@options rd.luks.name=${ROOT_UUID}=cryptroot root=/dev/mapper/cryptroot rw splash@" /mnt/boot/loader/entries/arch.conf
 }
 
-setup_root(){
-    genfstab -U /mnt >> /mnt/etc/fstab
+setup_root() {
+    genfstab -U /mnt >>/mnt/etc/fstab
 
     # Copy current network settings
     cp /etc/netctl/* /mnt/etc/netctl/
 
-    echo "FONT=ter-p28n" >> /mnt/etc/vconsole.conf
+    echo "FONT=ter-p28n" >>/mnt/etc/vconsole.conf
 
-    echo "$NEWHOSTNAME" > /mnt/etc/hostname
+    echo "$NEWHOSTNAME" >/mnt/etc/hostname
     cat >/mnt/etc/hosts <<EOF
 127.0.0.1	localhost
 ::1		localhost
 127.0.1.1	$NEWHOSTNAME.localdomain	$NEWHOSTNAME
 EOF
 
-    echo "en_US.UTF-8 UTF-8" >> /mnt/etc/locale.gen
+    echo "en_US.UTF-8 UTF-8" >>/mnt/etc/locale.gen
     chroot /mnt locale-gen
-    echo "LANG=en_US.UTF-8" >> /mnt/etc/locale.conf
+    echo "LANG=en_US.UTF-8" >>/mnt/etc/locale.conf
 
     chroot /mnt ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
     arch-chroot /mnt hwclock --systohc
