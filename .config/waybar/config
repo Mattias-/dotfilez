@@ -40,7 +40,7 @@
     "clock": {
         "tooltip-format": "{:%Y-%m-%d | %H:%M}",
         "format-alt": "{:%H:%M}",
-        "format": "{:%Y-%m-%d %H:%M}"
+        "format": "{:%Y-%m-%d %H:%M %Z}"
     },
     "cpu": {
         "format": "{usage}% "
