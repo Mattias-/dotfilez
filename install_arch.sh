@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 
 EXTRA_PACKAGES="sway termite vim"
 NEWHOSTNAME=myhostname
@@ -29,6 +30,7 @@ EOF
 }
 
 setup_boot() {
+    echo "FONT=ter-p28n" >>/mnt/etc/vconsole.conf
     sed -i "s/^HOOKS=.*/HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck)/" /mnt/etc/mkinitcpio.conf
     arch-chroot /mnt mkinitcpio -p linux
 
@@ -37,16 +39,14 @@ setup_boot() {
     cp -f /mnt/usr/share/systemd/bootctl/arch.conf /mnt/boot/loader/entries/
     bootctl --path=/mnt/boot status
     ROOT_UUID=$(blkid -s UUID -o value ${ROOT_PARTITION})
-    sed -i "s@^options .*@options rd.luks.name=${ROOT_UUID}=cryptroot root=/dev/mapper/cryptroot rw splash@" /mnt/boot/loader/entries/arch.conf
+    sed -i "s@^options .*@options rd.luks.name=${ROOT_UUID}=cryptroot root=/dev/mapper/cryptroot rw quiet splash@" /mnt/boot/loader/entries/arch.conf
 }
 
 setup_root() {
     genfstab -U /mnt >>/mnt/etc/fstab
 
     # Copy current network settings
-    cp /etc/netctl/* /mnt/etc/netctl/
-
-    echo "FONT=ter-p28n" >>/mnt/etc/vconsole.conf
+    cp -r /etc/netctl/* /mnt/etc/netctl/
 
     echo "$NEWHOSTNAME" >/mnt/etc/hostname
     cat >/mnt/etc/hosts <<EOF
@@ -66,19 +66,17 @@ EOF
 }
 
 # Install a better terminal font to make installation readable
-pacman -Sy
-pacman -S terminus-font
+pacman --noconfirm -Sy terminus-font
 setfont ter-p28n
 
 make_partitions
 
-pacstrap -i /mnt \
+pacstrap /mnt \
     base \
     base-devel \
     terminus-font \
     dialog \
     wpa_supplicant \
-    wpa_actiond \
     ${EXTRA_PACKAGES}
 
 setup_boot
