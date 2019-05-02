@@ -8,7 +8,15 @@ BOOT_PARTITION=${DISK}1
 ROOT_PARTITION=${DISK}2
 
 make_partitions() {
-    fdisk ${DISK}
+    cat >./disk.sfdisk <<EOF
+label: gpt
+label-id: $(uuidgen)
+unit: sectors
+
+${BOOT_PARTITION} : start=2048, size=512MiB, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B
+${ROOT_PARTITION} : type=0FC63DAF-8483-4772-8E79-3D69D8477DE4
+EOF
+    sfdisk ${DISK} <./disk.sfdisk
 
     cryptsetup -y -v luksFormat --type luks2 ${ROOT_PARTITION}
     cryptsetup open ${ROOT_PARTITION} cryptroot
