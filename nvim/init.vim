@@ -8,6 +8,9 @@ let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_verbose = 0
 autocmd! BufEnter,BufWritePost * Neomake
 
+let g:shfmt_fmt_on_save = 1
+let g:shfmt_extra_args = '-i 4'
+
 let NERDTreeIgnore = ['\.pyc$']
 map <C-n> :NERDTreeToggle<CR>
 map <C-m> :NERDTreeFind<CR>

@@ -58,3 +58,7 @@
 	path = nvim/bundle/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim.git
 	branch = master
+[submodule "nvim/bundle/vim-shfmt"]
+	path = nvim/bundle/vim-shfmt
+	url = https://github.com/z0mbix/vim-shfmt.git
+	branch = master
