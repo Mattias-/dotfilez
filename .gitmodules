@@ -1,60 +1,60 @@
 [submodule ".vim/bundle/vim-fugitive"]
-	path = .vim/bundle/vim-fugitive
+	path = nvim/bundle/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive
     branch = master
 [submodule ".vim/bundle/nerdtree"]
-	path = .vim/bundle/nerdtree
+	path = nvim/bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree
     branch = master
 [submodule ".vim/bundle/base16-vim"]
-	path = .vim/bundle/base16-vim
+	path = nvim/bundle/base16-vim
 	url = https://github.com/chriskempson/base16-vim
     branch = master
 [submodule ".vim/bundle/nerdtree-git-plugin"]
-	path = .vim/bundle/nerdtree-git-plugin
+	path = nvim/bundle/nerdtree-git-plugin
 	url = https://github.com/Xuyuanp/nerdtree-git-plugin.git
     branch = master
 [submodule ".vim/bundle/vim-grepper"]
-	path = .vim/bundle/vim-grepper
+	path = nvim/bundle/vim-grepper
 	url = https://github.com/mhinz/vim-grepper.git
     branch = master
 [submodule ".vim/bundle/apiblueprint.vim"]
-	path = .vim/bundle/apiblueprint.vim
+	path = nvim/bundle/apiblueprint.vim
 	url = https://github.com/kylef/apiblueprint.vim.git
     branch = master
 [submodule ".vim/bundle/salt-vim"]
-	path = .vim/bundle/salt-vim
+	path = nvim/bundle/salt-vim
 	url = https://github.com/saltstack/salt-vim.git
 	branch = master
 [submodule ".vim/bundle/neomake"]
-	path = .vim/bundle/neomake
+	path = nvim/bundle/neomake
 	url = https://github.com/neomake/neomake.git
 	branch = master
 [submodule ".vim/bundle/Dockerfile"]
-	path = .vim/bundle/Dockerfile
+	path = nvim/bundle/Dockerfile
 	url = https://github.com/ekalinin/Dockerfile.vim.git
 	branch = master
 [submodule ".vim/bundle/vim-vagrant"]
-	path = .vim/bundle/vim-vagrant
+	path = nvim/bundle/vim-vagrant
 	url = https://github.com/hashivim/vim-vagrant.git
 	branch = master
 [submodule ".vim/bundle/vim-terraform"]
-	path = .vim/bundle/vim-terraform
+	path = nvim/bundle/vim-terraform
 	url = https://github.com/hashivim/vim-terraform.git
 	branch = master
 [submodule ".vim/bundle/vim-go"]
-	path = .vim/bundle/vim-go
+	path = nvim/bundle/vim-go
 	url = https://github.com/fatih/vim-go.git
 	branch = master
 [submodule ".vim/bundle/vim-rhubarb"]
-	path = .vim/bundle/vim-rhubarb
+	path = nvim/bundle/vim-rhubarb
 	url = https://github.com/tpope/vim-rhubarb.git
 	branch = master
 [submodule ".vim/bundle/lightline.vim"]
-	path = .vim/bundle/lightline.vim
+	path = nvim/bundle/lightline.vim
 	url = https://github.com/itchyny/lightline.vim
 	branch = master
 [submodule ".vim/bundle/editorconfig-vim"]
-	path = .vim/bundle/editorconfig-vim
+	path = nvim/bundle/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim.git
 	branch = master
