@@ -7,6 +7,9 @@ TIMEZONE=Europe/Stockholm
 DISK=/dev/sda
 BOOT_PARTITION=${DISK}1
 ROOT_PARTITION=${DISK}2
+#DISK=/dev/nvme0n1
+#BOOT_PARTITION=${DISK}p1
+#ROOT_PARTITION=${DISK}p2
 
 make_partitions() {
     cat >./disk.sfdisk <<EOF
