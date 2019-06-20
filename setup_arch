@@ -49,7 +49,8 @@ sudo pacman -S --needed \
     ttf-liberation \
     ttf-roboto \
     dmenu \
-    pavucontrol
+    pavucontrol \
+    grc
 
 sudo usermod -aG docker "$USER"
 
@@ -70,7 +71,9 @@ yay -S \
     spotify \
     cfssl \
     waybar \
-    ttf-font-awesome-4
+    ttf-font-awesome-4 \
+    kubernetes-kind-bin \
+    visual-studio-code-bin
 
 pip3 install --user \
     neovim \
