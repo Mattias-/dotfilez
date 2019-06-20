@@ -74,6 +74,7 @@ setfont ter-p28n
 
 make_partitions
 
+# shellcheck disable=SC2086
 pacstrap /mnt \
     base \
     base-devel \
