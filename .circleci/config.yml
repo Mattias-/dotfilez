@@ -1,6 +1,13 @@
 version: 2
 jobs:
-  shfmt:
+  bash-shellcheck:
+    docker:
+      - image: koalaman/shellcheck-alpine:stable
+    steps:
+      - checkout
+      - run: find . -type f -name '*.sh' | wc -l
+      - run: find . -type f -name '*.sh' | xargs shellcheck --external-sources
+  bash-shfmt:
     docker:
       - image: golang:latest
     steps:
@@ -8,7 +15,7 @@ jobs:
       - run: go get -u mvdan.cc/sh/cmd/shfmt
       - run: shfmt -f .
       - run: shfmt -i 4 -d .
-  python:
+  python-black:
     docker:
       - image: python:3
     steps:
@@ -19,5 +26,6 @@ workflows:
   version: 2
   test:
     jobs:
-      - shfmt
-      - python
+      - bash-shfmt
+      - bash-shellcheck
+      - python-black
