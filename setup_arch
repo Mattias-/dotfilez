@@ -77,7 +77,8 @@ yay -S \
 
 pip3 install --user \
     neovim \
-    black
+    black \
+    yamllint
 
 manage_version() {
     local name="$1"
