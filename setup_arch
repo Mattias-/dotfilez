@@ -74,7 +74,7 @@ yay -S \
     cfssl \
     waybar \
     ttf-font-awesome-4 \
-    kubernetes-kind-bin \
+    kind-bin \
     visual-studio-code-bin
 
 pip3 install --user \
