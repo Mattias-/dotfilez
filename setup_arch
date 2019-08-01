@@ -1,6 +1,8 @@
 #!/bin/bash
 set -euo pipefail
 
+sudo timedatectl set-ntp true
+
 sudo pacman -Syu
 sudo pacman -S --needed \
     curl \
