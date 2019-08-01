@@ -77,7 +77,7 @@ yay -S \
     kind-bin \
     visual-studio-code-bin
 
-pip3 install --user \
+pip3 install --user --upgrade \
     neovim \
     black \
     yamllint
