@@ -40,6 +40,8 @@ if [ "$1" == "assume" ]; then
     # alias fa='assume-role $(fuzzy-assume assume)'
 elif [ "$1" == "open" ]; then
     xdg-open "$url" || open "$url"
+elif [ "$1" == "arn" ]; then
+    echo "arn:aws:iam::${account_id}:role/${role}"
 else
     echo "$url"
 fi
