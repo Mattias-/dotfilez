@@ -7,8 +7,7 @@
 }
 
 window#waybar {
-    background: rgba(43, 48, 59, 0.5);
-    border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+    background: #000;
     color: white;
 }
 
@@ -21,7 +20,6 @@ window#waybar {
 }
 
 #workspaces button.focused {
-    background: #64727D;
     border-bottom: 3px solid white;
 }
 
@@ -33,10 +31,6 @@ window#waybar {
 #clock, #battery, #cpu, #memory, #backlight, #network, #pulseaudio, #custom-spotify, #tray, #mode, #idle_inhibitor {
     padding: 0 10px;
     /*margin: 0 5px;*/
-}
-
-#clock {
-    background-color: #64727D;
 }
 
 #battery {
@@ -103,8 +97,8 @@ window#waybar {
 }
 
 #custom-spotify {
-    background: #66cc99;
-    color: #2a5c45;
+    background: #1DB954;
+    color: #fff;
 }
 
 #tray {

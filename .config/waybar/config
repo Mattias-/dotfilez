@@ -4,9 +4,9 @@
     // "height": 30, // Waybar height
     // "width": 1280, // Waybar width
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode", "custom/spotify"],
-    "modules-center": ["sway/window"],
-    "modules-right": ["network", "idle_inhibitor", "pulseaudio", "cpu", "memory", "backlight", "battery", "clock", "tray"],
+    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-center": ["custom/spotify"],
+    "modules-right": ["network", "pulseaudio", "cpu", "memory", "backlight", "battery", "idle_inhibitor", "clock", "tray"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -92,6 +92,7 @@
     "custom/spotify": {
         "format": " {}",
         "max-length": 40,
-        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null" // Script in resources folder
+        "interval": 5,
+        "exec": "eval \"$(sp eval)\" && echo \"$SPOTIFY_TITLE - $SPOTIFY_ARTIST\"" // Script in resources folder
     }
 }
