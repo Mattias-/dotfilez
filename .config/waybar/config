@@ -4,9 +4,13 @@
     // "height": 30, // Waybar height
     // "width": 1280, // Waybar width
     // Choose the order of the modules
-    "modules-left": ["sway/workspaces", "sway/mode"],
+    "modules-left": ["sway/workspaces", "sway/mode", "tray"],
     "modules-center": ["custom/spotify"],
-    "modules-right": ["network", "pulseaudio", "cpu", "memory", "backlight", "battery", "idle_inhibitor", "clock", "tray"],
+    "modules-right": [
+        "network", "pulseaudio",
+        //"cpu",
+        //"memory",
+        "backlight", "battery", "idle_inhibitor", "clock"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
