@@ -32,7 +32,6 @@ sudo pacman -S --needed \
     fzf \
     rclone \
     the_silver_searcher \
-    aws-cli \
     shfmt \
     python \
     python-pip \
@@ -81,7 +80,8 @@ yay -S \
 pip3 install --user --upgrade \
     neovim \
     black \
-    yamllint
+    yamllint \
+    awscli
 
 manage_version() {
     local name="$1"
