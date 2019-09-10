@@ -5,7 +5,7 @@
     // "width": 1280, // Waybar width
     // Choose the order of the modules
     "modules-left": ["sway/workspaces", "sway/mode", "tray"],
-    "modules-center": ["custom/spotify"],
+    "modules-center": ["custom/spotify", "custom/keyboard_layout"],
     "modules-right": [
         "network", "pulseaudio",
         //"cpu",
@@ -98,5 +98,10 @@
         "max-length": 40,
         "interval": 5,
         "exec": "eval \"$(sp eval)\" && echo \"$SPOTIFY_TITLE - $SPOTIFY_ARTIST\"" // Script in resources folder
+    },
+    "custom/keyboard_layout": {
+        "format": "{}", // piano keyboard. Normal keyboard: ⌨️
+        "exec": "kb_layout.sh",
+        "on-click": "keyboard_layout_switcher"
     }
 }
