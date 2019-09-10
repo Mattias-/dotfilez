@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-EXTRA_PACKAGES="sway termite vim"
+EXTRA_PACKAGES="sway alacritty vim"
 NEWHOSTNAME=myhostname
 TIMEZONE=Europe/Stockholm
 DISK=/dev/sda

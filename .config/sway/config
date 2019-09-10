@@ -7,7 +7,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term termite
+set $term alacritty
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
 set $menu dmenu_path | dmenu -fn Inconsolata:pixelsize=25 -b | xargs swaymsg exec
@@ -72,7 +72,7 @@ bindsym --release Print exec grim -g \"$(slurp)" - | wl-copy
 
 font pango:Inconsolata 20
 hide_edge_borders both
-exec "termite --exec=tmux"
+exec "alacritty -e tmux"
 exec "google-chrome-stable"
 
 #

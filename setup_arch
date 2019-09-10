@@ -26,6 +26,7 @@ sudo pacman -S --needed \
     vagrant \
     packer \
     bazel \
+    alacritty \
     docker \
     virtualbox \
     fzf \
