@@ -5,7 +5,7 @@ alias newscreen='screen -S $(basename $(pwd))'
 alias ta='assume-role $(fuzzy-assume assume)'
 alias fa='assume-role $(fuzzy-assume assume)'
 
-if ls --color > /dev/null 2>&1; then # GNU `ls`
+if ls --color >/dev/null 2>&1; then # GNU `ls`
     colorflag="--color"
 else # OS X `ls`
     colorflag="-G"
