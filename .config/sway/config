@@ -67,7 +67,8 @@ bindsym XF86MonBrightnessUp exec "light -A -b 10"
 bindsym XF86MonBrightnessDown exec "light -U -b 10"
 
 # Printscreen
-bindsym --release Print exec grim -g \"$(slurp)" - | wl-copy
+bindsym --release Print exec slurp | grim -g - - | wl-copy
+bindsym --release $mod+Print exec slurp | grim -g - ~/screenshots/screenshot_$(date --iso-8601=second).png
 
 
 font pango:Inconsolata 20
