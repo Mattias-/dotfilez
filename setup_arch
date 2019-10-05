@@ -27,7 +27,6 @@ sudo pacman -S --needed \
     terraform \
     vagrant \
     packer \
-    bazel \
     alacritty \
     docker \
     virtualbox \
@@ -39,8 +38,6 @@ sudo pacman -S --needed \
     python-pip \
     python-pipenv \
     python2 \
-    python2-pip \
-    python2-pipenv \
     xorg-server-xwayland \
     sway \
     swayidle \
@@ -54,7 +51,10 @@ sudo pacman -S --needed \
     ttf-roboto \
     dmenu \
     pavucontrol \
-    grc
+    grc \
+    light \
+    pulseaudio \
+    bash-completion
 
 sudo usermod -aG docker "$USER"
 
