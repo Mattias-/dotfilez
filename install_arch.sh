@@ -1,9 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
-EXTRA_PACKAGES="sway alacritty vim"
+EXTRA_PACKAGES="sway alacritty vim git"
 NEWHOSTNAME=myhostname
 TIMEZONE=Europe/Stockholm
+EXTRA_USER=mattias
 DISK=/dev/sda
 BOOT_PARTITION=${DISK}1
 ROOT_PARTITION=${DISK}2
@@ -64,8 +65,17 @@ EOF
 
     chroot /mnt ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
     arch-chroot /mnt hwclock --systohc
+}
 
+setup_users() {
+    echo "Select password for root"
     chroot /mnt passwd
+
+    chroot /mnt groupadd sudo
+    chroot /mnt useradd -m -G sudo "$EXTRA_USER"
+
+    echo "Select password for $EXTRA_USER"
+    chroot /mnt passwd "$EXTRA_USER"
 }
 
 # Install a better terminal font to make installation readable
@@ -73,6 +83,8 @@ pacman --noconfirm -Sy terminus-font
 setfont ter-p28n
 
 make_partitions
+
+setup_users
 
 # shellcheck disable=SC2086
 pacstrap /mnt \
