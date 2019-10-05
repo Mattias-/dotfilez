@@ -59,12 +59,16 @@ input * {
 ### Key bindings
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
+bindsym Shift+XF86AudioRaiseVolume exec pactl set-sink-volume 0 +1%
+
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
+bindsym Shift+XF86AudioLowerVolume exec pactl set-sink-volume 0 -1%
+
 bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
 
 # Screen brightness
-bindsym XF86MonBrightnessUp exec "light -A -b 10"
-bindsym XF86MonBrightnessDown exec "light -U -b 10"
+bindsym XF86MonBrightnessUp exec "light -A 10"
+bindsym XF86MonBrightnessDown exec "light -U 10"
 
 # Printscreen
 bindsym --release Print exec slurp | grim -g - - | wl-copy
