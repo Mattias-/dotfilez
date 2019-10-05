@@ -4,7 +4,6 @@ let g:airline_powerline_fonts = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 
-let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_verbose = 0
 autocmd! BufEnter,BufWritePost * Neomake
 
@@ -101,6 +100,8 @@ map <leader>x :set cursorline!<cr>
 map <leader>s :setlocal spell! spelllang=en_us<cr>
 map <leader><space> za
 nmap <silent> <leader>h :noh<cr>
+
+autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 
 if has("nvim")
     tnoremap <Esc> <C-\><C-n>
