@@ -10,6 +10,9 @@ fi
 if [ -r "$HOME/.aliases" ] && [ -f "$HOME/.aliases" ]; then
     source "$HOME/.aliases"
 fi
+if [ -r "$HOME/.workaliases" ] && [ -f "$HOME/.workaliases" ]; then
+    source "$HOME/.workaliases"
+fi
 
 # Add better tab completion
 if which brew &>/dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
