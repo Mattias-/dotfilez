@@ -36,7 +36,7 @@ EOF
 }
 
 setup_boot() {
-    echo "FONT=ter-p28n" >>/mnt/etc/vconsole.conf
+    echo "FONT=ter-p28n" >/mnt/etc/vconsole.conf
     sed -i "s/^HOOKS=.*/HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems fsck)/" /mnt/etc/mkinitcpio.conf
     arch-chroot /mnt mkinitcpio -p linux
 
@@ -49,7 +49,7 @@ setup_boot() {
 }
 
 setup_root() {
-    genfstab -U /mnt >>/mnt/etc/fstab
+    genfstab -U /mnt >/mnt/etc/fstab
 
     # Copy current network settings
     cp -r /etc/netctl/* /mnt/etc/netctl/
@@ -63,7 +63,7 @@ EOF
 
     echo "en_US.UTF-8 UTF-8" >>/mnt/etc/locale.gen
     chroot /mnt locale-gen
-    echo "LANG=en_US.UTF-8" >>/mnt/etc/locale.conf
+    echo "LANG=en_US.UTF-8" >/mnt/etc/locale.conf
 
     chroot /mnt ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
     arch-chroot /mnt hwclock --systohc
