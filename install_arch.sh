@@ -6,13 +6,13 @@ EXTRA_PACKAGES="sway alacritty vim git"
 EXTRA_USER=mattias
 TIMEZONE=Europe/Stockholm
 
-DISK=/dev/sda
-BOOT_PARTITION=${DISK}1
-ROOT_PARTITION=${DISK}2
+#DISK=/dev/sda
+#BOOT_PARTITION=${DISK}1
+#ROOT_PARTITION=${DISK}2
 
-#DISK=/dev/nvme0n1
-#BOOT_PARTITION=${DISK}p1
-#ROOT_PARTITION=${DISK}p2
+DISK=/dev/nvme0n1
+BOOT_PARTITION=${DISK}p1
+ROOT_PARTITION=${DISK}p2
 
 make_partitions() {
     cat >./disk.sfdisk <<EOF
@@ -73,12 +73,13 @@ setup_users() {
     echo "Select password for root"
     chroot /mnt passwd
 
-    chroot /mnt groupadd sudo
-    echo 'sudo ALL=(ALL) ALL' >/mnt/etc/sudoers.d/sudo
-
-    chroot /mnt useradd -m -G sudo "$EXTRA_USER"
+    chroot /mnt useradd -m "$EXTRA_USER"
     echo "Select password for $EXTRA_USER"
     chroot /mnt passwd "$EXTRA_USER"
+
+    chroot /mnt groupadd sudo
+    echo '%sudo ALL=(ALL) ALL' >/mnt/etc/sudoers.d/sudo
+    chroot /mnt usermod -a -G sudo "$EXTRA_USER"
 }
 
 # Install a better terminal font to make installation readable
@@ -90,6 +91,7 @@ make_partitions
 # shellcheck disable=SC2086
 pacstrap /mnt \
     linux \
+    linux-firmware \
     netctl \
     base \
     base-devel \
