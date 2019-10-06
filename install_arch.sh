@@ -1,13 +1,15 @@
 #!/bin/bash
 set -euo pipefail
 
-EXTRA_PACKAGES="sway alacritty vim git"
 NEWHOSTNAME=myhostname
-TIMEZONE=Europe/Stockholm
+EXTRA_PACKAGES="sway alacritty vim git"
 EXTRA_USER=mattias
+TIMEZONE=Europe/Stockholm
+
 DISK=/dev/sda
 BOOT_PARTITION=${DISK}1
 ROOT_PARTITION=${DISK}2
+
 #DISK=/dev/nvme0n1
 #BOOT_PARTITION=${DISK}p1
 #ROOT_PARTITION=${DISK}p2
@@ -72,8 +74,9 @@ setup_users() {
     chroot /mnt passwd
 
     chroot /mnt groupadd sudo
-    chroot /mnt useradd -m -G sudo "$EXTRA_USER"
+    echo 'sudo ALL=(ALL) ALL' >/mnt/etc/sudoers.d/sudo
 
+    chroot /mnt useradd -m -G sudo "$EXTRA_USER"
     echo "Select password for $EXTRA_USER"
     chroot /mnt passwd "$EXTRA_USER"
 }
@@ -83,8 +86,6 @@ pacman --noconfirm -Sy terminus-font
 setfont ter-p28n
 
 make_partitions
-
-setup_users
 
 # shellcheck disable=SC2086
 pacstrap /mnt \
@@ -97,3 +98,4 @@ pacstrap /mnt \
 
 setup_boot
 setup_root
+setup_users
