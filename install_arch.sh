@@ -89,6 +89,8 @@ make_partitions
 
 # shellcheck disable=SC2086
 pacstrap /mnt \
+    linux \
+    netctl \
     base \
     base-devel \
     terminus-font \
