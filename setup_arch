@@ -11,6 +11,7 @@ sudo pacman -S --needed \
     jq \
     git \
     vim \
+    bc \
     go \
     hub \
     keepassxc \
@@ -55,7 +56,10 @@ sudo pacman -S --needed \
     grc \
     light \
     pulseaudio \
-    bash-completion
+    bash-completion \
+    unzip \
+    waybar \
+    noto-fonts-emoji
 
 sudo usermod -aG docker "$USER"
 
@@ -75,7 +79,6 @@ yay -S \
     minikube-bin \
     spotify \
     cfssl \
-    waybar \
     ttf-font-awesome-4 \
     kind-bin
 
