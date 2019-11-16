@@ -18,10 +18,6 @@
 	path = nvim/pack/my-plugins/start/vim-grepper
 	url = https://github.com/mhinz/vim-grepper.git
     branch = master
-[submodule ".vim/bundle/apiblueprint.vim"]
-	path = nvim/pack/my-plugins/start/apiblueprint.vim
-	url = https://github.com/kylef/apiblueprint.vim.git
-    branch = master
 [submodule ".vim/bundle/salt-vim"]
 	path = nvim/pack/my-plugins/start/salt-vim
 	url = https://github.com/saltstack/salt-vim.git
