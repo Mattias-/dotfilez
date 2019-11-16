@@ -1,11 +1,11 @@
-execute pathogen#infect()
-
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 
 let g:neomake_verbose = 0
 autocmd! BufEnter,BufWritePost * Neomake
+
+let g:terraform_fmt_on_save=1
 
 let g:shfmt_fmt_on_save = 1
 let g:shfmt_extra_args = '-i 4'
