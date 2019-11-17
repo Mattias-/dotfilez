@@ -5,6 +5,8 @@ let g:airline_right_sep=''
 let g:neomake_verbose = 0
 autocmd! BufEnter,BufWritePost * Neomake
 
+let g:python_highlight_all = 1
+
 let g:terraform_fmt_on_save=1
 
 let g:shfmt_fmt_on_save = 1

@@ -58,3 +58,7 @@
 	path = nvim/pack/my-plugins/start/vim-shfmt
 	url = https://github.com/z0mbix/vim-shfmt.git
 	branch = master
+[submodule "nvim/pack/my-plugins/start/python-syntax"]
+	path = nvim/pack/my-plugins/start/python-syntax
+	url = https://github.com/vim-python/python-syntax.git
+	branch = master
