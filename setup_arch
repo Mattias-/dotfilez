@@ -2,6 +2,7 @@
 set -euo pipefail
 
 mkdir -p ~/screenshots
+mkdir -p ~/projects
 
 sudo timedatectl set-ntp true
 
@@ -19,6 +20,8 @@ sudo pacman -S --needed \
     shellcheck \
     traceroute \
     nmap \
+    whois \
+    dnsutils \
     tree \
     tmux \
     ufw \
@@ -59,19 +62,31 @@ sudo pacman -S --needed \
     bash-completion \
     unzip \
     waybar \
-    noto-fonts-emoji
+    noto-fonts-emoji \
+    iptables-nft \
+    pacman-contrib
 
 sudo usermod -aG docker "$USER"
 
 # Install yay
 if ! yay -V &>/dev/null; then
+    rm -rf "$HOME/projects/yay"
     git clone https://aur.archlinux.org/yay.git "$HOME/projects/yay"
     cd "$_"
-    makepkg -si --noconfirm
+    makepkg -fsri --noconfirm
 fi
 
-yay -S \
+# Install pikaur
+if ! pikaur -V &>/dev/null; then
+    rm -rf "$HOME/projects/pikaur"
+    git clone https://aur.archlinux.org/pikaur.git "$HOME/projects/pikaur"
+    cd "$_"
+    makepkg -fsri --noconfirm
+fi
+
+pikaur -S \
     yay \
+    pikaur \
     google-chrome \
     google-cloud-sdk \
     kubernetes-helm-bin \
