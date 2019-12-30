@@ -1,0 +1,7 @@
+daemonize
+show-keyboard-layout
+show-failed-attempts
+ignore-empty-password
+image=/home/mattias/background.png
+indicator-radius=50
+indicator-thickness=20
