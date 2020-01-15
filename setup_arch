@@ -95,7 +95,8 @@ pikaur -S \
     spotify \
     cfssl \
     ttf-font-awesome-4 \
-    kind-bin
+    kind-bin \
+    yq-bin
 
 pip3 install --user --upgrade \
     neovim \
