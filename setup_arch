@@ -96,7 +96,8 @@ pikaur -S \
     cfssl \
     ttf-font-awesome-4 \
     kind-bin \
-    yq-bin
+    yq2-bin \
+    github-cli
 
 pip3 install --user --upgrade \
     neovim \
@@ -119,3 +120,19 @@ install_assume_role() {
     sudo chmod +x /usr/local/bin/assume-role
 }
 #install_assume_role
+
+install_session_manager_plugin() {
+    if [ -x /usr/local/bin/session-manager-plugin ]; then
+        return 0
+    fi
+    mkdir -p /tmp/ssm
+    (
+        cd /tmp/ssm || exit 1
+        curl -s -L -O "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb"
+        ar x session-manager-plugin.deb data.tar.gz
+        tar -xf data.tar.gz
+        sudo cp usr/local/sessionmanagerplugin/bin/session-manager-plugin /usr/local/bin/
+    )
+    rm -rf /tmp/ssm
+}
+install_session_manager_plugin
