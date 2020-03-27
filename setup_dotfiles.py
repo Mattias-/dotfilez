@@ -19,6 +19,7 @@ FILES = [
     ".fonts",
     ".tmux.conf",
     "bin/*",
+    ".hyper.js",
 ]
 
 
