@@ -14,6 +14,30 @@ DISK=/dev/nvme0n1
 BOOT_PARTITION=${DISK}p1
 ROOT_PARTITION=${DISK}p2
 
+main() {
+    # Install a better terminal font to make installation readable
+    pacman --noconfirm -Sy terminus-font
+    setfont ter-p28n
+
+    make_partitions
+
+    # shellcheck disable=SC2086
+    pacstrap /mnt \
+        linux \
+        linux-firmware \
+        netctl \
+        base \
+        base-devel \
+        terminus-font \
+        dialog \
+        wpa_supplicant \
+        ${EXTRA_PACKAGES}
+
+    setup_boot
+    setup_root
+    setup_users
+}
+
 make_partitions() {
     cat >./disk.sfdisk <<EOF
 label: gpt
@@ -82,24 +106,4 @@ setup_users() {
     chroot /mnt usermod -a -G sudo "$EXTRA_USER"
 }
 
-# Install a better terminal font to make installation readable
-pacman --noconfirm -Sy terminus-font
-setfont ter-p28n
-
-make_partitions
-
-# shellcheck disable=SC2086
-pacstrap /mnt \
-    linux \
-    linux-firmware \
-    netctl \
-    base \
-    base-devel \
-    terminus-font \
-    dialog \
-    wpa_supplicant \
-    ${EXTRA_PACKAGES}
-
-setup_boot
-setup_root
-setup_users
+main
