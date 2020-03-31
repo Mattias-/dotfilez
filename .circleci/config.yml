@@ -14,7 +14,8 @@ jobs:
       - checkout
       - run: go get -u mvdan.cc/sh/cmd/shfmt
       - run: shfmt -f .
-      - run: shfmt -i 4 -d .
+      - run: shfmt -i 4 -d $(shfmt -f . | grep -v nvim/pack/my-plugins)
+
   python-black:
     docker:
       - image: python:3
