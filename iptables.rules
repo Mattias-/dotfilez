@@ -1,0 +1,19 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+-A INPUT -p icmp -j ACCEPT
+
+-A INPUT -p udp --dport 5353 -j ACCEPT -m comment --comment "Chromecast UDP 1"
+-A INPUT -p tcp --dport 5556 -j ACCEPT -m comment --comment "Chromecast TCP 1"
+-A INPUT -p tcp --dport 5558 -j ACCEPT -m comment --comment "Chromecast TCP 2"
+
+-A INPUT -m conntrack --ctstate INVALID -j DROP
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+
+-A INPUT -j LOG
+-A INPUT -p tcp -j REJECT --reject-with tcp-reset
+-A INPUT -p udp -j REJECT --reject-with icmp-port-unreachable
+-A INPUT -j REJECT --reject-with icmp-proto-unreachable
+COMMIT
