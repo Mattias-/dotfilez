@@ -38,5 +38,6 @@
     assume = update-index --assume-unchanged
     unassume = update-index --no-assume-unchanged
     shw = "!f() { git show $(git rev-list HEAD --max-count=20 | grep -m1 ^$1) ${@:2}; }; f"
+    grepblame = "!ggb() { git grep -n $@ | while IFS=: read i j k; do git blame -f -L $j,$j $i; done }; ggb"
 [pager]
     lgh = less --QUIT-AT-EOF
