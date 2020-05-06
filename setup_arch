@@ -37,7 +37,6 @@ sudo pacman -S --needed \
     virtualbox-host-modules-arch \
     fzf \
     rclone \
-    the_silver_searcher \
     shfmt \
     python \
     python-pip \
@@ -63,8 +62,8 @@ sudo pacman -S --needed \
     unzip \
     waybar \
     noto-fonts-emoji \
-    iptables-nft \
-    pacman-contrib
+    pacman-contrib \
+    helm
 
 sudo usermod -aG docker "$USER"
 
@@ -89,7 +88,6 @@ pikaur -S \
     pikaur \
     google-chrome \
     google-cloud-sdk \
-    kubernetes-helm-bin \
     kubectl-bin \
     minikube-bin \
     spotify \
