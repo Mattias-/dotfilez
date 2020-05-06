@@ -4,7 +4,7 @@ alias gs='git status'
 alias fa='assume-role $(fuzzy-assume assume)'
 
 if ls --color >/dev/null 2>&1; then # GNU `ls`
-    alias ls="ls --color"
+    alias ls="ls --color=auto"
 else # OS X `ls`
     alias ls="ls -G"
 fi
