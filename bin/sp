@@ -2,8 +2,6 @@
 set -euo pipefail
 
 main() {
-    track_url=$(get_track_url)
-    track_json=$(get_track_json "$track_url")
     local cmd=""
     if [[ "$#" == 1 ]]; then
         cmd=$1
@@ -11,8 +9,10 @@ main() {
     fi
 
     if [[ "$cmd" == "eval" ]]; then
-        cmd_eval "$track_json"
+        cmd_eval
     else
+        track_url=$(get_track_url)
+        track_json=$(get_track_json "$track_url")
         echo "$track_json"
     fi
 }
@@ -37,11 +37,22 @@ get_track_json() {
 
 cmd_eval() {
     # Print variables that can be evaluated by bash
-    local track_json=$1
+    #local title
+    #local artists
+    set +e
+    track_url=$(get_track_url)
+    track_json=$(get_track_json "$track_url")
     title=$(jq '.name' <<<"$track_json")
     artists=$(jq '[.artists[].name] | join(", ")' <<<"$track_json")
-    echo "SPOTIFY_TITLE=$title"
-    echo "SPOTIFY_ARTIST=$artists"
+    set -e
+
+    if [[ "$title" == "" ]]; then
+        echo false
+        exit 1
+    else
+        echo "SPOTIFY_TITLE=$title"
+        echo "SPOTIFY_ARTIST=$artists"
+    fi
 }
 
 main "$@"
