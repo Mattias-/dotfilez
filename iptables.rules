@@ -7,6 +7,7 @@
 -A INPUT -p udp --dport 5353 -j ACCEPT -m comment --comment "Chromecast UDP 1"
 -A INPUT -p tcp --dport 5556 -j ACCEPT -m comment --comment "Chromecast TCP 1"
 -A INPUT -p tcp --dport 5558 -j ACCEPT -m comment --comment "Chromecast TCP 2"
+-A INPUT -p tcp --dport 8096 -j ACCEPT -m comment --comment "Chromecast Emby"
 
 -A INPUT -m conntrack --ctstate INVALID -j DROP
 -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
