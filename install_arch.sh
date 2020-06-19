@@ -15,6 +15,9 @@ BOOT_PARTITION=${DISK}p1
 ROOT_PARTITION=${DISK}p2
 
 main() {
+    pacman --noconfirm -Sy reflector
+    reflector --latest 100 --country Sweden --country Norway --country Germany --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+
     # Install a better terminal font to make installation readable
     pacman --noconfirm -Sy terminus-font
     setfont ter-p28n
