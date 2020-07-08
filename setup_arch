@@ -99,6 +99,7 @@ pikaur -S \
 
 pip3 install --user --upgrade \
     neovim \
+    pynvim \
     black \
     yamllint \
     awscli

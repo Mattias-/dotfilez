@@ -62,3 +62,6 @@
 	path = nvim/pack/my-plugins/start/python-syntax
 	url = https://github.com/vim-python/python-syntax.git
 	branch = master
+[submodule "nvim/pack/my-plugins/start/black"]
+	path = nvim/pack/my-plugins/start/black
+	url = https://github.com/psf/black.git
