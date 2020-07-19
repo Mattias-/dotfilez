@@ -97,6 +97,15 @@ window#waybar {
     color: white;
 }
 
+#custom-micstatus {
+    background: #f1c40f;
+    color: black;
+}
+#custom-micstatus.muted {
+    background: black;
+    color: white;
+}
+
 #custom-spotify {
     background: #1DB954;
     color: #fff;

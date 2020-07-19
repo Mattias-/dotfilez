@@ -8,6 +8,7 @@
     "modules-center": ["custom/spotify", "custom/keyboard_layout"],
     "modules-right": [
         "network", "pulseaudio",
+        "custom/micstatus",
         //"cpu",
         //"memory",
         "backlight", "battery", "idle_inhibitor", "clock"],
@@ -78,20 +79,20 @@
         "format-disconnected": "Disconnected ⚠"
     },
     "pulseaudio": {
-        //"scroll-step": 1,
-        "format": "{volume}% {icon}",
-        "format-bluetooth": "{volume}% {icon}",
-        "format-muted": "",
-        "format-icons": {
-            "headphones": "",
-            "handsfree": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", ""]
-        },
-        "on-click": "pavucontrol"
+    "format": "{volume}% {icon}",
+    "format-bluetooth": "{volume}% {icon}",
+    "format-muted": "",
+    "format-icons": {
+        "headphone": "",
+        "hands-free": "",
+        "headset": "",
+        "phone": "",
+        "portable": "",
+        "car": "",
+        "default": ["", ""]
+    },
+    //"scroll-step": 1,
+    "on-click": "pavucontrol"
     },
     "custom/spotify": {
         "format": " {}",
@@ -102,6 +103,16 @@
     "custom/keyboard_layout": {
         "format": "{}", // piano keyboard. Normal keyboard: ⌨️
         "exec": "kb_layout.sh",
+        "interval": 1
+    },
+    "custom/micstatus": {
+        "format": "{icon}",
+        "format-icons": {
+          "muted": "",
+          "default": ""
+        },
+        "exec": "mic_status.sh",
+        "return-type": "json",
         "interval": 1
     }
 }

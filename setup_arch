@@ -58,6 +58,9 @@ sudo pacman -S --needed \
     grc \
     light \
     pulseaudio \
+    pulseaudio-alsa \
+    pulseaudio-bluetooth \
+    bluez-utils \
     bash-completion \
     unzip \
     waybar \
@@ -113,12 +116,6 @@ ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chmod g+w /sys/class/backlight
 ACTION=="add", SUBSYSTEM=="leds", RUN+="/bin/chgrp video /sys/class/leds/%k/brightness"
 ACTION=="add", SUBSYSTEM=="leds", RUN+="/bin/chmod g+w /sys/class/leds/%k/brightness"
 EOF
-
-install_assume_role() {
-    sudo curl -Lso /usr/local/bin/assume-role https://raw.githubusercontent.com/coinbase/assume-role/master/assume-role
-    sudo chmod +x /usr/local/bin/assume-role
-}
-#install_assume_role
 
 install_session_manager_plugin() {
     if [ -x /usr/local/bin/session-manager-plugin ]; then
