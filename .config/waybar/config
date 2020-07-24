@@ -1,9 +1,6 @@
+// vim: set ft=json:
 {
-    "layer": "top", // Waybar at top layer
-    // "position": "bottom", // Waybar at the bottom of your screen
-    // "height": 30, // Waybar height
-    // "width": 1280, // Waybar width
-    // Choose the order of the modules
+    "layer": "top",
     "modules-left": ["sway/workspaces", "sway/mode", "tray"],
     "modules-center": ["custom/spotify", "custom/keyboard_layout"],
     "modules-right": [
@@ -12,22 +9,6 @@
         //"cpu",
         //"memory",
         "backlight", "battery", "idle_inhibitor", "clock"],
-    // Modules configuration
-    // "sway/workspaces": {
-    //     "disable-scroll": true,
-    //     "all-outputs": true,
-    //     "format": "{name}: {icon}",
-    //     "format-icons": {
-    //         "1": "",
-    //         "2": "",
-    //         "3": "",
-    //         "4": "",
-    //         "5": "",
-    //         "urgent": "",
-    //         "focused": "",
-    //         "default": ""
-    //     }
-    // },
     "sway/mode": {
         "format": "{}"
     },
@@ -74,6 +55,7 @@
     },
     "network": {
         // "interface": "wlp2s0", // (Optional) To force the use of this interface
+        "format-alt": "{signalStrength}% ",
         "format-wifi": "{essid} ({signalStrength}%) ",
         "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
         "format-disconnected": "Disconnected ⚠",
