@@ -7,8 +7,8 @@
     "modules-left": ["sway/workspaces", "sway/mode", "tray"],
     "modules-center": ["custom/spotify", "custom/keyboard_layout"],
     "modules-right": [
-        "network", "pulseaudio",
-        "custom/micstatus",
+        "network",
+        "pulseaudio",
         //"cpu",
         //"memory",
         "backlight", "battery", "idle_inhibitor", "clock"],
@@ -29,7 +29,7 @@
     //     }
     // },
     "sway/mode": {
-        "format": "<span style=\"italic\">{}</span>"
+        "format": "{}"
     },
     "idle_inhibitor": {
         "format": "{icon}",
@@ -76,12 +76,15 @@
         // "interface": "wlp2s0", // (Optional) To force the use of this interface
         "format-wifi": "{essid} ({signalStrength}%) ",
         "format-ethernet": "{ifname}: {ipaddr}/{cidr} ",
-        "format-disconnected": "Disconnected ⚠"
+        "format-disconnected": "Disconnected ⚠",
+        "tooltip-format": "{ifname} {ipaddr}/{cidr}, Freq: {frequency}"
     },
     "pulseaudio": {
-    "format": "{volume}% {icon}",
-    "format-bluetooth": "{volume}% {icon}",
-    "format-muted": "",
+    "format": "{volume}% {icon} {format_source}",
+    "format-bluetooth": "{volume}% {icon}  {format_source}",
+    "format-muted": " {format_source}",
+    "format-source": "",
+    "format-source-muted": "",
     "format-icons": {
         "headphone": "",
         "hands-free": "",
@@ -103,16 +106,6 @@
     "custom/keyboard_layout": {
         "format": "{}", // piano keyboard. Normal keyboard: ⌨️
         "exec": "kb_layout.sh",
-        "interval": 1
-    },
-    "custom/micstatus": {
-        "format": "{icon}",
-        "format-icons": {
-          "muted": "",
-          "default": ""
-        },
-        "exec": "mic_status.sh",
-        "return-type": "json",
         "interval": 1
     }
 }
