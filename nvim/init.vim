@@ -69,6 +69,7 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
+set iskeyword+=-
 
 " Tabs and indents
 set tabstop=4
