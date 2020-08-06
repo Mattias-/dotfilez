@@ -3,8 +3,10 @@ extends: default
 
 rules:
   document-start: disable
+  line-length: disable
+  comments-indentation: disable
+  comments:
+    require-starting-space: false
   indentation:
     spaces: 2
     indent-sequences: whatever
-  line-length:
-    level: warning
