@@ -2,9 +2,16 @@
 set -euo pipefail
 
 NEWHOSTNAME=myhostname
-EXTRA_PACKAGES="sway alacritty vim git"
 EXTRA_USER=mattias
 TIMEZONE=Europe/Stockholm
+EXTRA_PACKAGES=(
+    sway
+    alacritty
+    vim
+    git
+    man-db
+    iwd
+)
 
 #DISK=/dev/sda
 #BOOT_PARTITION=${DISK}1
@@ -15,12 +22,11 @@ BOOT_PARTITION=${DISK}p1
 ROOT_PARTITION=${DISK}p2
 
 main() {
-    pacman --noconfirm -Sy reflector
-    reflector --latest 100 --country Sweden --country Norway --country Germany --protocol https --sort rate --save /etc/pacman.d/mirrorlist
-
-    # Install a better terminal font to make installation readable
-    pacman --noconfirm -Sy terminus-font
+    pacman --noconfirm -Sy reflector terminus-font
+    # Improve readablilty during install with larger font
     setfont ter-p28n
+
+    reflector --latest 100 --country Sweden --country Norway --country Germany --protocol https --sort rate --save /etc/pacman.d/mirrorlist
 
     make_partitions
 
@@ -28,13 +34,10 @@ main() {
     pacstrap /mnt \
         linux \
         linux-firmware \
-        netctl \
         base \
         base-devel \
         terminus-font \
-        dialog \
-        wpa_supplicant \
-        ${EXTRA_PACKAGES}
+        "${EXTRA_PACKAGES[@]}"
 
     setup_boot
     setup_root
@@ -79,7 +82,18 @@ setup_root() {
     genfstab -U /mnt >/mnt/etc/fstab
 
     # Copy current network settings
-    cp -r /etc/netctl/* /mnt/etc/netctl/
+    cp -r /etc/netctl/* /mnt/etc/netctl/ || true
+    cp -r /var/lib/iwd /mnt/var/lib/ || true
+    mkdir -p /mnt/etc/iwd
+    cat >/mnt/etc/iwd/main.conf <<EOF
+[General]
+EnableNetworkConfiguration=true
+
+[Network]
+NameResolvingService=systemd
+EOF
+
+    chroot /mnt systemctl enable iwd systemd-networkd systemd-resolved
 
     echo "$NEWHOSTNAME" >/mnt/etc/hostname
     cat >/mnt/etc/hosts <<EOF

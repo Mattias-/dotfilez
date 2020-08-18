@@ -3,6 +3,7 @@ set -euo pipefail
 
 mkdir -p ~/screenshots
 mkdir -p ~/projects
+mkdir -p ~/mnt
 
 sudo timedatectl set-ntp true
 
@@ -66,17 +67,10 @@ sudo pacman -S --needed \
     waybar \
     noto-fonts-emoji \
     pacman-contrib \
-    helm
+    helm \
+    reflector
 
 sudo usermod -aG docker "$USER"
-
-# Install yay
-if ! yay -V &>/dev/null; then
-    rm -rf "$HOME/projects/yay"
-    git clone https://aur.archlinux.org/yay.git "$HOME/projects/yay"
-    cd "$_"
-    makepkg -fsri --noconfirm
-fi
 
 # Install pikaur
 if ! pikaur -V &>/dev/null; then
@@ -87,18 +81,17 @@ if ! pikaur -V &>/dev/null; then
 fi
 
 pikaur -S \
-    yay \
     pikaur \
     google-chrome \
     google-cloud-sdk \
     kubectl-bin \
     minikube-bin \
-    spotify \
     cfssl \
     ttf-font-awesome-4 \
     kind-bin \
     yq2-bin \
     github-cli
+#    spotify \
 
 pip3 install --user --upgrade \
     neovim \
@@ -106,6 +99,9 @@ pip3 install --user --upgrade \
     black \
     yamllint \
     awscli
+
+ln -sf /usr/bin/nvim "$HOME/bin/vim"
+ln -sf /usr/bin/nvim "$HOME/bin/vi"
 
 sudo usermod -aG video "$USER"
 
