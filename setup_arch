@@ -7,8 +7,7 @@ mkdir -p ~/mnt
 
 sudo timedatectl set-ntp true
 
-sudo pacman -Syu
-sudo pacman -S --needed \
+sudo pacman -Syu --needed \
     curl \
     jq \
     git \
@@ -69,17 +68,25 @@ sudo pacman -S --needed \
     pacman-contrib \
     helm \
     reflector \
-    transmission-qt
+    transmission-qt \
+    fuse2
 
 sudo usermod -aG docker "$USER"
 
-# Install pikaur
-if ! pikaur -V &>/dev/null; then
-    rm -rf "$HOME/projects/pikaur"
-    git clone https://aur.archlinux.org/pikaur.git "$HOME/projects/pikaur"
-    cd "$_"
-    makepkg -fsri --noconfirm
-fi
+install_pikaur() {
+    if command -v pikaur >/dev/null; then
+        return 0
+    fi
+    d="/tmp/pikaur"
+    rm -rf "$d"
+    git clone https://aur.archlinux.org/pikaur.git "$d"
+    (
+        cd "$d"
+        makepkg -fsri --noconfirm
+    )
+    rm -rf "$d"
+}
+install_pikaur
 
 pikaur -S \
     pikaur \
@@ -116,13 +123,23 @@ install_session_manager_plugin() {
     if command -v session-manager-plugin >/dev/null; then
         return 0
     fi
-    mkdir -p /tmp/ssm
+    d="/tmp/ssm"
+    mkdir -p "$d"
     (
-        cd /tmp/ssm || exit 1
+        cd "$d" || exit 1
         curl -s -L -O "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb"
         ar x session-manager-plugin.deb data.tar.gz
         tar -xf data.tar.gz
         sudo cp usr/local/sessionmanagerplugin/bin/session-manager-plugin /usr/local/bin/
     )
-    rm -rf /tmp/ssm
+    rm -rf "$d"
 }
+
+install_hyper() {
+    if command -v hyper >/dev/null; then
+        return 0
+    fi
+    curl -Lo "$HOME/bin/hyper" https://releases.hyper.is/download/AppImage
+    chmod +x "$HOME/bin/hyper"
+}
+install_hyper
