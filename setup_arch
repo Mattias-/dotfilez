@@ -1,77 +1,131 @@
 #!/bin/bash
 set -euo pipefail
 
-mkdir -p ~/screenshots
-mkdir -p ~/projects
-mkdir -p ~/mnt
-
-sudo timedatectl set-ntp true
-
-sudo pacman -Syu --needed \
-    curl \
-    jq \
-    git \
-    vim \
-    bc \
-    go \
-    hub \
-    keepassxc \
-    htop \
-    shellcheck \
-    traceroute \
-    nmap \
-    whois \
-    dnsutils \
-    tree \
-    tmux \
-    ufw \
-    openssh \
-    iperf3 \
-    neovim \
-    terraform \
-    vagrant \
-    packer \
-    alacritty \
-    docker \
-    virtualbox \
-    virtualbox-host-modules-arch \
-    fzf \
-    rclone \
-    shfmt \
-    python \
-    python-pip \
-    python-pipenv \
-    python2 \
-    xorg-server-xwayland \
-    sway \
-    swayidle \
-    swaylock \
-    grim \
-    slurp \
-    wl-clipboard \
-    ttf-inconsolata \
-    ttf-dejavu \
-    ttf-liberation \
-    ttf-roboto \
-    dmenu \
-    pavucontrol \
-    grc \
-    light \
-    pulseaudio \
-    pulseaudio-alsa \
-    pulseaudio-bluetooth \
-    bluez-utils \
-    bash-completion \
-    unzip \
-    waybar \
-    noto-fonts-emoji \
-    pacman-contrib \
-    helm \
-    reflector \
-    transmission-qt \
+packages=(
+    curl
+    jq
+    git
+    vim
+    bc
+    go
+    tmux
+    neovim
+    bash-completion
+    htop
+    tree
+    fzf
+    unzip
     fuse2
+    rclone
+    pacman-contrib
+    reflector
 
-sudo usermod -aG docker "$USER"
+    nmap
+    traceroute
+    whois
+    dnsutils
+    ufw
+    openssh
+    iperf3
+
+    python
+    python-pip
+    python-pipenv
+    python2
+
+    sway
+    swayidle
+    swaylock
+    xorg-server-xwayland
+    grim
+    slurp
+    dmenu
+    waybar
+    wl-clipboard
+
+    light
+    pavucontrol
+    pulseaudio
+    pulseaudio-alsa
+    pulseaudio-bluetooth
+    bluez-utils
+
+    shellcheck
+    shfmt
+    helm
+    github-cli
+    terraform
+    vagrant
+    packer
+    hub
+    docker
+    virtualbox
+    virtualbox-host-modules-arch
+    grc
+
+    keepassxc
+    transmission-qt
+    alacritty
+    ttf-inconsolata
+    ttf-dejavu
+    ttf-liberation
+    ttf-roboto
+    noto-fonts-emoji
+)
+
+aur_packages=(
+    pikaur
+    google-cloud-sdk
+    cfssl
+    ttf-font-awesome-4
+    yq2-bin
+    aws-cli-v2-bin
+    aws-session-manager-plugin
+
+    google-chrome
+    spotify-dev
+
+    kubectl-bin
+    minikube-bin
+    kind-bin
+)
+
+pip_packages=(
+    neovim
+    pynvim
+    black
+    yamllint
+)
+
+main() {
+    mkdir -p ~/screenshots
+    mkdir -p ~/projects
+    mkdir -p ~/mnt
+
+    sudo timedatectl set-ntp true
+    sudo pacman -Syu --needed "${packages[@]}"
+    sudo usermod -aG docker "$USER"
+    sudo systemctl enable --now docker
+    configure_backlight
+    install_pikaur
+    pikaur -S "${aur_packages[@]}"
+    pip3 install --user --upgrade "${pip_packages[@]}"
+    install_hyper
+    configure_iptables
+}
+
+configure_backlight() {
+    sudo pacman -S --needed light
+    sudo usermod -aG video "$USER"
+
+    # Add udev rule for light command
+    sudo tee /usr/lib/udev/rules.d/90-backlight.rules >/dev/null <<EOF
+ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
+ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
+ACTION=="add", SUBSYSTEM=="leds", RUN+="/bin/chgrp video /sys/class/leds/%k/brightness"
+ACTION=="add", SUBSYSTEM=="leds", RUN+="/bin/chmod g+w /sys/class/leds/%k/brightness"
+EOF
+}
 
 install_pikaur() {
     if command -v pikaur >/dev/null; then
@@ -86,38 +140,6 @@ install_pikaur() {
     )
     rm -rf "$d"
 }
-install_pikaur
-
-pikaur -S \
-    pikaur \
-    google-chrome \
-    google-cloud-sdk \
-    kubectl-bin \
-    minikube-bin \
-    cfssl \
-    ttf-font-awesome-4 \
-    kind-bin \
-    yq2-bin \
-    github-cli \
-    aws-cli-v2-bin \
-    aws-session-manager-plugin \
-    spotify-dev
-
-pip3 install --user --upgrade \
-    neovim \
-    pynvim \
-    black \
-    yamllint
-
-sudo usermod -aG video "$USER"
-
-# Add udev rule for light command
-sudo tee /usr/lib/udev/rules.d/90-backlight.rules >/dev/null <<EOF
-ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness"
-ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
-ACTION=="add", SUBSYSTEM=="leds", RUN+="/bin/chgrp video /sys/class/leds/%k/brightness"
-ACTION=="add", SUBSYSTEM=="leds", RUN+="/bin/chmod g+w /sys/class/leds/%k/brightness"
-EOF
 
 install_session_manager_plugin() {
     if command -v session-manager-plugin >/dev/null; then
@@ -142,4 +164,10 @@ install_hyper() {
     curl -Lo "$HOME/bin/hyper" https://releases.hyper.is/download/AppImage
     chmod +x "$HOME/bin/hyper"
 }
-install_hyper
+
+configure_iptables() {
+    sudo cp "$HOME/dotfilez/iptables.rules" /etc/iptables/iptables.rules
+    sudo systemctl enable --now iptables
+}
+
+main
