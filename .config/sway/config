@@ -33,9 +33,11 @@ output "Sharp Corporation 0x148B 0x00000000" scale 1.8
 # Example configuration:
 #
 set $lockcmd swaylock
+set $locktimeout 2000
+set $locktimeoutscreen 2000
 exec swayidle -w \
-         timeout 2000 $lockcmd \
-         timeout 2000 'swaymsg "output * dpms off"' \
+         timeout $locktimeout $lockcmd \
+         timeout $locktimeoutscreen 'swaymsg "output * dpms off"' \
               resume 'swaymsg "output * dpms on"' \
          before-sleep $lockcmd
 
