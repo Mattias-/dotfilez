@@ -128,8 +128,8 @@ exec "google-chrome-stable"
     bindsym $mod+Up focus up
     bindsym $mod+Right focus right
 
-bindsym Mod1+Tab focus right
-bindsym Mod1+Shift+Tab focus left
+    bindsym Mod1+Tab focus next
+    bindsym Mod1+Shift+Tab focus left
 
     # _move_ the focused window with the same, but add Shift
     bindsym $mod+Shift+$left move left
