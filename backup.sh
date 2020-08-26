@@ -2,6 +2,7 @@
 set -euo pipefail
 
 dry_run=false
+encrypt=true
 
 backup_paths=(
     background.png
@@ -13,6 +14,7 @@ backup_paths=(
     screenshots
     bin
     dotfilez
+    work
 )
 
 exclude_paths=(
@@ -21,7 +23,8 @@ exclude_paths=(
     .config/google-chrome
 )
 
-dest="./backup-$(date --iso-8601)"
+date=$(date -u "+%Y-%m-%d_%H-%M")
+dest="./backup-${date}"
 rsync_args=()
 
 if $dry_run; then
@@ -39,3 +42,6 @@ rsync -av \
 
 find "$dest" -type f -size +50M
 tar -czf "$dest.tar.gz" "$dest"
+if $encrypt; then
+    gpg --output "$dest.tar.gz.gpg" --symmetric "$dest.tar.gz"
+fi
