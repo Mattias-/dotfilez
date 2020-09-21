@@ -27,6 +27,7 @@ packages=(
     ufw
     openssh
     iperf3
+    gnu-netcat
 
     python
     python-pip
@@ -64,6 +65,7 @@ packages=(
     grc
 
     keepassxc
+    firefox
     transmission-qt
     alacritty
     ttf-inconsolata
