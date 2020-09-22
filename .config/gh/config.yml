@@ -1,0 +1,3 @@
+aliases:
+    npr: pr create --fill
+git_protocol: ssh
