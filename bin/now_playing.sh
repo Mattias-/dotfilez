@@ -7,6 +7,6 @@ else
 fi
 
 if [ "$SPOTIFY_ARTIST" != "" ]; then
-    echo " $SPOTIFY_TITLE - $SPOTIFY_ARTIST"
+    echo " $SPOTIFY_TITLE • $SPOTIFY_ARTIST"
     #echo "♫ $SPOTIFY_TITLE - $SPOTIFY_ARTIST"
 fi
