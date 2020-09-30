@@ -19,6 +19,7 @@ packages=(
     rclone
     pacman-contrib
     reflector
+    neofetch
 
     nmap
     traceroute
@@ -77,6 +78,7 @@ packages=(
 
 aur_packages=(
     pikaur
+    pipes.sh
     google-cloud-sdk
     cfssl
     ttf-font-awesome-4
