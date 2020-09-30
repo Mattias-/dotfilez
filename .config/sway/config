@@ -87,7 +87,7 @@ bindsym --release Print exec slurp | grim -g - - | wl-copy
 bindsym --release $mod+Print exec slurp | grim -g - ~/screenshots/screenshot_$(date --iso-8601=second).png
 
 
-font pango:Inconsolata 20
+font pango:Roboto 16
 hide_edge_borders both
 exec "alacritty -e tmux"
 exec "google-chrome-stable"
