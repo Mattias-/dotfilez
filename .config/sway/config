@@ -10,7 +10,7 @@ set $right l
 set $term alacritty
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
-set $menu dmenu_path | dmenu -fn Inconsolata:pixelsize=25 -b | xargs swaymsg exec
+set $menu dmenu_path | dmenu -fn 'DejaVu Sans Mono:pixelsize=25' -b | xargs swaymsg exec
 
 
 ### Output configuration
