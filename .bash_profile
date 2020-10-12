@@ -82,3 +82,9 @@ export PATH=$GOPATH/bin:$PATH
 export PATH=$PATH:/usr/local/go/bin
 
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+if [ -f /usr/share/nvm/nvm.sh ]; then
+    #source /usr/share/nvm/init-nvm.sh
+    [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
+    source /usr/share/nvm/nvm.sh --no-use
+fi
