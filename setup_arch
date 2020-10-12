@@ -29,6 +29,7 @@ packages=(
     openssh
     iperf3
     gnu-netcat
+    inetutils
 
     python
     python-pip
