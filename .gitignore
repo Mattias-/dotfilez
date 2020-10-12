@@ -1,6 +1,9 @@
+.vim/spell
 .vim/.netrwhist
 nvim/.netrwhist
-.vim/spell
+nvim/black
+
 .fonts/.uuid
 .fonts/fonts.dir
+
 .config/gh/hosts.yml
