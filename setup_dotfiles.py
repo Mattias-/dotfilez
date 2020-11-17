@@ -21,6 +21,7 @@ FILES = [
     "bin/*",
     ".hyper.js",
     ".grc",
+    ".zshrc",
 ]
 
 
