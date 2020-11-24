@@ -16,8 +16,8 @@ let NERDTreeIgnore = ['\.pyc$']
 map <C-n> :NERDTreeToggle<CR>
 map <C-m> :NERDTreeFind<CR>
 
-set rtp+=~/.fzf
-map <C-p> :FZF<CR>
+"set rtp+=~/.fzf
+map <C-p> :Files!<CR>
 
 let g:grepper = { 'tools': ['git', 'ag', 'grep'] }
 map <C-g> :Grepper<CR>
