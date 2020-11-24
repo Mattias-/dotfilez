@@ -20,6 +20,8 @@ packages=(
     pacman-contrib
     reflector
     neofetch
+    ripgrep
+    bat
 
     nmap
     traceroute
@@ -89,6 +91,7 @@ aur_packages=(
 
     google-chrome
     spotify-dev
+    visual-studio-code-bin
 
     kubectl-bin
     minikube-bin
