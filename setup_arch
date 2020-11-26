@@ -22,6 +22,7 @@ packages=(
     neofetch
     ripgrep
     bat
+    zip
 
     nmap
     traceroute
