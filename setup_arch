@@ -78,6 +78,7 @@ packages=(
     ttf-liberation
     ttf-roboto
     noto-fonts-emoji
+    nerd-fonts-inconsolata
 )
 
 aur_packages=(
@@ -89,6 +90,7 @@ aur_packages=(
     yq2-bin
     aws-cli-v2-bin
     aws-session-manager-plugin
+    starship-bin
 
     google-chrome
     spotify-dev

@@ -45,28 +45,28 @@ shopt -s checkwinsize
 stty -ixon -ixoff
 
 # Set prompt
-reset=$(tput sgr0)
-red=$(tput setaf 1)
-yellow=$(tput setaf 3)
-blue=$(tput setaf 4)
-prompt_start="\[$yellow\]\u\[$reset\] @ "
-prompt_start+="\[$blue\]\h\[$reset\] \w"
-prompt_end="\n\[$red\]\\\$\[$reset\] "
-export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWSTASHSTATE=1
-export GIT_PS1_SHOWUNTRACKEDFILES=1
-export GIT_PS1_SHOWCOLORHINTS=1
-export GIT_PS1_SHOWUPSTREAM="auto verbose"
+#reset=$(tput sgr0)
+#red=$(tput setaf 1)
+#yellow=$(tput setaf 3)
+#blue=$(tput setaf 4)
+#prompt_start="\[$yellow\]\u\[$reset\] @ "
+#prompt_start+="\[$blue\]\h\[$reset\] \w"
+#prompt_end="\n\[$red\]\\\$\[$reset\] "
+#export GIT_PS1_SHOWDIRTYSTATE=1
+#export GIT_PS1_SHOWSTASHSTATE=1
+#export GIT_PS1_SHOWUNTRACKEDFILES=1
+#export GIT_PS1_SHOWCOLORHINTS=1
+#export GIT_PS1_SHOWUPSTREAM="auto verbose"
 
-function aws_account_info() {
-    [ "$AWS_ACCOUNT_NAME" ] && [ "$AWS_ACCOUNT_ROLE" ] && echo " (${yellow}${AWS_ACCOUNT_ROLE}${reset} @ ${blue}${AWS_ACCOUNT_NAME}${reset})"
-    [ "$AWS_PROFILE" ] && echo " (${yellow}${AWS_PROFILE}${reset})"
-}
-
-if [ -f /usr/share/git/completion/git-prompt.sh ]; then
-    source /usr/share/git/completion/git-prompt.sh
-fi
-PROMPT_COMMAND='__git_ps1 "$prompt_start" "$(aws_account_info)$prompt_end"'
+#function aws_account_info() {
+#    [ "$AWS_ACCOUNT_NAME" ] && [ "$AWS_ACCOUNT_ROLE" ] && echo " (${yellow}${AWS_ACCOUNT_ROLE}${reset} @ ${blue}${AWS_ACCOUNT_NAME}${reset})"
+#    [ "$AWS_PROFILE" ] && echo " (${yellow}${AWS_PROFILE}${reset})"
+#}
+#
+#if [ -f /usr/share/git/completion/git-prompt.sh ]; then
+#    source /usr/share/git/completion/git-prompt.sh
+#fi
+#PROMPT_COMMAND='__git_ps1 "$prompt_start" "$(aws_account_info)$prompt_end"'
 
 # Fancy titles in GNU Screen
 if [[ $TERM =~ 'screen' || $TERMCAP =~ 'screen' ]]; then
@@ -88,3 +88,5 @@ if [ -f /usr/share/nvm/nvm.sh ]; then
     [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
     source /usr/share/nvm/nvm.sh --no-use
 fi
+
+eval "$(starship init bash)"

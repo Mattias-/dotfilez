@@ -1,0 +1,33 @@
+add_newline = false
+
+[username]
+format = "[$user]($style) @ "
+style_user = "yellow"
+show_always = true
+
+[hostname]
+format = "[$hostname]($style) "
+style = "blue"
+ssh_only = false
+
+[directory]
+style = ""
+
+[git_branch]
+format = "[$branch]($style) "
+
+[aws]
+format = ' [$symbol$profile]($style) '
+disabled = true
+
+[gcloud]
+disabled = true
+
+[golang]
+disabled = true
+
+[python]
+disabled = true
+
+[vagrant]
+disabled = true
