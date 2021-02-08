@@ -75,7 +75,7 @@ if [[ $TERM =~ 'screen' || $TERMCAP =~ 'screen' ]]; then
 fi
 
 complete -C aws_completer aws
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
+export FZF_DEFAULT_COMMAND="rg --files --hidden --iglob '!.git/'"
 
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
