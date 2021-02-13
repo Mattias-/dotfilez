@@ -3,13 +3,13 @@ set -euo pipefail
 
 main() {
     local cmd=""
-    if [[ "$#" == 1 ]]; then
+    if [[ "$#" -ge 1 ]]; then
         cmd=$1
         shift
     fi
 
     if [[ "$cmd" == "eval" ]]; then
-        cmd_eval
+        cmd_eval "$@"
     else
         track_url=$(get_track_url)
         track_json=$(get_track_json "$track_url")
@@ -24,8 +24,8 @@ get_track_url() {
         org.freedesktop.DBus.Properties.Get \
         string:'org.mpris.MediaPlayer2.Player' \
         string:'Metadata' |
-        grep -o 'https[^"]*'
-    # Look for a string that starts with `https`
+        grep -o 'https[^"]*' |
+        grep -E '/(track|episode)/'
 }
 
 get_track_json() {
@@ -37,14 +37,23 @@ get_track_json() {
 
 cmd_eval() {
     # Print variables that can be evaluated by bash
-    #local title
-    #local artists
-    set +e
+    title_query='.name'
+    artists_query='[.artists[]?.name] | join(", ")'
+    show_name_query='.show.name | values'
+
+    if [[ "$#" == 1 ]]; then
+        if [[ "$1" == "--html" ]]; then
+            title_query+=' | @html'
+            artists_query+=' | @html'
+            show_name_query+=' | @html'
+        fi
+    fi
+
     track_url=$(get_track_url)
     track_json=$(get_track_json "$track_url")
-    title=$(jq '.name' <<<"$track_json")
-    artists=$(jq '[.artists[].name] | join(", ")' <<<"$track_json")
-    set -e
+    title=$(jq "$title_query" <<<"$track_json")
+    artists=$(jq "$artists_query" <<<"$track_json")
+    show_name=$(jq "$show_name_query" <<<"$track_json")
 
     if [[ "$title" == "" ]]; then
         echo false
@@ -52,6 +61,7 @@ cmd_eval() {
     else
         echo "SPOTIFY_TITLE=$title"
         echo "SPOTIFY_ARTIST=$artists"
+        echo "SPOTIFY_SHOW_NAME=$show_name"
     fi
 }
 

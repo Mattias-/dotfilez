@@ -1,9 +1,16 @@
 // vim: set ft=json:
 {
     "layer": "top",
-    "modules-left": ["sway/workspaces", "sway/mode", "tray"],
-    "modules-center": ["custom/spotify", "custom/keyboard_layout"],
+    "modules-left": [
+        "sway/workspaces",
+        "sway/mode",
+        "tray",
+        "custom/spotify"
+    ],
+    "modules-center": [
+    ],
     "modules-right": [
+        "sway/language",
         "network",
         "pulseaudio",
         //"cpu",
@@ -50,9 +57,6 @@
         // "format-full": "",
         "format-icons": ["", "", "", "", ""]
     },
-    "battery#bat2": {
-        "bat": "BAT2"
-    },
     "network": {
         // "interface": "wlp2s0", // (Optional) To force the use of this interface
         "format-alt": "{signalStrength}% ",
@@ -80,14 +84,10 @@
     "on-click": "pavucontrol"
     },
     "custom/spotify": {
-        "format": " {}",
+        "format": "{}",
         "max-length": 40,
-        "interval": 5,
-        "exec": "eval \"$(sp eval)\" && echo \"$SPOTIFY_TITLE - $SPOTIFY_ARTIST\"" // Script in resources folder
-    },
-    "custom/keyboard_layout": {
-        "format": "{}", // piano keyboard. Normal keyboard: ⌨️
-        "exec": "kb_layout.sh",
-        "interval": 1
+        "interval": 10,
+        "exec": "~/bin/now_playing.sh --html",
+        "exec-if": "pgrep spotify"
     }
 }
