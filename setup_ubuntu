@@ -1,5 +1,5 @@
 #!/bin/bash
-set -o pipefail
+set -euo pipefail
 
 echo "Running APT update and upgrade..."
 sudo apt-get update -y >/dev/null
@@ -17,7 +17,7 @@ manage_version() {
     if [ "$version" == "" ]; then
         version=$installed_version
         if [ "$latest_version" != "" ] && [ "$installed_version" != "$latest_version" ]; then
-            read -p "$(tput setaf 2)${name} ${latest_version}$(tput sgr0) is available, upgrade? [y/N] " upgrade
+            read -r -p "$(tput setaf 2)${name} ${latest_version}$(tput sgr0) is available, upgrade? [y/N] " upgrade
             if [ "$upgrade" == "y" ]; then
                 version=$latest_version
             fi
@@ -270,7 +270,7 @@ installed_version_fzf() {
 manage_version "fzf"
 
 install_assume-role() {
-    sudo curl -Lso /usr/local/bin/assume-role https://raw.githubusercontent.com/coinbase/assume-role/${version}/assume-role
+    sudo curl -Lso /usr/local/bin/assume-role "https://raw.githubusercontent.com/coinbase/assume-role/${version}/assume-role"
     sudo chmod +x /usr/local/bin/assume-role
 }
 

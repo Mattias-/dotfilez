@@ -1,21 +1,27 @@
+#!/bin/bash
+
 # Add /usr/local/sbin to PATH as some homebrew things are there
 export PATH="/usr/local/sbin:$PATH"
 
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 if [ -r "$HOME/.functions" ] && [ -f "$HOME/.functions" ]; then
+    # shellcheck disable=SC1090
     source "$HOME/.functions"
 fi
 
 if [ -r "$HOME/.aliases" ] && [ -f "$HOME/.aliases" ]; then
+    # shellcheck disable=SC1090
     source "$HOME/.aliases"
 fi
 if [ -r "$HOME/.workaliases" ] && [ -f "$HOME/.workaliases" ]; then
+    # shellcheck disable=SC1090
     source "$HOME/.workaliases"
 fi
 
 # Add better tab completion
 if which brew &>/dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
+    # shellcheck disable=SC1090
     source "$(brew --prefix)/etc/bash_completion"
 fi
 if [ -f /etc/bash_completion ]; then
