@@ -56,7 +56,6 @@ packages=(
     pulseaudio-bluetooth
     bluez-utils
 
-    shellcheck
     shfmt
     helm
     github-cli
@@ -78,7 +77,6 @@ packages=(
     ttf-liberation
     ttf-roboto
     noto-fonts-emoji
-    nerd-fonts-inconsolata
 )
 
 aur_packages=(
@@ -87,6 +85,7 @@ aur_packages=(
     google-cloud-sdk
     cfssl
     ttf-font-awesome-4
+    nerd-fonts-inconsolata
     yq2-bin
     aws-cli-v2-bin
     aws-session-manager-plugin
@@ -99,6 +98,8 @@ aur_packages=(
     kubectl-bin
     minikube-bin
     kind-bin
+    tfsec
+    shellcheck-bin
 )
 
 pip_packages=(
@@ -106,6 +107,7 @@ pip_packages=(
     pynvim
     black
     yamllint
+    pre-commit
 )
 
 main() {
