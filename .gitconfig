@@ -27,6 +27,8 @@
 [rebase]
     autoSquash = true
     autoStash = true
+[init]
+    defaultBranch = master
 [pull]
     rebase = true
 [rerere]
