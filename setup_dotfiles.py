@@ -20,6 +20,7 @@ FILES = [
     ".tmux.conf",
     "bin/*",
     ".hyper.js",
+    ".grc",
 ]
 
 
