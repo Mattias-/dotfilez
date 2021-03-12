@@ -6,16 +6,11 @@ set $left h
 set $down j
 set $up k
 set $right l
-# Your preferred terminal emulator
 set $term alacritty
-# Your preferred application launcher
-# Note: it's recommended that you pass the final command to sway
-set $menu dmenu_path | dmenu -fn 'DejaVu Sans Mono:pixelsize=25' -b | xargs swaymsg exec
+set $menu wofi --show=drun --lines=5 --prompt=""
 
 
 ### Output configuration
-#
-# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 
 # Dell XPS 13 4k
