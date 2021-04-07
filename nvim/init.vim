@@ -36,8 +36,6 @@ set background=dark
 
 if v:version >= 800 || has("nvim") && match($TERM, "screen") == -1
   set termguicolors
-  set t_Co=256
-  "colorscheme base16-default
   colorscheme base16-default-dark
   " The default comment hl is really really bad
   highlight! link Comment Special
