@@ -9,7 +9,7 @@ function dotimes() {
     num=$1
     shift
     RES=()
-    for ((i=0; i<$num; i++)) do
+    for ((i = 0; i < $num; i++)); do
         $@
         RES+="$? "
     done
@@ -21,7 +21,7 @@ function psgrep() {
 }
 
 function nmaph() {
-   nmap -n -sn "$1" -oG - | awk '/Up$/{print $2}'
+    nmap -n -sn "$1" -oG - | awk '/Up$/{print $2}'
 }
 
 function iterm2_set() {
