@@ -31,3 +31,9 @@ disabled = true
 
 [vagrant]
 disabled = true
+
+[terraform]
+disabled = true
+
+[ruby]
+disabled = true
