@@ -45,3 +45,11 @@ man() {
         LESS_TERMCAP_us=$'\e[01;32m' \
         command man "$@"
 }
+
+aws-sts-decode() {
+    aws sts decode-authorization-message \
+        --query DecodedMessage \
+        --output text \
+        --encoded-message "$1" |
+        jq
+}
