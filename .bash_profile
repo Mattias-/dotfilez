@@ -96,3 +96,13 @@ if [ -f /usr/share/nvm/nvm.sh ]; then
 fi
 
 eval "$(starship init bash)"
+
+# macOS
+if [ -f /usr/local/opt/nvm/nvm.sh ]; then
+    [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
+    source /usr/local/opt/nvm/nvm.sh --no-use
+fi
+
+if [[ $OSTYPE =~ darwin* ]]; then
+    export BASH_SILENCE_DEPRECATION_WARNING=1
+fi
