@@ -1,7 +1,9 @@
 #!/bin/bash
 if [ "$(uname)" == "Darwin" ]; then
-    SPOTIFY_ARTIST=$(osascript -e 'tell application "Spotify" to artist of current track as string')
-    SPOTIFY_TITLE=$(osascript -e 'tell application "Spotify" to name of current track as string')
+    if pgrep -i spotify &>/dev/null; then
+        SPOTIFY_ARTIST=$(osascript -e 'tell application "Spotify" to artist of current track as string')
+        SPOTIFY_TITLE=$(osascript -e 'tell application "Spotify" to name of current track as string')
+    fi
 else
     if pgrep spotify &>/dev/null; then
         eval "$(sp eval "$@")" &>/dev/null
