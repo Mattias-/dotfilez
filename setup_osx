@@ -21,10 +21,10 @@ mkdir -p ~/projects
 mkdir -p ~/bin
 
 ln -shf "$(brew --prefix)/opt/fzf" "$HOME/.fzf"
-ln -sf "$(which nvim)" "$HOME/bin/vi"
-ln -sf "$(which nvim)" "$HOME/bin/vim"
+ln -sf "$(command -v nvim)" "$HOME/bin/vi"
+ln -sf "$(command -v nvim)" "$HOME/bin/vim"
 
-pip3 install --upgrade pip setuptools ipython flake8 py3kwarn
+pip3 install --upgrade pip setuptools ipython flake8 py3kwarn neovim
 
 ln -shf "/Volumes/GoogleDrive/My Drive" "$HOME/gdrive" || true
 
