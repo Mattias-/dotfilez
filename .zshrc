@@ -23,12 +23,15 @@ export PATH="$HOME/bin:$PATH"
 export FZF_DEFAULT_COMMAND="rg --files --hidden --iglob '!.git/'"
 
 if [ -r "$HOME/.functions" ] && [ -f "$HOME/.functions" ]; then
+    # shellcheck disable=SC1090
     source "$HOME/.functions"
 fi
 if [ -r "$HOME/.aliases" ] && [ -f "$HOME/.aliases" ]; then
+    # shellcheck disable=SC1090
     source "$HOME/.aliases"
 fi
 if [ -r "$HOME/.workaliases" ] && [ -f "$HOME/.workaliases" ]; then
+    # shellcheck disable=SC1090
     source "$HOME/.workaliases"
 fi
 
