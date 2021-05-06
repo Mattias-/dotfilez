@@ -36,6 +36,7 @@ brew "yq"
 brew "rclone"
 brew "neofetch"
 brew "starship"
+brew "pre-commit"
 
 brew "awscli"
 brew "cfssl"
