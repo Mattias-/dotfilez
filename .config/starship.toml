@@ -17,7 +17,7 @@ style = ""
 format = "[$branch]($style) "
 
 [aws]
-format = ' [$symbol$profile]($style) '
+format = ' [$profile]($style) '
 disabled = false
 
 [gcloud]
