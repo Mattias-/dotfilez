@@ -20,7 +20,7 @@ if [ -r "$HOME/.workaliases" ] && [ -f "$HOME/.workaliases" ]; then
 fi
 
 # Add better tab completion
-if which brew &>/dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
+if command -v brew &>/dev/null && [ -f "$(brew --prefix)/etc/bash_completion" ]; then
     # shellcheck disable=SC1090
     source "$(brew --prefix)/etc/bash_completion"
 fi

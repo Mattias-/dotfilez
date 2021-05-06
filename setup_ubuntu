@@ -279,7 +279,7 @@ latest_version_assume-role() {
 }
 
 installed_version_assume-role() {
-    which assume-role >/dev/null && echo "master"
+    command -v assume-role >/dev/null && echo "master"
 }
 
 manage_version "assume-role"
