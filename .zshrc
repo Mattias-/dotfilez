@@ -1,3 +1,6 @@
+#!/bin/zsh
+# shellcheck shell=bash
+
 autoload -Uz compinit promptinit
 compinit
 promptinit
@@ -17,7 +20,7 @@ export PATH="$GOPATH/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 
-export FZF_DEFAULT_COMMAND='(set -o pipefail; git ls-tree -r --full-tree --name-only HEAD | sed "s:^:$(git rev-parse --show-toplevel)/:" || ag -g "") 2> /dev/null'
+export FZF_DEFAULT_COMMAND="rg --files --hidden --iglob '!.git/'"
 
 if [ -r "$HOME/.functions" ] && [ -f "$HOME/.functions" ]; then
     source "$HOME/.functions"
