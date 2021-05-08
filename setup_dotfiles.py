@@ -7,6 +7,7 @@ import shutil
 FILES = [
     ".bashrc",
     ".bash_profile",
+    ".editorconfig",
     ".functions",
     ".aliases",
     ".gitconfig",
