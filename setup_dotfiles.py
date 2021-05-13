@@ -15,7 +15,6 @@ FILES = [
     ".ssh/*",
     ".config/*",
     ".fonts",
-    ".tmux.conf",
     "bin/*",
     ".hyper.js",
     ".grc",
