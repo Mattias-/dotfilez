@@ -4,8 +4,8 @@
     signingkey = mattias@ppelgren.se
 [core]
     editor = vi
-    excludesfile = ~/.gitignore_global
-    attributesfile = ~/.gitattributes_global
+    excludesfile = ~/.config/git/gitignore_global
+    attributesfile = ~/.config/git/gitattributes_global
 [credential]
     helper = cache --timeout=3600
 [init]
