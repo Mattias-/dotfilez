@@ -1,3 +1,44 @@
+if has("nvim")
+    tnoremap <Esc> <C-\><C-n>
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained",
+  highlight = {
+    enable = true,
+  },
+  indent = {
+    enable = true
+  }
+}
+
+local lspconfig = require'lspconfig'
+lspconfig.gopls.setup{
+  root_dir = lspconfig.util.root_pattern('.git');
+}
+
+vim.o.completeopt = "menuone,noselect"
+require('compe').setup {
+  enabled = true;
+  autocomplete = true;
+  debug = false;
+  min_length = 1;
+  preselect = 'enable';
+  throttle_time = 80;
+  source_timeout = 200;
+  incomplete_delay = 400;
+  max_abbr_width = 100;
+  max_kind_width = 100;
+  max_menu_width = 100;
+  documentation = true;
+  source = {
+    nvim_lsp = true;
+    nvim_lua = true;
+  };
+}
+EOF
+endif
+
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
@@ -16,12 +57,13 @@ let NERDTreeIgnore = ['\.pyc$']
 map <C-n> :NERDTreeToggle<CR>
 map <C-m> :NERDTreeFind<CR>
 
-"set rtp+=~/.fzf
-map <C-p> :Files!<CR>
-
 let g:grepper = { 'tools': ['git', 'ag', 'grep'] }
 map <C-g> :Grepper<CR>
-map <leader># :Grepper -cword -noprompt -highlight<cr>
+"map <leader># :Grepper -cword -noprompt -highlight<cr>
+
+nnoremap <leader>g <cmd>lua require('telescope.builtin').grep_string()<cr>
+nnoremap <C-p> <cmd>lua require('telescope.builtin').git_files()<cr>
+nnoremap <C-g> <cmd>lua require('telescope.builtin').live_grep()<cr>
 
 let g:lightline = {
       \ 'colorscheme': 'seoul256',
@@ -77,8 +119,9 @@ set shiftwidth=4 " When indenting use x spaces
 set autoindent " Keep indentation from previous line
 
 " Folding
-set foldmethod=indent
-set foldlevelstart=20
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set foldlevelstart=10
 
 " Highlight whitespace errors and line length
 autocmd BufWinEnter * if &l:buftype != 'help' | match Error /\s\+$\|\t \| \t/
@@ -103,7 +146,3 @@ map <leader><space> za
 nmap <silent> <leader>h :noh<cr>
 
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
-
-if has("nvim")
-    tnoremap <Esc> <C-\><C-n>
-endif

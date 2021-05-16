@@ -9,7 +9,6 @@ packages=(
     bc
     go
     tmux
-    neovim
     bash-completion
     htop
     tree
@@ -89,6 +88,7 @@ aur_packages=(
     aws-cli-v2-bin
     aws-session-manager-plugin
     starship-bin
+    neovim-nightly-bin
 
     google-chrome
     spotify-dev
