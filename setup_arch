@@ -66,7 +66,6 @@ packages=(
     docker
     virtualbox
     virtualbox-host-modules-arch
-    grc
 
     keepassxc
     firefox
@@ -102,6 +101,10 @@ aur_packages=(
     shellcheck-bin
 )
 
+uninstalled_packages=(
+    grc
+)
+
 pip_packages=(
     neovim
     pynvim
@@ -123,6 +126,7 @@ main() {
     configure_backlight
     install_pikaur
     pikaur -S "${aur_packages[@]}"
+    pikaur -Rsu "${uninstalled_packages[@]}" || true
     pip3 install --user --upgrade "${pip_packages[@]}"
     install_hyper
     configure_iptables
