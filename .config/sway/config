@@ -7,7 +7,7 @@ set $down j
 set $up k
 set $right l
 set $term alacritty
-set $menu wofi --show=drun --lines=5 --prompt=""
+set $menu wofi --show=run --lines=5 --prompt=""
 
 
 ### Output configuration
