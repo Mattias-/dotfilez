@@ -1,72 +1,60 @@
-[submodule ".vim/bundle/vim-fugitive"]
-	path = nvim/pack/my-plugins/start/vim-fugitive
-	url = https://github.com/tpope/vim-fugitive
-    branch = master
-[submodule ".vim/bundle/nerdtree"]
-	path = nvim/pack/my-plugins/start/nerdtree
-	url = https://github.com/scrooloose/nerdtree
-    branch = master
-[submodule ".vim/bundle/base16-vim"]
-	path = nvim/pack/my-plugins/start/base16-vim
-	url = https://github.com/chriskempson/base16-vim
-    branch = master
-[submodule ".vim/bundle/nerdtree-git-plugin"]
-	path = nvim/pack/my-plugins/start/nerdtree-git-plugin
-	url = https://github.com/Xuyuanp/nerdtree-git-plugin.git
-    branch = master
-[submodule ".vim/bundle/vim-grepper"]
-	path = nvim/pack/my-plugins/start/vim-grepper
-	url = https://github.com/mhinz/vim-grepper.git
-    branch = master
-[submodule ".vim/bundle/salt-vim"]
-	path = nvim/pack/my-plugins/start/salt-vim
-	url = https://github.com/saltstack/salt-vim.git
-	branch = master
-[submodule ".vim/bundle/neomake"]
-	path = nvim/pack/my-plugins/start/neomake
-	url = https://github.com/neomake/neomake.git
-	branch = master
-[submodule ".vim/bundle/Dockerfile"]
-	path = nvim/pack/my-plugins/start/Dockerfile
-	url = https://github.com/ekalinin/Dockerfile.vim.git
-	branch = master
-[submodule ".vim/bundle/vim-vagrant"]
-	path = nvim/pack/my-plugins/start/vim-vagrant
-	url = https://github.com/hashivim/vim-vagrant.git
-	branch = master
-[submodule ".vim/bundle/vim-terraform"]
-	path = nvim/pack/my-plugins/start/vim-terraform
-	url = https://github.com/hashivim/vim-terraform.git
-	branch = master
-[submodule ".vim/bundle/vim-go"]
-	path = nvim/pack/my-plugins/start/vim-go
-	url = https://github.com/fatih/vim-go.git
-	branch = master
-[submodule ".vim/bundle/vim-rhubarb"]
-	path = nvim/pack/my-plugins/start/vim-rhubarb
-	url = https://github.com/tpope/vim-rhubarb.git
-	branch = master
-[submodule ".vim/bundle/lightline.vim"]
-	path = nvim/pack/my-plugins/start/lightline.vim
-	url = https://github.com/itchyny/lightline.vim
-	branch = master
-[submodule ".vim/bundle/editorconfig-vim"]
+[submodule "nvim/pack/my-plugins/start/nvim-compe"]
+	path = nvim/pack/my-plugins/start/nvim-compe
+	url = https://github.com/hrsh7th/nvim-compe.git
+[submodule "nvim/pack/my-plugins/start/nvim-treesitter"]
+	path = nvim/pack/my-plugins/start/nvim-treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter.git
+[submodule "nvim/pack/my-plugins/start/telescope.nvim"]
+	path = nvim/pack/my-plugins/start/telescope.nvim
+	url = https://github.com/nvim-telescope/telescope.nvim.git
+[submodule "nvim/pack/my-plugins/start/editorconfig-vim"]
 	path = nvim/pack/my-plugins/start/editorconfig-vim
 	url = https://github.com/editorconfig/editorconfig-vim.git
-	branch = master
-[submodule "nvim/bundle/vim-shfmt"]
+[submodule "nvim/pack/my-plugins/start/lightline.vim"]
+	path = nvim/pack/my-plugins/start/lightline.vim
+	url = https://github.com/itchyny/lightline.vim
+[submodule "nvim/pack/my-plugins/start/base16-vim"]
+	path = nvim/pack/my-plugins/start/base16-vim
+	url = https://github.com/chriskempson/base16-vim
+[submodule "nvim/pack/my-plugins/start/nerdtree-git-plugin"]
+	path = nvim/pack/my-plugins/start/nerdtree-git-plugin
+	url = https://github.com/Xuyuanp/nerdtree-git-plugin.git
+[submodule "nvim/pack/my-plugins/start/vim-go"]
+	path = nvim/pack/my-plugins/start/vim-go
+	url = https://github.com/fatih/vim-go.git
+[submodule "nvim/pack/my-plugins/start/vim-shfmt"]
 	path = nvim/pack/my-plugins/start/vim-shfmt
 	url = https://github.com/z0mbix/vim-shfmt.git
-	branch = master
-[submodule "nvim/pack/my-plugins/start/python-syntax"]
-	path = nvim/pack/my-plugins/start/python-syntax
-	url = https://github.com/vim-python/python-syntax.git
-	branch = master
-[submodule "nvim/pack/my-plugins/start/black"]
-	path = nvim/pack/my-plugins/start/black
-	url = https://github.com/psf/black.git
-	branch = master
-[submodule "nvim/pack/my-plugins/start/fzf.vim"]
-	path = nvim/pack/my-plugins/start/fzf.vim
-	url = https://github.com/junegunn/fzf.vim.git
-	branch = master
+[submodule "nvim/pack/my-plugins/start/salt-vim"]
+	path = nvim/pack/my-plugins/start/salt-vim
+	url = https://github.com/saltstack/salt-vim.git
+[submodule "nvim/pack/my-plugins/start/plenary.nvim"]
+	path = nvim/pack/my-plugins/start/plenary.nvim
+	url = https://github.com/nvim-lua/plenary.nvim.git
+[submodule "nvim/pack/my-plugins/start/nerdtree"]
+	path = nvim/pack/my-plugins/start/nerdtree
+	url = https://github.com/scrooloose/nerdtree
+[submodule "nvim/pack/my-plugins/start/vim-fugitive"]
+	path = nvim/pack/my-plugins/start/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive
+[submodule "nvim/pack/my-plugins/start/vim-vagrant"]
+	path = nvim/pack/my-plugins/start/vim-vagrant
+	url = https://github.com/hashivim/vim-vagrant.git
+[submodule "nvim/pack/my-plugins/start/vim-grepper"]
+	path = nvim/pack/my-plugins/start/vim-grepper
+	url = https://github.com/mhinz/vim-grepper.git
+[submodule "nvim/pack/my-plugins/start/vim-rhubarb"]
+	path = nvim/pack/my-plugins/start/vim-rhubarb
+	url = https://github.com/tpope/vim-rhubarb.git
+[submodule "nvim/pack/my-plugins/start/popup.nvim"]
+	path = nvim/pack/my-plugins/start/popup.nvim
+	url = https://github.com/nvim-lua/popup.nvim.git
+[submodule "nvim/pack/my-plugins/start/vim-terraform"]
+	path = nvim/pack/my-plugins/start/vim-terraform
+	url = https://github.com/hashivim/vim-terraform.git
+[submodule "nvim/pack/my-plugins/start/neomake"]
+	path = nvim/pack/my-plugins/start/neomake
+	url = https://github.com/neomake/neomake.git
+[submodule "nvim/pack/my-plugins/start/nvim-lspconfig"]
+	path = nvim/pack/my-plugins/start/nvim-lspconfig
+	url = https://github.com/neovim/nvim-lspconfig.git
