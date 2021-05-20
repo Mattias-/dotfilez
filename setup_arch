@@ -50,10 +50,14 @@ packages=(
 
     light
     pavucontrol
-    pulseaudio
-    pulseaudio-alsa
-    pulseaudio-bluetooth
     bluez-utils
+    pipewire
+    pipewire-alsa
+    pipewire-jack
+    pipewire-media-session
+    pipewire-pulse
+    gst-plugin-pipewire
+    libpulse
 
     shfmt
     helm
