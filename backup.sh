@@ -45,3 +45,7 @@ tar -czf "$dest.tar.gz" "$dest"
 if $encrypt; then
     gpg --output "$dest.tar.gz.gpg" --symmetric "$dest.tar.gz"
 fi
+
+restore() {
+    gpg --decrypt "$1" | tar -xz
+}
