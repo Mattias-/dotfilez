@@ -16,7 +16,7 @@ main() {
     python -m archinstall my-archinstall
 
     git clone --recurse-submodules https://github.com/Mattias-/dotfilez /mnt/home/mattias/dotfilez
-    chmod -R 1000:1000 --reference=/mnt/home/mattias /mnt/home/mattias/dotfilez
+    chown -R --reference=/mnt/home/mattias /mnt/home/mattias/dotfilez
 
     echo "FONT=ter-p28n" >/mnt/etc/vconsole.conf
 }
