@@ -134,6 +134,9 @@ main() {
     pip3 install --user --upgrade "${pip_packages[@]}"
     install_hyper
     configure_iptables
+
+    ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+    rm -f /etc/systemd/network/20-ethernet.network
 }
 
 configure_backlight() {

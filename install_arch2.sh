@@ -19,6 +19,9 @@ main() {
     chown -R --reference=/mnt/home/mattias /mnt/home/mattias/dotfilez
 
     echo "FONT=ter-p28n" >/mnt/etc/vconsole.conf
+
+    ln -sf /run/systemd/resolve/stub-resolv.conf /mnt/etc/resolv.conf
+    rm -f /mnt/etc/systemd/network/20-ethernet.network
 }
 
 main
