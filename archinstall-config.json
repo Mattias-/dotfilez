@@ -1,0 +1,20 @@
+{
+    "bootloader": "systemd-bootctl",
+    "hostname": "my-machine",
+    "kernels": [
+        "linux"
+    ],
+    "keyboard-language": "us",
+    "mirror-region": "Sweden",
+    "nic": "Copy ISO network configuration to installation",
+    "ntp": true,
+    "packages": [
+        "git",
+        "curl"
+    ],
+    "profile": "minimal",
+    "sys-encoding": "utf-8",
+    "sys-language": "en_US",
+    "timezone": "Europe/Stockholm"
+}
+
