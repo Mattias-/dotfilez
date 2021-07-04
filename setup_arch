@@ -23,6 +23,8 @@ packages=(
     bat
     zip
     bpytop
+    man-db
+    neovim
 
     nmap
     traceroute
@@ -93,7 +95,6 @@ aur_packages=(
     aws-cli-v2-bin
     aws-session-manager-plugin
     starship-bin
-    neovim-nightly-bin
 
     google-chrome
     spotify-dev
@@ -137,8 +138,8 @@ main() {
     install_hyper
     configure_iptables
 
-    ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
-    rm -f /etc/systemd/network/20-ethernet.network
+    sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+    sudo rm -f /etc/systemd/network/20-ethernet.network
 }
 
 configure_backlight() {
