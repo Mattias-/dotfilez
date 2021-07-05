@@ -69,7 +69,8 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 if [ -f /usr/share/nvm/nvm.sh ]; then
     #source /usr/share/nvm/init-nvm.sh
     [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
-    source /usr/share/nvm/nvm.sh --no-use
+    #source /usr/share/nvm/nvm.sh --no-use
+    source /usr/share/nvm/nvm.sh use --lts
 fi
 
 eval "$(starship init bash)"
@@ -77,7 +78,8 @@ eval "$(starship init bash)"
 # macOS
 if [ -f /usr/local/opt/nvm/nvm.sh ]; then
     [ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.nvm"
-    source /usr/local/opt/nvm/nvm.sh --no-use
+    #source /usr/local/opt/nvm/nvm.sh --no-use
+    source /usr/share/nvm/nvm.sh use --lts
 fi
 
 if [[ $OSTYPE =~ darwin* ]]; then
