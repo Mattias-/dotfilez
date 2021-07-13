@@ -36,6 +36,21 @@ require('compe').setup {
     nvim_lua = true;
   };
 }
+
+require('telescope').setup{
+  defaults = {
+    vimgrep_arguments = {
+      'rg',
+      '--color=never',
+      '--no-heading',
+      '--with-filename',
+      '--line-number',
+      '--column',
+      '--smart-case',
+      '--hidden'
+    },
+  }
+}
 EOF
 endif
 
@@ -58,8 +73,6 @@ map <C-n> :NERDTreeToggle<CR>
 map <C-m> :NERDTreeFind<CR>
 
 let g:grepper = { 'tools': ['git', 'ag', 'grep'] }
-map <C-g> :Grepper<CR>
-"map <leader># :Grepper -cword -noprompt -highlight<cr>
 
 nnoremap <leader>g <cmd>lua require('telescope.builtin').grep_string()<cr>
 nnoremap <C-p> <cmd>lua require('telescope.builtin').git_files()<cr>
