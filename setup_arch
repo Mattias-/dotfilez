@@ -95,6 +95,7 @@ aur_packages=(
     aws-cli-v2-bin
     aws-session-manager-plugin
     starship-bin
+    nvm
 
     google-chrome
     spotify-dev
