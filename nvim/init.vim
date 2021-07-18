@@ -142,6 +142,11 @@ autocmd BufWinEnter * if &l:buftype != 'help' | match Error /\s\+$\|\t \| \t/
 autocmd InsertLeave * match Error /\s\+$\|\t \| \t/
 set colorcolumn=80
 
+augroup templates
+  au!
+  autocmd BufNewFile *.* silent! execute '0r ~/.vim/templates/skeleton.'.expand("<afile>:e")
+augroup END
+
 set listchars=space:·,trail:·,tab:▸\ ,nbsp:_,precedes:«,extends:»,eol:↲
 
 filetype indent on
