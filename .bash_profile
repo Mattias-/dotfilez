@@ -71,8 +71,12 @@ if [ -f /usr/share/nvm/nvm.sh ]; then
 fi
 
 # macOS
-if [ -f /usr/local/opt/nvm/nvm.sh ]; then
-    source /usr/local/opt/nvm/init-nvm.sh
+if [ -s "$(brew --prefix)/opt/nvm/nvm.sh" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    source "$(brew --prefix)/opt/nvm/nvm.sh"
+fi
+if [ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ]; then
+    source "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"
 fi
 
 if [[ $OSTYPE =~ darwin* ]]; then

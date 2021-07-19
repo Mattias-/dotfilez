@@ -26,6 +26,9 @@ ln -sf "$(command -v nvim)" "$HOME/bin/vim"
 
 pip3 install --upgrade pip setuptools ipython flake8 py3kwarn neovim
 
+nvm install --lts
+nvm install-latest-npm
+
 ln -shf "/Volumes/GoogleDrive/My Drive" "$HOME/gdrive" || true
 
 #git clone --recursive https://github.com/Mattias-/dotfilez.git "$HOME/dotfilez" || true

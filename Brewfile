@@ -6,7 +6,7 @@ tap "homebrew/cask-versions"
 tap "homebrew/core"
 
 tap "neovim/neovim"
-brew "neovim"
+brew "neovim", args: ["head"]
 
 tap "github/gh"
 brew "gh"
