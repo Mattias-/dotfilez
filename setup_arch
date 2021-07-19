@@ -127,18 +127,19 @@ main() {
     mkdir -p ~/mnt
     mkdir -p ~/bin
 
-    sudo timedatectl set-ntp true
     sudo pacman -Syu --needed "${packages[@]}"
-    sudo usermod -aG docker "$USER"
-    sudo systemctl enable --now docker
-    configure_backlight
     install_pikaur
     pikaur --noedit -S "${aur_packages[@]}"
     pikaur -Rsu "${uninstalled_packages[@]}" || true
     pip3 install --user --upgrade "${pip_packages[@]}"
+    setup_nvm
     install_hyper
-    configure_iptables
 
+    sudo timedatectl set-ntp true
+    sudo usermod -aG docker "$USER"
+    sudo systemctl enable --now docker
+    configure_backlight
+    configure_iptables
     sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
     sudo rm -f /etc/systemd/network/20-ethernet.network
 }
@@ -197,6 +198,16 @@ install_hyper() {
 configure_iptables() {
     sudo cp "$HOME/dotfilez/iptables.rules" /etc/iptables/iptables.rules
     sudo systemctl enable --now iptables
+}
+
+setup_nvm() {
+    if [ -f /usr/share/nvm/nvm.sh ]; then
+        source /usr/share/nvm/init-nvm.sh
+    fi
+    if [ -f /usr/local/opt/nvm/nvm.sh ]; then
+        source /usr/local/opt/nvm/init-nvm.sh
+    fi
+    nvm install --lts
 }
 
 main
