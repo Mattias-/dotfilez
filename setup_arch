@@ -77,6 +77,7 @@ packages=(
     firefox
     transmission-qt
     alacritty
+    wireshark-qt
     ttf-inconsolata
     ttf-dejavu
     ttf-liberation
@@ -121,6 +122,12 @@ pip_packages=(
     pre-commit
 )
 
+npm_packages=(
+    dockerfile-language-server-nodejs
+    vscode-langservers-extracted
+    pyright
+)
+
 main() {
     mkdir -p ~/screenshots
     mkdir -p ~/projects
@@ -131,12 +138,16 @@ main() {
     install_pikaur
     pikaur --noedit -S "${aur_packages[@]}"
     pikaur -Rsu "${uninstalled_packages[@]}" || true
+
     pip3 install --user --upgrade "${pip_packages[@]}"
-    setup_nvm
+
+    setup_node
+    npm install -g "${npm_packages[@]}"
+
     install_hyper
 
     sudo timedatectl set-ntp true
-    sudo usermod -aG docker "$USER"
+    sudo usermod -aG docker,wireshark "$USER"
     sudo systemctl enable --now docker
     configure_backlight
     configure_iptables
@@ -200,14 +211,16 @@ configure_iptables() {
     sudo systemctl enable --now iptables
 }
 
-setup_nvm() {
+setup_node() {
     if [ -f /usr/share/nvm/nvm.sh ]; then
+        # shellcheck disable=SC1091
         source /usr/share/nvm/init-nvm.sh
     fi
     if [ -f /usr/local/opt/nvm/nvm.sh ]; then
+        # shellcheck disable=SC1091
         source /usr/local/opt/nvm/init-nvm.sh
     fi
-    nvm install --lts
+    nvm install --lts --latest-npm --no-progress
 }
 
 main
