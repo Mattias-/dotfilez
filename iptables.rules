@@ -13,6 +13,11 @@
 -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 -A INPUT -i lo -j ACCEPT
 
+-A INPUT -m addrtype --dst-type BROADCAST -j DROP
+-A INPUT -m addrtype --dst-type MULTICAST -j DROP
+-A INPUT -m addrtype --dst-type ANYCAST -j DROP
+-A INPUT -p udp --sport 1900 -j DROP -m comment --comment "Drop SSDP"
+
 -A INPUT -j LOG
 -A INPUT -p tcp -j REJECT --reject-with tcp-reset
 -A INPUT -p udp -j REJECT --reject-with icmp-port-unreachable
