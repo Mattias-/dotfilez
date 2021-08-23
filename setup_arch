@@ -25,6 +25,7 @@ packages=(
     bpytop
     man-db
     neovim
+    starship
 
     nmap
     traceroute
@@ -95,7 +96,6 @@ aur_packages=(
     yq2-bin
     aws-cli-v2-bin
     aws-session-manager-plugin
-    starship-bin
     nvm
 
     google-chrome
@@ -215,12 +215,14 @@ setup_node() {
     if [ -f /usr/share/nvm/nvm.sh ]; then
         # shellcheck disable=SC1091
         source /usr/share/nvm/init-nvm.sh
+        sudo cp /usr/share/nvm/bash_completion /etc/bash_completion.d/nvm
     fi
     if [ -f /usr/local/opt/nvm/nvm.sh ]; then
         # shellcheck disable=SC1091
         source /usr/local/opt/nvm/init-nvm.sh
     fi
     nvm install --lts --latest-npm --no-progress
+    npm completion | sudo tee /etc/bash_completion.d/npm >/dev/null
 }
 
 main
