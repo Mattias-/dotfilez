@@ -13,9 +13,12 @@ require'nvim-treesitter.configs'.setup {
 }
 
 local lspconfig = require'lspconfig'
-lspconfig.gopls.setup{
-  root_dir = lspconfig.util.root_pattern('.git');
-}
+lspconfig.gopls.setup{}
+lspconfig.pyright.setup{}
+lspconfig.dockerls.setup{}
+lspconfig.cssls.setup{}
+lspconfig.html.setup{}
+lspconfig.tsserver.setup{}
 
 vim.o.completeopt = "menuone,noselect"
 require('compe').setup {

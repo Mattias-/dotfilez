@@ -126,6 +126,7 @@ npm_packages=(
     dockerfile-language-server-nodejs
     vscode-langservers-extracted
     pyright
+    typescript-language-server
 )
 
 main() {
