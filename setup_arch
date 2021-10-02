@@ -73,6 +73,7 @@ packages=(
     docker
     virtualbox
     virtualbox-host-modules-arch
+    minikube
 
     keepassxc
     firefox
@@ -103,7 +104,6 @@ aur_packages=(
     visual-studio-code-bin
 
     kubectl-bin
-    minikube-bin
     kind-bin
     tfsec
     shellcheck-bin
