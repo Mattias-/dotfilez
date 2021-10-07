@@ -105,12 +105,12 @@ aur_packages=(
 
     kubectl-bin
     kind-bin
-    tfsec
     shellcheck-bin
 )
 
 uninstalled_packages=(
     grc
+    tfsec
 )
 
 pip_packages=(
@@ -127,6 +127,16 @@ npm_packages=(
     vscode-langservers-extracted
     pyright
     typescript-language-server
+    typescript
+    eslint_d
+)
+
+go_packages=(
+    github.com/mattn/efm-langserver@latest
+    github.com/goreleaser/goreleaser@latest
+    golang.org/x/tools/gopls@latest
+    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.0
+    github.com/aquasecurity/tfsec/cmd/tfsec@latest
 )
 
 main() {
@@ -139,6 +149,10 @@ main() {
     install_pikaur
     pikaur --noedit -S "${aur_packages[@]}"
     pikaur -Rsu "${uninstalled_packages[@]}" || true
+
+    for go_package in "${go_packages[@]}"; do
+        go install "$go_package"
+    done
 
     pip3 install --user --upgrade "${pip_packages[@]}"
 
