@@ -45,7 +45,7 @@ brew "terraform"
 brew "packer"
 brew "bazelisk"
 
-brew "nvm"
+brew "fnm"
 
 brew "python"
 brew "pipenv"

@@ -59,23 +59,9 @@ if [ -f /usr/share/bash-completion/bash_completion ]; then
 fi
 complete -C aws_completer aws
 
-# Setup NVM
-if [ -f /usr/share/nvm/nvm.sh ]; then
-    # shellcheck disable=SC1091
-    source /usr/share/nvm/init-nvm.sh
-fi
-if command -v brew &>/dev/null && [ -s "$(brew --prefix)/opt/nvm/nvm.sh" ]; then
-    export NVM_DIR="${HOME}/.nvm"
-    # shellcheck disable=SC1090,SC1091
-    source "$(brew --prefix)/opt/nvm/nvm.sh"
-fi
-if command -v brew &>/dev/null && [ -s "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm" ]; then
-    # shellcheck disable=SC1090,SC1091
-    source "$(brew --prefix)/opt/nvm/etc/bash_completion.d/nvm"
-fi
-
 if [[ ${OSTYPE} =~ darwin* ]]; then
     export BASH_SILENCE_DEPRECATION_WARNING=1
 fi
 
+eval "$(fnm env --shell bash)"
 eval "$(starship init bash)"

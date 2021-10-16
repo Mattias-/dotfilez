@@ -1,12 +1,15 @@
 #!/bin/zsh
 # shellcheck shell=bash
 
+zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
+
 autoload -Uz compinit promptinit
 compinit
 promptinit
 
 export EDITOR="vi"
 export VISUAL=$EDITOR
+export MANPAGER="nvim +Man! -c ':set signcolumn='"
 
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
@@ -35,4 +38,5 @@ if [ -r "$HOME/.workaliases" ] && [ -f "$HOME/.workaliases" ]; then
     source "$HOME/.workaliases"
 fi
 
+eval "$(fnm env --shell zsh)"
 eval "$(starship init zsh)"
