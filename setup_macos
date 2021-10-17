@@ -1,39 +1,85 @@
 #!/bin/bash
 set -euo pipefail
 
-if ! xcode-select -p >/dev/null; then
-    echo "Install Xcode command line tools and run script again"
-    echo "xcode-select --install"
-    exit 1
-fi
+pip_packages=(
+    wheel
+    neovim
+    pynvim
+    black
+    yamllint
+    pre-commit
+)
 
-if ! command -v brew >/dev/null; then
-    bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-fi
+npm_packages=(
+    dockerfile-language-server-nodejs
+    vscode-langservers-extracted
+    pyright
+    typescript-language-server
+    typescript
+    eslint_d
+)
 
-brew update
-brew upgrade
-brew bundle
-brew bundle cleanup
-brew cleanup
+go_packages=(
+    github.com/mattn/efm-langserver@latest
+    github.com/goreleaser/goreleaser@latest
+    golang.org/x/tools/gopls@latest
+    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.0
+    github.com/aquasecurity/tfsec/cmd/tfsec@latest
+)
 
-mkdir -p ~/projects
-mkdir -p ~/bin
+main() {
+    sudo softwareupdate -i -a
 
-ln -shf "$(brew --prefix)/opt/fzf" "$HOME/.fzf"
-ln -sf "$(command -v nvim)" "$HOME/bin/vi"
-ln -sf "$(command -v nvim)" "$HOME/bin/vim"
+    if ! xcode-select -p >/dev/null; then
+        echo "Install Xcode command line tools and run script again"
+        echo "xcode-select --install"
+        exit 1
+    fi
 
-pip3 install --upgrade pip setuptools ipython flake8 py3kwarn neovim
+    if ! command -v brew >/dev/null; then
+        bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
 
-nvm install --lts
-nvm install-latest-npm
+    brew update
+    brew upgrade
+    brew bundle
+    brew bundle cleanup
+    brew cleanup
 
-ln -shf "/Volumes/GoogleDrive/My Drive" "$HOME/gdrive" || true
+    mkdir -p ~/projects
+    mkdir -p ~/bin
 
-#git clone --recursive https://github.com/Mattias-/dotfilez.git "$HOME/dotfilez" || true
-#git -C "$HOME/dotfilez" submodule update --remote --rebase
-#python "$HOME/dotfilez/setup_dotfiles.py"
+    configure_macos
 
-defaults write NSGlobalDomain KeyRepeat -int 1
-defaults write NSGlobalDomain InitialKeyRepeat -int 12
+    #ln -shf "$(brew --prefix)/opt/fzf" "$HOME/.fzf"
+    #ln -sf "$(command -v nvim)" "$HOME/bin/vi"
+    #ln -sf "$(command -v nvim)" "$HOME/bin/vim"
+    #ln -shf "/Volumes/GoogleDrive/My Drive" "$HOME/gdrive" || true
+
+    #git clone --recursive https://github.com/Mattias-/dotfilez.git "$HOME/dotfilez" || true
+    #git -C "$HOME/dotfilez" submodule update --remote --rebase
+    #python "$HOME/dotfilez/setup_dotfiles.py"
+
+    for go_package in "${go_packages[@]}"; do
+        go install "$go_package"
+    done
+
+    pip install --user --upgrade "${pip_packages[@]}"
+
+    setup_node
+    npm install -g "${npm_packages[@]}"
+}
+
+setup_node() {
+    fnm install --lts
+    eval "$(fnm env --shell bash)"
+    npm install -g npm@latest
+    npm completion | sudo tee /etc/bash_completion.d/npm >/dev/null
+}
+
+configure_macos() {
+    defaults write NSGlobalDomain KeyRepeat -int 1
+    defaults write NSGlobalDomain InitialKeyRepeat -int 12
+}
+
+main "$@"
