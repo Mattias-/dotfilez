@@ -1,11 +1,17 @@
 #!/bin/zsh
 # shellcheck shell=bash
 
+if [ -d "$(brew --prefix)/share/zsh/site-functions" ]; then
+    export FPATH="$(brew --prefix)/share/zsh/site-functions:$FPATH"
+fi
+
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 
 autoload -Uz compinit promptinit
 compinit
 promptinit
+
+bindkey -e
 
 export EDITOR="vi"
 export VISUAL=$EDITOR
@@ -22,6 +28,7 @@ export PATH="/usr/local/go/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 export FZF_DEFAULT_COMMAND="rg --files --hidden --iglob '!.git/'"
 
@@ -38,5 +45,8 @@ if [ -r "$HOME/.workaliases" ] && [ -f "$HOME/.workaliases" ]; then
     source "$HOME/.workaliases"
 fi
 
+if [ -f /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 eval "$(fnm env --shell zsh)"
 eval "$(starship init zsh)"
