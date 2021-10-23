@@ -22,6 +22,11 @@ disabled = false
 
 [gcloud]
 disabled = true
+symbol = "☁️ "
+format = '[$symbol$project]($style) '
+
+[kubernetes]
+disabled = true
 
 [golang]
 disabled = true
