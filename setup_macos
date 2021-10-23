@@ -1,34 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
-pip_packages=(
-    wheel
-    neovim
-    pynvim
-    black
-    yamllint
-    pre-commit
-)
-
-npm_packages=(
-    dockerfile-language-server-nodejs
-    vscode-langservers-extracted
-    pyright
-    typescript-language-server
-    typescript
-    eslint_d
-)
-
-go_packages=(
-    github.com/mattn/efm-langserver@latest
-    github.com/goreleaser/goreleaser@latest
-    golang.org/x/tools/gopls@latest
-    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.0
-    github.com/aquasecurity/tfsec/cmd/tfsec@latest
-)
+source ./packages.sh
 
 main() {
-    sudo softwareupdate -i -a
+    #sudo softwareupdate -i -a
 
     if ! xcode-select -p >/dev/null; then
         echo "Install Xcode command line tools and run script again"
@@ -38,35 +14,40 @@ main() {
 
     if ! command -v brew >/dev/null; then
         bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        eval "$(/opt/homebrew/bin/brew shellenv)"
     fi
 
-    brew update
-    brew upgrade
-    brew bundle
-    brew bundle cleanup
-    brew cleanup
+    arch -arm64 brew update
+    arch -arm64 brew upgrade
+    arch -arm64 brew bundle
 
     mkdir -p ~/projects
     mkdir -p ~/bin
 
     configure_macos
 
-    #ln -shf "$(brew --prefix)/opt/fzf" "$HOME/.fzf"
-    #ln -sf "$(command -v nvim)" "$HOME/bin/vi"
-    #ln -sf "$(command -v nvim)" "$HOME/bin/vim"
-    #ln -shf "/Volumes/GoogleDrive/My Drive" "$HOME/gdrive" || true
+    ln -sf "$(command -v nvim)" "$HOME/bin/vi"
+    ln -sf "$(command -v nvim)" "$HOME/bin/vim"
 
-    #git clone --recursive https://github.com/Mattias-/dotfilez.git "$HOME/dotfilez" || true
-    #git -C "$HOME/dotfilez" submodule update --remote --rebase
-    #python "$HOME/dotfilez/setup_dotfiles.py"
+    install_go_packages
 
+    install_python_packages
+
+    setup_node
+    install_node_packages
+}
+
+install_go_packages() {
     for go_package in "${go_packages[@]}"; do
         go install "$go_package"
     done
+}
 
-    pip install --user --upgrade "${pip_packages[@]}"
+install_python_packages() {
+    pip3 install --user --upgrade "${pip_packages[@]}"
+}
 
-    setup_node
+install_node_packages() {
     npm install -g "${npm_packages[@]}"
 }
 
@@ -74,12 +55,18 @@ setup_node() {
     fnm install --lts
     eval "$(fnm env --shell bash)"
     npm install -g npm@latest
-    npm completion | sudo tee /etc/bash_completion.d/npm >/dev/null
+    #npm completion | sudo tee /etc/bash_completion.d/npm >/dev/null
 }
 
 configure_macos() {
     defaults write NSGlobalDomain KeyRepeat -int 1
     defaults write NSGlobalDomain InitialKeyRepeat -int 12
+    defaults write com.apple.dock autohide -bool true
+    defaults write com.Apple.Dock show-recents -bool false
+    defaults write com.apple.screensaver askForPassword -int 1
+    defaults write com.apple.screensaver askForPasswordDelay -int 0
+    defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+    defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 }
 
 main "$@"
