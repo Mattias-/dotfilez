@@ -1,17 +1,35 @@
 #!/bin/zsh
 # shellcheck shell=bash
 
-if [ -d "$(brew --prefix)/share/zsh/site-functions" ]; then
-    export FPATH="$(brew --prefix)/share/zsh/site-functions:$FPATH"
+if [ -d "/opt/homebrew/share/zsh/site-functions" ]; then
+    export FPATH="/opt/homebrew/share/zsh/site-functions:$FPATH"
 fi
 
-zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
+unsetopt menu_complete   # do not autoselect the first completion entry
+unsetopt flowcontrol
+setopt auto_menu         # show completion menu on successive tab press
+setopt complete_in_word
+setopt always_to_end
 
-autoload -Uz compinit promptinit
+#zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
+zstyle ':completion:*' special-dirs true
+zstyle ':completion:*' list-colors ''
+
+autoload -Uz compinit
 compinit
-promptinit
 
 bindkey -e
+
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=50000
+SAVEHIST=10000
+## History command configuration
+setopt extended_history       # record timestamp of command in HISTFILE
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt share_history          # share command history data
 
 export EDITOR="vi"
 export VISUAL=$EDITOR
@@ -23,12 +41,12 @@ export LC_CTYPE="en_US.UTF-8"
 
 export GOPATH=$HOME/go
 
-export PATH="/usr/local/sbin:$PATH"
-export PATH="/usr/local/go/bin:$PATH"
-export PATH="$GOPATH/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export PATH="$HOME/bin:$PATH"
-export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+path=(/usr/local/sbin $path)
+path=(/usr/local/go/bin $GOPATH/bin $path)
+path=($HOME/.local/bin $HOME/bin $path)
+path=(${KREW_ROOT:-$HOME/.krew}/bin $path)
+
+typeset -U path
 
 export FZF_DEFAULT_COMMAND="rg --files --hidden --iglob '!.git/'"
 
