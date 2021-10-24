@@ -1,143 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-packages=(
-    curl
-    jq
-    git
-    vim
-    bc
-    go
-    tmux
-    bash-completion
-    htop
-    tree
-    fzf
-    unzip
-    fuse2
-    rclone
-    pacman-contrib
-    reflector
-    neofetch
-    ripgrep
-    bat
-    zip
-    bpytop
-    man-db
-    neovim
-    starship
-
-    nmap
-    traceroute
-    whois
-    dnsutils
-    ufw
-    openssh
-    iperf3
-    gnu-netcat
-    inetutils
-
-    python
-    python-pip
-    python-pipenv
-    python2
-
-    sway
-    swayidle
-    swaylock
-    xorg-server-xwayland
-    grim
-    slurp
-    wofi
-    waybar
-    wl-clipboard
-
-    light
-    pavucontrol
-    bluez-utils
-    pipewire
-    pipewire-alsa
-    pipewire-jack
-    pipewire-media-session
-    pipewire-pulse
-    gst-plugin-pipewire
-    libpulse
-
-    shfmt
-    helm
-    github-cli
-    terraform
-    vagrant
-    packer
-    hub
-    docker
-    virtualbox
-    virtualbox-host-modules-arch
-    minikube
-
-    keepassxc
-    firefox
-    transmission-qt
-    alacritty
-    wireshark-qt
-    ttf-inconsolata
-    ttf-dejavu
-    ttf-liberation
-    ttf-roboto
-    noto-fonts-emoji
-)
-
-aur_packages=(
-    pikaur
-    pipes.sh
-    google-cloud-sdk
-    cfssl
-    ttf-font-awesome-4
-    nerd-fonts-inconsolata
-    yq2-bin
-    aws-cli-v2-bin
-    aws-session-manager-plugin
-    fnm-bin
-
-    google-chrome
-    spotify-dev
-    visual-studio-code-bin
-
-    kubectl-bin
-    kind-bin
-    shellcheck-bin
-)
-
-uninstalled_packages=(
-    grc
-    tfsec
-)
-
-pip_packages=(
-    wheel
-    neovim
-    pynvim
-    black
-    yamllint
-    pre-commit
-)
-
-npm_packages=(
-    dockerfile-language-server-nodejs
-    vscode-langservers-extracted
-    pyright
-    typescript-language-server
-    typescript
-    eslint_d
-)
-
-go_packages=(
-    github.com/mattn/efm-langserver@latest
-    github.com/goreleaser/goreleaser@latest
-    golang.org/x/tools/gopls@latest
-    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.0
-    github.com/aquasecurity/tfsec/cmd/tfsec@latest
-)
+source ./packages.sh
 
 main() {
     mkdir -p ~/screenshots
@@ -145,19 +9,20 @@ main() {
     mkdir -p ~/mnt
     mkdir -p ~/bin
 
-    sudo pacman -Syu --needed "${packages[@]}"
+    sudo pacman -Syu --needed "${pacman_packages[@]}"
     install_pikaur
     pikaur --noedit -S "${aur_packages[@]}"
-    pikaur -Rsu "${uninstalled_packages[@]}" || true
+    pikaur -Rsu "${uninstalled_aur_packages[@]}" || true
 
-    for go_package in "${go_packages[@]}"; do
-        go install "$go_package"
-    done
+    ln -sf "$(command -v nvim)" "$HOME/bin/vi"
+    ln -sf "$(command -v nvim)" "$HOME/bin/vim"
 
-    pip3 install --user --upgrade "${pip_packages[@]}"
+    install_go_packages
+
+    install_python_packages
 
     setup_node
-    npm install -g "${npm_packages[@]}"
+    install_node_packages
 
     install_hyper
 
@@ -168,6 +33,20 @@ main() {
     configure_iptables
     sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
     sudo rm -f /etc/systemd/network/20-ethernet.network
+}
+
+install_go_packages() {
+    for go_package in "${go_packages[@]}"; do
+        go install "$go_package"
+    done
+}
+
+install_python_packages() {
+    pip3 install --user --upgrade "${pip_packages[@]}"
+}
+
+install_node_packages() {
+    npm install -g "${npm_packages[@]}"
 }
 
 configure_backlight() {
