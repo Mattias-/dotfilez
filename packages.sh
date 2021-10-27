@@ -19,7 +19,6 @@ npm_packages=(
     pyright
     typescript-language-server
     typescript
-    eslint_d
 )
 
 go_packages=(
