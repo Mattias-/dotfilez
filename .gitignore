@@ -2,8 +2,8 @@
 .vim/.netrwhist
 nvim/.netrwhist
 nvim/black
-
 .fonts/.uuid
 .fonts/fonts.dir
-
 .config/gh/hosts.yml
+bin/vi
+bin/vim
