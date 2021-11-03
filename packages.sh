@@ -54,6 +54,7 @@ pacman_packages=(
     man-db
     neovim
     starship
+    go-yq
 
     nmap
     traceroute
@@ -122,7 +123,6 @@ aur_packages=(
     cfssl
     ttf-font-awesome-4
     nerd-fonts-inconsolata
-    yq2-bin
     aws-cli-v2-bin
     aws-session-manager-plugin
     fnm-bin
