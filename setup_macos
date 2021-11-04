@@ -38,16 +38,19 @@ main() {
 }
 
 install_go_packages() {
+    # shellcheck disable=SC2154
     for go_package in "${go_packages[@]}"; do
         go install "$go_package"
     done
 }
 
 install_python_packages() {
+    # shellcheck disable=SC2154
     pip3 install --user --upgrade "${pip_packages[@]}"
 }
 
 install_node_packages() {
+    # shellcheck disable=SC2154
     npm install -g "${npm_packages[@]}"
 }
 

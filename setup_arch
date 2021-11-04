@@ -9,9 +9,12 @@ main() {
     mkdir -p ~/mnt
     mkdir -p ~/bin
 
+    # shellcheck disable=SC2154
     sudo pacman -Syu --needed "${pacman_packages[@]}"
     install_pikaur
+    # shellcheck disable=SC2154
     pikaur --noedit -S "${aur_packages[@]}"
+    # shellcheck disable=SC2154
     pikaur -Rsu "${uninstalled_aur_packages[@]}" || true
 
     ln -sf "$(command -v nvim)" "$HOME/bin/vi"
@@ -36,16 +39,19 @@ main() {
 }
 
 install_go_packages() {
+    # shellcheck disable=SC2154
     for go_package in "${go_packages[@]}"; do
         go install "$go_package"
     done
 }
 
 install_python_packages() {
+    # shellcheck disable=SC2154
     pip3 install --user --upgrade "${pip_packages[@]}"
 }
 
 install_node_packages() {
+    # shellcheck disable=SC2154
     npm install -g "${npm_packages[@]}"
 }
 

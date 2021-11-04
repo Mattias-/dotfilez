@@ -5,13 +5,12 @@ if [ -d "/opt/homebrew/share/zsh/site-functions" ]; then
     export FPATH="/opt/homebrew/share/zsh/site-functions:$FPATH"
 fi
 
-unsetopt menu_complete   # do not autoselect the first completion entry
+unsetopt menu_complete # do not autoselect the first completion entry
 unsetopt flowcontrol
-setopt auto_menu         # show completion menu on successive tab press
+setopt auto_menu # show completion menu on successive tab press
 setopt complete_in_word
 setopt always_to_end
 
-#zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' list-colors ''
 
@@ -22,6 +21,7 @@ bindkey -e
 
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
+# shellcheck disable=SC2034
 SAVEHIST=10000
 ## History command configuration
 setopt extended_history       # record timestamp of command in HISTFILE
@@ -41,10 +41,10 @@ export LC_CTYPE="en_US.UTF-8"
 
 export GOPATH=$HOME/go
 
-path=(/usr/local/sbin $path)
-path=(/usr/local/go/bin $GOPATH/bin $path)
-path=($HOME/.local/bin $HOME/bin $path)
-path=(${KREW_ROOT:-$HOME/.krew}/bin $path)
+path=("/usr/local/sbin" "${path[@]}")
+path=("/usr/local/go/bin" "$GOPATH/bin" "${path[@]}")
+path=("$HOME/.local/bin" "$HOME/bin" "${path[@]}")
+path=("${KREW_ROOT:-$HOME/.krew}/bin" "${path[@]}")
 
 typeset -U path
 
