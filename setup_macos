@@ -56,6 +56,7 @@ install_node_packages() {
 
 setup_node() {
     fnm install --lts
+    fnm use lts-latest
     eval "$(fnm env --shell bash)"
     npm install -g npm@latest
     #npm completion | sudo tee /etc/bash_completion.d/npm >/dev/null
@@ -70,6 +71,7 @@ configure_macos() {
     defaults write com.apple.screensaver askForPasswordDelay -int 0
     defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
     defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+    defaults write .GlobalPreferences com.apple.mouse.scaling -1
 }
 
 main "$@"
