@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 
 if [ -d "/opt/homebrew/share/zsh/site-functions" ]; then
-    export FPATH="/opt/homebrew/share/zsh/site-functions:$FPATH"
+    fpath=("/opt/homebrew/share/zsh/site-functions" "${fpath[@]}")
 fi
 
 unsetopt menu_complete # do not autoselect the first completion entry
@@ -39,6 +39,8 @@ export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 
+export FZF_DEFAULT_COMMAND="rg --files --hidden --iglob '!.git/'"
+
 export GOPATH=$HOME/go
 
 path=("/usr/local/sbin" "${path[@]}")
@@ -46,9 +48,22 @@ path=("/usr/local/go/bin" "$GOPATH/bin" "${path[@]}")
 path=("$HOME/.local/bin" "$HOME/bin" "${path[@]}")
 path=("${KREW_ROOT:-$HOME/.krew}/bin" "${path[@]}")
 
-typeset -U path
+if [ -d "$HOME/Library/Python/3.9/bin" ]; then
+    path+=("$HOME/Library/Python/3.9/bin")
+fi
 
-export FZF_DEFAULT_COMMAND="rg --files --hidden --iglob '!.git/'"
+if [ -d "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk" ]; then
+    source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
+    source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+fi
+
+if [ -f /opt/homebrew/bin/brew ]; then
+    path=("/opt/homebrew/bin" "/opt/homebrew/sbin" "${path[@]}")
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+typeset -U path
+typeset -U fpath
 
 if [ -r "$HOME/.functions" ] && [ -f "$HOME/.functions" ]; then
     # shellcheck disable=SC1090
@@ -63,8 +78,5 @@ if [ -r "$HOME/.workaliases" ] && [ -f "$HOME/.workaliases" ]; then
     source "$HOME/.workaliases"
 fi
 
-if [ -f /opt/homebrew/bin/brew ]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
 eval "$(fnm env --shell zsh)"
 eval "$(starship init zsh)"
