@@ -7,3 +7,4 @@ nvim/black
 .config/gh/hosts.yml
 bin/vi
 bin/vim
+.config/git/extraconfig

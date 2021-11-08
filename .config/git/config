@@ -2,6 +2,8 @@
     name = Mattias Appelgren
     email = mattias@ppelgren.se
     signingkey = mattias@ppelgren.se
+[include]
+    path = ~/.config/git/extraconfig
 [core]
     editor = vi
     excludesfile = ~/.config/git/gitignore_global
