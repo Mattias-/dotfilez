@@ -31,6 +31,7 @@ brew "neofetch"
 brew "svn"
 brew "terraform"
 brew "minikube"
+brew "k9s"
 
 cask "font-inconsolata"
 cask "font-inconsolata-g-for-powerline"
