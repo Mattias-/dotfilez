@@ -113,6 +113,7 @@ configure_iptables() {
 
 setup_node() {
     fnm install --lts
+    fnm default lts-latest
     eval "$(fnm env --shell bash)"
     npm install -g npm@latest
     npm completion | sudo tee /etc/bash_completion.d/npm >/dev/null
