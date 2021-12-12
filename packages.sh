@@ -108,6 +108,7 @@ pacman_packages=(
     firefox
     transmission-qt
     alacritty
+    kitty
     wireshark-qt
     ttf-inconsolata
     ttf-dejavu
