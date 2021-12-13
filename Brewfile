@@ -32,6 +32,8 @@ brew "svn"
 brew "terraform"
 brew "minikube"
 brew "k9s"
+brew "k6"
+brew "helm"
 
 cask "font-inconsolata"
 cask "font-inconsolata-g-for-powerline"
