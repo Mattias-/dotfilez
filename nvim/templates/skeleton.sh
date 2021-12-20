@@ -11,9 +11,11 @@ finish() {
 trap finish EXIT
 
 echo_err_blue() {
-    tput setaf 033
-    echo 1>&2 "$@"
-    tput sgr0
+    (
+        tput setaf 033
+        echo "$@"
+        tput sgr0
+    ) 1>&2
 }
 
 script_dir() {
