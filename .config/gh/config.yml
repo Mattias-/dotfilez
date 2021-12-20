@@ -1,3 +1,4 @@
 aliases:
   npr: pr create
+  mpr: pr merge --merge --delete-branch
 git_protocol: ssh
