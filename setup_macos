@@ -64,6 +64,7 @@ setup_node() {
     eval "$(fnm env --shell bash)"
     npm install -g npm@latest
     #npm completion | sudo tee /etc/bash_completion.d/npm >/dev/null
+    corepack enable
 }
 
 configure_macos() {
