@@ -2,7 +2,7 @@
 
 export EDITOR="vi"
 export VISUAL=${EDITOR}
-export MANPAGER="nvim +Man! -c ':set signcolumn='"
+export MANPAGER="nvim +Man!"
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
