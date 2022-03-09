@@ -76,6 +76,7 @@ ssh_only = false
 
 [directory]
 style = ""
+truncation_length = 4
 
 [git_branch]
 format = "[$branch]($style) "
