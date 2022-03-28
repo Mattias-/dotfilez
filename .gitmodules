@@ -25,9 +25,6 @@
 [submodule "nvim/pack/my-plugins/start/vim-shfmt"]
 	path = nvim/pack/my-plugins/start/vim-shfmt
 	url = https://github.com/z0mbix/vim-shfmt.git
-[submodule "nvim/pack/my-plugins/start/salt-vim"]
-	path = nvim/pack/my-plugins/start/salt-vim
-	url = https://github.com/saltstack/salt-vim.git
 [submodule "nvim/pack/my-plugins/start/plenary.nvim"]
 	path = nvim/pack/my-plugins/start/plenary.nvim
 	url = https://github.com/nvim-lua/plenary.nvim.git
@@ -37,9 +34,6 @@
 [submodule "nvim/pack/my-plugins/start/vim-fugitive"]
 	path = nvim/pack/my-plugins/start/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive
-[submodule "nvim/pack/my-plugins/start/vim-vagrant"]
-	path = nvim/pack/my-plugins/start/vim-vagrant
-	url = https://github.com/hashivim/vim-vagrant.git
 [submodule "nvim/pack/my-plugins/start/vim-grepper"]
 	path = nvim/pack/my-plugins/start/vim-grepper
 	url = https://github.com/mhinz/vim-grepper.git
