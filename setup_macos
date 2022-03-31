@@ -4,45 +4,27 @@ set -euo pipefail
 source ./packages.sh
 
 main() {
-    #sudo softwareupdate -i -a
-
-    if ! xcode-select -p >/dev/null; then
-        echo "Install Xcode command line tools and run script again"
-        echo "xcode-select --install"
-        exit 1
-    fi
-
-    if ! command -v brew >/dev/null; then
-        bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-        eval "$(/opt/homebrew/bin/brew shellenv)"
-    fi
-
-    arch -arm64 brew update
-    arch -arm64 brew upgrade
-    arch -arm64 brew bundle
-
     mkdir -p ~/projects
+    mkdir -p ~/mnt
     mkdir -p ~/bin
 
-    configure_macos
-
-    ln -sf "$(command -v nvim)" "$HOME/bin/vi"
-    ln -sf "$(command -v nvim)" "$HOME/bin/vim"
+    install_macos_packages
 
     install_go_packages
-
     install_python_packages
-
     setup_node
     install_node_packages
+
+    configure_macos
 
     #nvim +":checkhealth"
     #nvim +":TSUninstall all"
     #nvim +":TSInstall all"
     #nvim +":GoInstallBinaries"
-
     nvim +":PlugInstall" +qall
     nvim +":helptags ALL" +qall
+    ln -sf "$(command -v nvim)" "$HOME/bin/vi"
+    ln -sf "$(command -v nvim)" "$HOME/bin/vim"
 }
 
 install_go_packages() {
@@ -69,6 +51,23 @@ setup_node() {
     npm install -g npm@latest
     #npm completion | sudo tee /etc/bash_completion.d/npm >/dev/null
     corepack enable
+}
+
+install_macos_packages() {
+    #sudo softwareupdate -i -a
+    if ! xcode-select -p >/dev/null; then
+        echo "Install Xcode command line tools and run script again"
+        echo "xcode-select --install"
+        exit 1
+    fi
+    if ! command -v brew >/dev/null; then
+        bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+    arch -arm64 brew update
+    arch -arm64 brew upgrade
+    arch -arm64 brew bundle
+
 }
 
 configure_macos() {

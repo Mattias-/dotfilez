@@ -9,36 +9,19 @@ main() {
     mkdir -p ~/mnt
     mkdir -p ~/bin
 
-    # shellcheck disable=SC2154
-    sudo pacman -Syu --needed "${pacman_packages[@]}"
-    install_pikaur
-    # shellcheck disable=SC2154
-    pikaur --noedit -S "${aur_packages[@]}"
-    # shellcheck disable=SC2154
-    pikaur -Rsu "${uninstalled_aur_packages[@]}" || true
-
-    ln -sf "$(command -v nvim)" "$HOME/bin/vi"
-    ln -sf "$(command -v nvim)" "$HOME/bin/vim"
+    install_arch_packages
 
     install_go_packages
-
     install_python_packages
-
     setup_node
     install_node_packages
 
-    install_hyper
+    configure_arch
 
     nvim +":PlugInstall" +qall
     nvim +":helptags ALL" +qall
-
-    sudo timedatectl set-ntp true
-    sudo usermod -aG docker,wireshark "$USER"
-    sudo systemctl enable --now docker
-    configure_backlight
-    configure_iptables
-    sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
-    sudo rm -f /etc/systemd/network/20-ethernet.network
+    ln -sf "$(command -v nvim)" "$HOME/bin/vi"
+    ln -sf "$(command -v nvim)" "$HOME/bin/vim"
 }
 
 install_go_packages() {
@@ -56,6 +39,25 @@ install_python_packages() {
 install_node_packages() {
     # shellcheck disable=SC2154
     npm install -g "${npm_packages[@]}"
+}
+
+setup_node() {
+    fnm install --lts
+    fnm default lts-latest
+    eval "$(fnm env --shell bash)"
+    npm install -g npm@latest
+    npm completion | sudo tee /etc/bash_completion.d/npm >/dev/null
+    corepack enable
+}
+
+install_arch_packages() {
+    # shellcheck disable=SC2154
+    sudo pacman -Syu --needed "${pacman_packages[@]}"
+    install_pikaur
+    # shellcheck disable=SC2154
+    pikaur --noedit -S "${aur_packages[@]}"
+    # shellcheck disable=SC2154
+    pikaur -Rsu "${uninstalled_aur_packages[@]}" || true
 }
 
 configure_backlight() {
@@ -85,22 +87,6 @@ install_pikaur() {
     rm -rf "$d"
 }
 
-install_session_manager_plugin() {
-    if command -v session-manager-plugin >/dev/null; then
-        return 0
-    fi
-    d="/tmp/ssm"
-    mkdir -p "$d"
-    (
-        cd "$d" || exit 1
-        curl -s -L -O "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb"
-        ar x session-manager-plugin.deb data.tar.gz
-        tar -xf data.tar.gz
-        sudo cp usr/local/sessionmanagerplugin/bin/session-manager-plugin /usr/local/bin/
-    )
-    rm -rf "$d"
-}
-
 install_hyper() {
     if command -v hyper >/dev/null; then
         return 0
@@ -114,13 +100,15 @@ configure_iptables() {
     sudo systemctl enable --now iptables
 }
 
-setup_node() {
-    fnm install --lts
-    fnm default lts-latest
-    eval "$(fnm env --shell bash)"
-    npm install -g npm@latest
-    npm completion | sudo tee /etc/bash_completion.d/npm >/dev/null
-    corepack enable
+configure_arch() {
+    sudo timedatectl set-ntp true
+    sudo usermod -aG docker,wireshark "$USER"
+    sudo systemctl enable --now docker
+    configure_backlight
+    configure_iptables
+    sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+    sudo rm -f /etc/systemd/network/20-ethernet.network
+    install_hyper
 }
 
-main
+main "$@"
