@@ -36,9 +36,12 @@ main() {
     setup_node
     install_node_packages
 
+    #nvim +":checkhealth"
     #nvim +":TSUninstall all"
     #nvim +":TSInstall all"
-    #nvim +":checkhealth"
+    #nvim +":GoInstallBinaries"
+
+    nvim +":helptags ALL" +":TSUpdate all" +":GoUpdateBinaries" +qall
 }
 
 install_go_packages() {
