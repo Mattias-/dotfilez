@@ -29,6 +29,9 @@ main() {
 
     install_hyper
 
+    nvim +":PlugInstall" +qall
+    nvim +":helptags ALL" +qall
+
     sudo timedatectl set-ntp true
     sudo usermod -aG docker,wireshark "$USER"
     sudo systemctl enable --now docker

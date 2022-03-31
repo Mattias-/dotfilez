@@ -41,7 +41,8 @@ main() {
     #nvim +":TSInstall all"
     #nvim +":GoInstallBinaries"
 
-    nvim +":helptags ALL" +":TSUpdate all" +":GoUpdateBinaries" +qall
+    nvim +":PlugInstall" +qall
+    nvim +":helptags ALL" +qall
 }
 
 install_go_packages() {

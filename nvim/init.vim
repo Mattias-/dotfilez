@@ -1,6 +1,25 @@
 if has("nvim")
     tnoremap <Esc> <C-\><C-n>
 
+call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
+
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'chriskempson/base16-vim'
+Plug 'itchyny/lightline.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'editorconfig/editorconfig-vim'
+
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+
+Plug 'neovim/nvim-lspconfig'
+
+call plug#end()
+
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained",
@@ -20,25 +39,25 @@ lspconfig.cssls.setup{}
 lspconfig.html.setup{}
 lspconfig.tsserver.setup{}
 
-vim.o.completeopt = "menuone,noselect"
-require('compe').setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 1;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = true;
-  source = {
-    nvim_lsp = true;
-    nvim_lua = true;
-  };
-}
+--vim.o.completeopt = "menuone,noselect"
+--require('compe').setup {
+--  enabled = true;
+--  autocomplete = true;
+--  debug = false;
+--  min_length = 1;
+--  preselect = 'enable';
+--  throttle_time = 80;
+--  source_timeout = 200;
+--  incomplete_delay = 400;
+--  max_abbr_width = 100;
+--  max_kind_width = 100;
+--  max_menu_width = 100;
+--  documentation = true;
+--  source = {
+--    nvim_lsp = true;
+--    nvim_lua = true;
+--  };
+--}
 
 require('telescope').setup{
   defaults = {
@@ -65,7 +84,7 @@ let g:airline_right_sep=''
 let g:neomake_verbose = 0
 autocmd! BufEnter,BufWritePost * Neomake
 
-let g:python_highlight_all = 1
+"let g:python_highlight_all = 1
 
 let g:terraform_fmt_on_save=1
 
@@ -76,7 +95,7 @@ let NERDTreeIgnore = ['\.pyc$']
 map <C-n> :NERDTreeToggle<CR>
 map <C-m> :NERDTreeFind<CR>
 
-let g:grepper = { 'tools': ['git', 'ag', 'grep'] }
+"let g:grepper = { 'tools': ['git', 'ag', 'grep'] }
 
 nnoremap <leader>g <cmd>lua require('telescope.builtin').grep_string()<cr>
 nnoremap <C-p> <cmd>lua require('telescope.builtin').git_files()<cr>
@@ -154,8 +173,6 @@ set listchars=space:·,trail:·,tab:▸\ ,nbsp:_,precedes:«,extends:»,eol:↲
 
 filetype indent on
 filetype plugin on
-
-let python_highlight_all=1
 
 let mapleader = "\<Space>"
 map <leader>w :set wrap! wrap?<cr>
