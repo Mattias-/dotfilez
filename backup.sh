@@ -15,7 +15,7 @@ restore_paths=(
 backup_paths=(
     background.png
     .config
-    .aws
+    #    .aws
     .ssh
     kp
     projects
@@ -29,6 +29,8 @@ exclude_paths=(
     .config/spotify
     .config/VirtualBox
     .config/google-chrome
+    .config/yarn
+    .config/Code
 )
 
 backup() {
@@ -38,6 +40,7 @@ backup() {
 
     if $dry_run; then
         rsync_args+=("--dry-run")
+        rsync_args+=("-v")
     fi
 
     for ep in ${exclude_paths[*]}; do
@@ -48,6 +51,11 @@ backup() {
         "${rsync_args[@]}" \
         "${backup_paths[@]}" \
         "$dest"
+
+    if $dry_run; then
+        echo "Done"
+        return
+    fi
 
     find "$dest" -type f -size +50M
     tar -czf "$dest.tar.gz" "$dest"
@@ -69,4 +77,5 @@ restore() {
     #cp -ri $1/.config/rclone ./.config/
 }
 
-restore "$1"
+#restore "$1"
+backup
