@@ -51,6 +51,26 @@ lspconfig.cssls.setup{}
 lspconfig.html.setup{}
 lspconfig.tsserver.setup{}
 
+local black = require "efm/black"
+local prettier = require "efm/prettier"
+local shellcheck = require "efm/shellcheck"
+local shfmt = require "efm/shfmt"
+
+lspconfig.efm.setup {
+    init_options = {documentFormatting = true},
+    settings = {
+        rootMarkers = {".git/"},
+        languages = {
+            python = { black },
+            html = { prettier },
+            markdown = { prettier },
+            sh = { shellcheck, shfmt },
+        }
+    }
+}
+
+vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
+
 vim.o.completeopt = "menu,menuone,noselect"
 
 local cmp = require'cmp'
@@ -127,15 +147,9 @@ let g:airline_powerline_fonts = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 
-let g:neomake_verbose = 0
-autocmd! BufEnter,BufWritePost * Neomake
-
-"let g:python_highlight_all = 1
+autocmd! BufEnter,BufWritePost * Format
 
 let g:terraform_fmt_on_save=1
-
-let g:shfmt_fmt_on_save = 1
-let g:shfmt_extra_args = '-i 4'
 
 let NERDTreeIgnore = ['\.pyc$']
 map <C-n> :NERDTreeToggle<CR>
