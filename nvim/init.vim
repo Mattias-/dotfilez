@@ -58,6 +58,7 @@ local shfmt = require "efm/shfmt"
 
 lspconfig.efm.setup {
     init_options = {documentFormatting = true},
+    filetypes = { "python", "sh", "html", "markdown" },
     settings = {
         rootMarkers = {".git/"},
         languages = {
