@@ -19,6 +19,7 @@ npm_packages=(
     pyright
     typescript-language-server
     typescript
+    aws-cdk
 )
 
 go_packages=(
