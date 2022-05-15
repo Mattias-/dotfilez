@@ -118,6 +118,7 @@ pacman_packages=(
     ttf-dejavu
     ttf-liberation
     ttf-roboto
+    ttf-fira-code
     noto-fonts-emoji
 )
 

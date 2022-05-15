@@ -34,7 +34,7 @@ call plug#end()
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",
+  ensure_installed = "all",
   highlight = {
     enable = true,
   },
@@ -148,7 +148,7 @@ let g:airline_powerline_fonts = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 
-autocmd! BufEnter,BufWritePost * Format
+"autocmd! BufEnter,BufWritePost * Format
 
 let g:terraform_fmt_on_save=1
 
