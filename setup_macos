@@ -17,11 +17,9 @@ main() {
 
     configure_macos
 
-    #nvim +":checkhealth"
-    #nvim +":TSUninstall all"
-    #nvim +":TSInstall all"
-    #nvim +":GoInstallBinaries"
     nvim +":PlugInstall" +qall
+    nvim +":PlugUpgrade" +qall
+    nvim +":PlugUpdate" +qall
     nvim +":helptags ALL" +qall
     ln -sf "$(command -v nvim)" "$HOME/bin/vi"
     ln -sf "$(command -v nvim)" "$HOME/bin/vim"
