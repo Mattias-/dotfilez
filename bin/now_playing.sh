@@ -11,5 +11,5 @@ else
 fi
 
 if [ "$SPOTIFY_ARTIST" != "" ] || [ "$SPOTIFY_SHOW_NAME" != "" ]; then
-    echo " ${SPOTIFY_TITLE:0:40} • ${SPOTIFY_ARTIST:0:40}${SPOTIFY_SHOW_NAME:0:40}"
+    echo "♫ ${SPOTIFY_TITLE:0:40} • ${SPOTIFY_ARTIST:0:40}${SPOTIFY_SHOW_NAME:0:40}"
 fi
