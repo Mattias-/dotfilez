@@ -38,6 +38,7 @@ require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
   },
+  ignore_install = { "phpdoc" },
   indent = {
     enable = true
   }
@@ -92,6 +93,13 @@ cmp.setup({
       c = cmp.mapping.close(),
     }),
     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    ['<Tab>'] = function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end,
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
@@ -153,8 +161,8 @@ let g:airline_right_sep=''
 let g:terraform_fmt_on_save=1
 
 let NERDTreeIgnore = ['\.pyc$']
-map <C-n> :NERDTreeToggle<CR>
-map <C-m> :NERDTreeFind<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <C-m> :NERDTreeFind<CR>
 
 "let g:grepper = { 'tools': ['git', 'ag', 'grep'] }
 
