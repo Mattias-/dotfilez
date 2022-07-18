@@ -29,7 +29,6 @@ go_packages=(
     golang.org/x/tools/gopls@latest
     github.com/golangci/golangci-lint/cmd/golangci-lint@v1.45.2
     github.com/aquasecurity/tfsec/cmd/tfsec@latest
-    github.com/nektos/act@latest
     github.com/swaggo/swag/cmd/swag@latest
 )
 
