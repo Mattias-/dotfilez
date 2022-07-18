@@ -82,11 +82,11 @@ truncation_length = 4
 format = "[$branch]($style) "
 
 [aws]
-format = ' [$profile]($style) '
+format = "[$profile]($style) "
 disabled = false
 
 [gcloud]
-disabled = false
+disabled = true
 symbol = "☁️ "
 format = '[$symbol$project]($style) '
 
@@ -98,6 +98,10 @@ format = '[$symbol$context( \($namespace\))]($style) '
 
 [nodejs]
 symbol=""
+format="[$symbol($version )]($style)"
+
+[package]
+disabled = true
 
 [golang]
 disabled = true
