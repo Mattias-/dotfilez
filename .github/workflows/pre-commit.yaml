@@ -15,10 +15,6 @@ jobs:
       with:
         go-version: '1.18'
     - run: |
-        go env
         go install mvdan.cc/sh/v3/cmd/shfmt@latest
-        echo $PATH
-        ls -l $GOPATH/bin
-        which shfmt
     - uses: actions/setup-python@v3
     - uses: pre-commit/action@v3.0.0
