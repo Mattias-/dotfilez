@@ -90,8 +90,8 @@ pacman_packages=(
     pipewire
     pipewire-alsa
     pipewire-jack
-    pipewire-media-session
     pipewire-pulse
+    wireplumber
     gst-plugin-pipewire
     libpulse
 
