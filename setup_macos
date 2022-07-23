@@ -4,6 +4,7 @@ set -euo pipefail
 source ./packages.sh
 
 main() {
+    mkdir -p ~/screenshots
     mkdir -p ~/projects
     mkdir -p ~/mnt
     mkdir -p ~/bin
@@ -69,25 +70,29 @@ install_macos_packages() {
 }
 
 configure_macos() {
-    defaults write NSGlobalDomain KeyRepeat -int 1
-    defaults write NSGlobalDomain InitialKeyRepeat -int 12
-    defaults write com.apple.dock autohide -bool true
-    defaults write com.Apple.Dock show-recents -bool false
-    defaults write com.apple.screensaver askForPassword -int 1
-    defaults write com.apple.screensaver askForPasswordDelay -int 0
-    defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-    defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
     defaults write .GlobalPreferences com.apple.mouse.scaling 0.5
-
-    defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
     defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-    defaults write com.apple.finder AppleShowAllFiles -bool true
-    defaults write com.apple.finder QuitMenuItem -bool true
-    defaults write com.apple.finder ShowStatusBar -bool true
-    defaults write com.apple.finder ShowPathbar -bool true
-    defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+    defaults write NSGlobalDomain InitialKeyRepeat -int 12
+    defaults write NSGlobalDomain KeyRepeat -int 1
+    defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+    defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+    defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+    defaults write com.apple.dock show-recents -bool false
     defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
     defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+    defaults write com.apple.dock autohide -bool true
+    defaults write com.apple.finder AppleShowAllFiles -bool true
+    defaults write com.apple.finder QuitMenuItem -bool true
+    defaults write com.apple.finder ShowPathbar -bool true
+    defaults write com.apple.finder ShowStatusBar -bool true
+    defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+    defaults write com.apple.screencapture location ~/screenshots
+    defaults write com.apple.screensaver askForPassword -int 1
+    defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+    defaults write NSGlobalDomain AppleInterfaceStyle Dark
+    defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool false
+
 }
 
 main "$@"
