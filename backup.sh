@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-dry_run=false
+dry_run=true
 encrypt=true
 
 restore_paths=(
@@ -43,7 +43,7 @@ backup() {
         rsync_args+=("-v")
     fi
 
-    for ep in ${exclude_paths[*]}; do
+    for ep in "${exclude_paths[@]}"; do
         rsync_args+=("--exclude=$ep")
     done
 
@@ -66,7 +66,7 @@ backup() {
 
 restore() {
     #gpg --decrypt "$1.tar.gz.gpg" | tar -xz
-    for rp in ${restore_paths[*]}; do
+    for rp in "${restore_paths[@]}"; do
         echo "cp -ri $1/$rp ~"
     done
     #cp -ri $1/.ssh ~
