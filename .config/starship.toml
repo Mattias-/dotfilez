@@ -97,7 +97,7 @@ format = '[$symbol$context( \($namespace\))]($style) '
 "gke_.*_(?P<cluster>[\\w-]+)" = "gke-$cluster"
 
 [nodejs]
-symbol=""
+#symbol=""
 format="[$symbol($version )]($style)"
 
 [package]
