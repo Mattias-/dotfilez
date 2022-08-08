@@ -49,8 +49,19 @@ lspconfig.gopls.setup{}
 lspconfig.pyright.setup{}
 lspconfig.dockerls.setup{}
 lspconfig.cssls.setup{}
-lspconfig.html.setup{}
-lspconfig.tsserver.setup{}
+--lspconfig.html.setup{}
+lspconfig.tsserver.setup{
+    init_options = {documentFormatting = false},
+    settings = {documentFormatting = false},
+    indent = {
+        enable = false
+    },
+    on_attach = function (client, bufnr)
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+        --lspconfig.tsserver(client, bufnr)
+    end
+}
 
 local black = require "efm/black"
 local prettier = require "efm/prettier"
@@ -59,12 +70,13 @@ local shfmt = require "efm/shfmt"
 
 lspconfig.efm.setup {
     init_options = {documentFormatting = true},
-    filetypes = { "python", "sh", "markdown" },
+    filetypes = { "python", "sh", "markdown", "html", "typescript"},
     settings = {
         rootMarkers = {".git/"},
         languages = {
             python = { black },
             html = { prettier },
+            typescript = { prettier },
             markdown = { prettier },
             sh = { shellcheck, shfmt },
         }
@@ -156,7 +168,7 @@ let g:airline_powerline_fonts = 1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 
-"autocmd! BufEnter,BufWritePost * Format
+autocmd! BufEnter,BufWritePost * Format
 
 let g:terraform_fmt_on_save=1
 
