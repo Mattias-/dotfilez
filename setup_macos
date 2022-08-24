@@ -77,10 +77,12 @@ configure_macos() {
     defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
     defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
     defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
-    defaults write com.apple.dock show-recents -bool false
     defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
     defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
     defaults write com.apple.dock autohide -bool true
+    defaults write com.apple.dock orientation -string "right"
+    defaults write com.apple.dock persistent-apps -array
+    defaults write com.apple.dock show-recents -bool false
     defaults write com.apple.finder AppleShowAllFiles -bool true
     defaults write com.apple.finder QuitMenuItem -bool true
     defaults write com.apple.finder ShowPathbar -bool true
@@ -93,6 +95,13 @@ configure_macos() {
     defaults write NSGlobalDomain AppleInterfaceStyle Dark
     defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool false
 
+    if [ "$(scutil --get HostName)" = "xxxx" ]; then
+        echo YEP
+    else
+        scutil --set LocalHostName "xxxx"
+        scutil --set ComputerName "xxxx"
+        scutil --set HostName "xxxx"
+    fi
 }
 
 main "$@"
