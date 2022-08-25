@@ -1,7 +1,6 @@
 [user]
     name = Mattias Appelgren
     email = mattias@ppelgren.se
-    signingkey = mattias@ppelgren.se
 [include]
     path = ~/.config/git/extraconfig
 [core]
@@ -10,8 +9,6 @@
     attributesfile = ~/.config/git/gitattributes_global
 [credential]
     helper = cache --timeout=3600
-[init]
-    defaultBranch = master
 [diff]
     algorithm = patience
 [color]
@@ -21,6 +18,7 @@
     ui = auto
 [push]
     default = simple
+    autoSetupRemote = true
 [mergetool]
     keepBackup = false
 [mergetool "nvimdiff"]
@@ -32,7 +30,7 @@
     autoSquash = true
     autoStash = true
 [init]
-    defaultBranch = master
+    defaultBranch = main
 [pull]
     rebase = true
 [rerere]
@@ -47,3 +45,13 @@
     grepblame = "!ggb() { git grep -n $@ | while IFS=: read i j k; do git blame -f -L $j,$j $i; done }; ggb"
 [pager]
     lgh = less --QUIT-AT-EOF
+[gpg]
+    format = ssh
+[gpg "ssh"]
+    allowedSignersFile = ~/config/git/allowed_signers
+#[commit]
+#    gpgsign = true
+#[tag]
+#    gpgsign = true
+#[user]
+#    signingkey = ssh-ed25519 AAAA
