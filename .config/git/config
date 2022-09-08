@@ -55,3 +55,4 @@
 #    gpgsign = true
 #[user]
 #    signingkey = ssh-ed25519 AAAA
+## echo "mattias@a.a ssh-ed25519 AAAA" >~/.config/git/allowed_signers
