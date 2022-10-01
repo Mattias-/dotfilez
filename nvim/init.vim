@@ -170,32 +170,20 @@ require("trouble").setup {
 EOF
 endif
 
-let g:airline_powerline_fonts = 1
-let g:airline_left_sep=''
-let g:airline_right_sep=''
-
-autocmd! BufEnter,BufWritePost * Format
-
 let g:terraform_fmt_on_save=1
 
 let NERDTreeIgnore = ['\.pyc$']
-nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <C-m> :NERDTreeFind<CR>
-
-"let g:grepper = { 'tools': ['git', 'ag', 'grep'] }
-
-nnoremap <leader>g <cmd>lua require('telescope.builtin').grep_string()<cr>
-nnoremap <C-p> <cmd>lua require('telescope.builtin').git_files()<cr>
-nnoremap <C-g> <cmd>lua require('telescope.builtin').live_grep()<cr>
 
 let g:lightline = {
       \ 'colorscheme': 'seoul256',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ] ]
+      \             [ 'readonly', 'relativepath', 'modified' ] ]
       \ },
       \ }
 
+filetype indent on
+filetype plugin on
 syntax on
 set background=dark
 
@@ -216,9 +204,8 @@ set cursorline
 set lazyredraw
 set backspace=2
 set scrolloff=10
-
+set listchars=space:·,trail:·,tab:▸\ ,nbsp:_,precedes:«,extends:»,eol:↲
 set noswapfile
-
 set splitright
 set splitbelow
 
@@ -255,19 +242,20 @@ augroup templates
   autocmd BufNewFile *.* silent! execute '0r ~/.vim/templates/skeleton.'.expand("<afile>:e")
 augroup END
 
-set listchars=space:·,trail:·,tab:▸\ ,nbsp:_,precedes:«,extends:»,eol:↲
-
-filetype indent on
-filetype plugin on
+autocmd! BufEnter,BufWritePost * Format
+autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 
 let mapleader = "\<Space>"
 map <leader>w :set wrap! wrap?<cr>
-map <leader>p :set paste!<cr>
-map <silent> <leader>n :set number!<cr>
 map <leader>l :set list! list?<cr>
-map <leader>x :set cursorline!<cr>
-map <leader>s :setlocal spell! spelllang=en_us<cr>
 map <leader><space> za
 nmap <silent> <leader>h :noh<cr>
+"map <leader>p :set paste!<cr>
+"map <leader>x :set cursorline!<cr>
+"map <leader>s :setlocal spell! spelllang=en_us<cr>
 
-autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+nnoremap <leader>g <cmd>lua require('telescope.builtin').grep_string()<cr>
+nnoremap <C-p> <cmd>lua require('telescope.builtin').git_files()<cr>
+nnoremap <C-g> <cmd>lua require('telescope.builtin').live_grep()<cr>
+map <leader>n :NERDTreeFind<CR>
+nnoremap <C-n> :NERDTreeToggle<CR>
