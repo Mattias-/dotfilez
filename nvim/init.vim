@@ -62,7 +62,6 @@ lspconfig.tsserver.setup{
     on_attach = function (client, bufnr)
         client.resolved_capabilities.document_formatting = false
         client.resolved_capabilities.document_range_formatting = false
-        --lspconfig.tsserver(client, bufnr)
     end
 }
 
@@ -86,7 +85,7 @@ lspconfig.efm.setup {
     }
 }
 
-vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
+vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format({ async = false })' ]])
 
 vim.o.completeopt = "menu,menuone,noselect"
 
@@ -237,12 +236,14 @@ autocmd BufWinEnter * if &l:buftype != 'help' | match Error /\s\+$\|\t \| \t/
 autocmd InsertLeave * match Error /\s\+$\|\t \| \t/
 set colorcolumn=80
 
+set omnifunc=v:lua.vim.lsp.omnifunc
+
 augroup templates
   au!
   autocmd BufNewFile *.* silent! execute '0r ~/.vim/templates/skeleton.'.expand("<afile>:e")
 augroup END
 
-autocmd! BufEnter,BufWritePost * Format
+autocmd! BufEnter,BufWritePost * silent Format
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 
 let mapleader = "\<Space>"
