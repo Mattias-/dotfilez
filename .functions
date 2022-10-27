@@ -43,3 +43,11 @@ aws-sts-decode() {
         --encoded-message "$1" |
         jq
 }
+
+genrand() {
+    openssl rand -base64 12 | tr '[:upper:]' '[:lower:]' | cut -c -10
+}
+
+genuuid() {
+    uuidgen | tr '[:upper:]' '[:lower:]'
+}
