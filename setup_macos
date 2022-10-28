@@ -17,6 +17,7 @@ main() {
     install_node_packages
 
     configure_macos
+    set_hostname
 
     nvim +":PlugInstall" +qall
     nvim +":PlugUpgrade" +qall
@@ -53,8 +54,7 @@ setup_node() {
 }
 
 install_macos_packages() {
-    #sudo softwareupdate -i -a
-    if ! xcode-select -p >/dev/null; then
+    if ! xcode-select -p >/dev/null || ! [ -d "/Library/Developer/CommandLineTools/usr/bin" ]; then
         echo "Install Xcode command line tools and run script again"
         echo "xcode-select --install"
         exit 1
@@ -66,7 +66,6 @@ install_macos_packages() {
     arch -arm64 brew update
     arch -arm64 brew upgrade
     arch -arm64 brew bundle
-
 }
 
 configure_macos() {
@@ -95,12 +94,25 @@ configure_macos() {
     defaults write NSGlobalDomain AppleInterfaceStyle Dark
     defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool false
 
-    if [ "$(scutil --get HostName)" = "xxxx" ]; then
-        echo YEP
+}
+
+set_hostname() {
+    current_cn="$(scutil --get ComputerName)"
+    cat <<EOF
+LocalHostName: $(scutil --get LocalHostName)
+ComputerName:  ${current_cn}
+HostName:      $(scutil --get HostName)
+EOF
+
+    # If computer name contains unwanted characters
+    if [[ $current_cn != $(tr -d '[:upper:][:digit:]- ()' <<<"$current_cn") ]]; then
+        read -r -p "Enter a new hostname: " new_hn
+        echo "Setting hostname to: $new_hn"
+        scutil --set LocalHostName "$new_hn"
+        scutil --set ComputerName "$new_hn"
+        scutil --set HostName "$new_hn"
     else
-        scutil --set LocalHostName "xxxx"
-        scutil --set ComputerName "xxxx"
-        scutil --set HostName "xxxx"
+        echo "Hostname OK"
     fi
 }
 
