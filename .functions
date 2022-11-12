@@ -51,3 +51,12 @@ genrand() {
 genuuid() {
     uuidgen | tr '[:upper:]' '[:lower:]'
 }
+
+sigv4curl() {
+    kf=$(find ~/.aws/cli/cache -type f -name '*.json' | head -1)
+    user=$(jq -r '.Credentials | "\(.AccessKeyId):\(.SecretAccessKey)"' "$kf")
+    sesstok=$(jq -r '.Credentials.SessionToken' "$kf")
+    curl --user "$user" --header "x-amz-security-token: $sesstok" \
+        --aws-sigv4 "aws:amz:eu-west-1:execute-api" \
+        "$@"
+}
