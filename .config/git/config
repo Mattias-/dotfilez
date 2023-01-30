@@ -1,7 +1,7 @@
 [user]
     name = Mattias Appelgren
     email = mattias@ppelgren.se
-[include]
+[includeIf "gitdir:~/work/"]
     path = ~/.config/git/extraconfig
 [core]
     editor = vi
