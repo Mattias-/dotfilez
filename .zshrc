@@ -48,8 +48,8 @@ path=("/usr/local/go/bin" "$GOPATH/bin" "${path[@]}")
 path=("$HOME/.local/bin" "$HOME/bin" "${path[@]}")
 path=("${KREW_ROOT:-$HOME/.krew}/bin" "${path[@]}")
 
-if [ -d "$HOME/Library/Python/3.9/bin" ]; then
-    path+=("$HOME/Library/Python/3.9/bin")
+if [ -d "$HOME/Library/Python/3.10/bin" ]; then
+    path+=("$HOME/Library/Python/3.10/bin")
 fi
 
 if [ -d "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk" ]; then
