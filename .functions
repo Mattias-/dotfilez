@@ -53,9 +53,9 @@ genuuid() {
 }
 
 sigv4curl() {
-    kf=$(find ~/.aws/cli/cache -type f -name '*.json' | head -1)
-    user=$(jq -r '.Credentials | "\(.AccessKeyId):\(.SecretAccessKey)"' "$kf")
-    sesstok=$(jq -r '.Credentials.SessionToken' "$kf")
+    creds=$(jq -c -s '. |= sort_by(.Credentials.Expiration) | last | .Credentials' <~/.aws/cli/cache/*.json)
+    user=$(jq -r '"\(.AccessKeyId):\(.SecretAccessKey)"' <<<"$creds")
+    sesstok=$(jq -r '.SessionToken' <<<"$creds")
     curl --user "$user" --header "x-amz-security-token: $sesstok" \
         --aws-sigv4 "aws:amz:eu-west-1:execute-api" \
         "$@"
