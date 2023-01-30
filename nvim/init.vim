@@ -30,9 +30,9 @@ Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'hrsh7th/cmp-vsnip'
 
-Plug 'kyazdani42/nvim-web-devicons'
 Plug 'folke/trouble.nvim'
 
+Plug 'nvim-tree/nvim-web-devicons'
 call plug#end()
 
 lua <<EOF
