@@ -11,6 +11,7 @@ pip_packages=(
     pre-commit
     pipenv
     pip
+    prowler-cloud
 )
 
 npm_packages=(
@@ -27,9 +28,10 @@ go_packages=(
     github.com/mattn/efm-langserver@latest
     github.com/goreleaser/goreleaser@latest
     golang.org/x/tools/gopls@latest
-    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.45.2
+    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.50.1
     github.com/aquasecurity/tfsec/cmd/tfsec@latest
-    github.com/swaggo/swag/cmd/swag@latest
+    github.com/swaggo/swag/cmd/swag@v1.8.7
+    github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest
 )
 
 pacman_packages=(
