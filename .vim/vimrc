@@ -1,0 +1,65 @@
+if &compatible
+  set nocompatible
+endif
+
+syntax on
+colorscheme default
+set background=dark
+filetype indent on
+filetype plugin on
+
+set number
+set ruler
+set laststatus=2
+"set showcmd
+"set cursorline
+"set lazyredraw
+set backspace=2
+set scrolloff=10
+set listchars=space:·,trail:·,tab:▸\ ,nbsp:_,precedes:«,extends:»,eol:↲
+set noswapfile
+"set splitright
+"set splitbelow
+"
+"" Autocomplete filenames
+set wildmenu
+"set wildignore=*.o,*.hi,*.pyc,*.pdf
+"
+"" Searching
+"set hlsearch
+set incsearch
+"set ignorecase
+"set smartcase
+"set iskeyword+=-
+"
+"" Tabs and indents
+"set tabstop=4
+"set softtabstop=4 " Make spaces feel like real tabs
+"set expandtab " When pressing tab, insert [tabstop] spaces
+"set shiftwidth=4 " When indenting use x spaces
+"set autoindent " Keep indentation from previous line
+"
+"" Folding
+"set foldmethod=expr
+"set foldlevelstart=10
+"
+"" Highlight whitespace errors and line length
+"autocmd BufWinEnter * if &l:buftype != 'help' | match Error /\s\+$\|\t \| \t/
+"autocmd InsertLeave * match Error /\s\+$\|\t \| \t/
+"set colorcolumn=80
+"
+"autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+"
+"let mapleader = "\<Space>"
+"map <leader>w :set wrap! wrap?<cr>
+"map <leader>l :set list! list?<cr>
+"map <leader><space> za
+"nmap <silent> <leader>h :noh<cr>
+"
+"" make netrw work like nerdtree
+"let g:netrw_banner = 0
+"let g:netrw_liststyle = 3
+"let g:netrw_browse_split = 4
+"let g:netrw_altv = 1
+"let g:netrw_winsize = 25
+"nmap <silent> <C-n> :Lexplore<CR>
