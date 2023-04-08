@@ -1,8 +1,5 @@
-if has("nvim")
-    tnoremap <Esc> <C-\><C-n>
-
-call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
-
+vim.cmd([[
+call plug#begin(stdpath('data') . '/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'scrooloose/nerdtree'
@@ -12,7 +9,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'editorconfig/editorconfig-vim'
 
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 
@@ -35,7 +31,69 @@ Plug 'folke/trouble.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 call plug#end()
 
-lua <<EOF
+set termguicolors
+colorscheme base16-default-dark
+" The default comment hl is really really bad
+highlight! link Comment Special
+
+set number
+set ruler
+set colorcolumn=80
+set laststatus=2
+set showcmd
+set cursorline
+set lazyredraw
+set backspace=2
+set scrolloff=10
+set listchars=space:·,trail:·,tab:▸\ ,nbsp:_,precedes:«,extends:»,eol:↲
+set noswapfile
+set splitright
+set splitbelow
+
+" Autocomplete filenames
+set wildmenu
+set wildignore=*.o,*.hi,*.pyc,*.pdf
+
+" Searching
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set iskeyword+=-
+
+" Tabs and indents
+set tabstop=4
+set softtabstop=4 " Make spaces feel like real tabs
+set expandtab " When pressing tab, insert [tabstop] spaces
+set shiftwidth=4 " When indenting use x spaces
+set autoindent " Keep indentation from previous line
+
+" Folding
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set foldlevelstart=10
+
+let NERDTreeIgnore = ['\.pyc$']
+
+command! Format execute 'lua vim.lsp.buf.format({ async = false })'
+autocmd! BufEnter,BufWritePost * silent Format
+
+" Highlight whitespace errors
+autocmd BufWinEnter * if &l:buftype != 'help' | match Error /\s\+$\|\t \| \t/
+autocmd InsertLeave * match Error /\s\+$\|\t \| \t/
+
+set omnifunc=v:lua.vim.lsp.omnifunc
+
+augroup templates
+  au!
+  autocmd BufNewFile *.* silent! execute '0r ~/.vim/templates/skeleton.'.expand("<afile>:e")
+augroup END
+
+autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
+]])
+
+vim.o.completeopt = "menu,menuone,noselect"
+
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "all",
   highlight = {
@@ -85,12 +143,9 @@ lspconfig.efm.setup {
     }
 }
 
-vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format({ async = false })' ]])
 
-vim.o.completeopt = "menu,menuone,noselect"
 
 local cmp = require'cmp'
-
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -166,97 +221,22 @@ require('telescope').setup{
 
 require("trouble").setup {
 }
-EOF
-endif
 
-let g:terraform_fmt_on_save=1
+vim.g.mapleader = ' '
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
+vim.keymap.set('', '<leader>l', ':set list! list?<cr>')
+vim.keymap.set('', '<leader>w', ':set wrap! wrap?<cr>')
+vim.keymap.set('', '<leader><space>', 'za')
+vim.keymap.set('n', '<leader>h', ':noh<cr>')
 
-let NERDTreeIgnore = ['\.pyc$']
+vim.keymap.set('', '<leader>n', ':NERDTreeFind<cr>')
+vim.keymap.set('n', '<C-n>', ':NERDTreeToggle<cr>')
 
-let g:lightline = {
-      \ 'colorscheme': 'seoul256',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'relativepath', 'modified' ] ]
-      \ },
-      \ }
+local telescope_builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>g', function() telescope_builtin.grep_string() end)
+vim.keymap.set('n', '<C-p>', function() telescope_builtin.git_files() end)
+vim.keymap.set('n', '<C-g>', function() telescope_builtin.live_grep() end)
 
-filetype indent on
-filetype plugin on
-syntax on
-set background=dark
-
-if v:version >= 800 || has("nvim") && match($TERM, "screen") == -1
-  set termguicolors
-  colorscheme base16-default-dark
-  " The default comment hl is really really bad
-  highlight! link Comment Special
-else
-  colorscheme default
-endif
-
-set number
-set ruler
-set laststatus=2
-set showcmd
-set cursorline
-set lazyredraw
-set backspace=2
-set scrolloff=10
-set listchars=space:·,trail:·,tab:▸\ ,nbsp:_,precedes:«,extends:»,eol:↲
-set noswapfile
-set splitright
-set splitbelow
-
-" Autocomplete filenames
-set wildmenu
-set wildignore=*.o,*.hi,*.pyc,*.pdf
-
-" Searching
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
-set iskeyword+=-
-
-" Tabs and indents
-set tabstop=4
-set softtabstop=4 " Make spaces feel like real tabs
-set expandtab " When pressing tab, insert [tabstop] spaces
-set shiftwidth=4 " When indenting use x spaces
-set autoindent " Keep indentation from previous line
-
-" Folding
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set foldlevelstart=10
-
-" Highlight whitespace errors and line length
-autocmd BufWinEnter * if &l:buftype != 'help' | match Error /\s\+$\|\t \| \t/
-autocmd InsertLeave * match Error /\s\+$\|\t \| \t/
-set colorcolumn=80
-
-set omnifunc=v:lua.vim.lsp.omnifunc
-
-augroup templates
-  au!
-  autocmd BufNewFile *.* silent! execute '0r ~/.vim/templates/skeleton.'.expand("<afile>:e")
-augroup END
-
-autocmd! BufEnter,BufWritePost * silent Format
-autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
-
-let mapleader = "\<Space>"
-map <leader>w :set wrap! wrap?<cr>
-map <leader>l :set list! list?<cr>
-map <leader><space> za
-nmap <silent> <leader>h :noh<cr>
-"map <leader>p :set paste!<cr>
-"map <leader>x :set cursorline!<cr>
-"map <leader>s :setlocal spell! spelllang=en_us<cr>
-
-nnoremap <leader>g <cmd>lua require('telescope.builtin').grep_string()<cr>
-nnoremap <C-p> <cmd>lua require('telescope.builtin').git_files()<cr>
-nnoremap <C-g> <cmd>lua require('telescope.builtin').live_grep()<cr>
-map <leader>n :NERDTreeFind<CR>
-nnoremap <C-n> :NERDTreeToggle<CR>
+vim.g.lightline = {
+    colorscheme = 'seoul256'
+}
