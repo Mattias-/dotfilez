@@ -90,10 +90,10 @@ configure_macos() {
     defaults write com.apple.screencapture location ~/screenshots
     defaults write com.apple.screensaver askForPassword -int 1
     defaults write com.apple.screensaver askForPasswordDelay -int 0
-
     defaults write NSGlobalDomain AppleInterfaceStyle Dark
     defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool false
-
+    #defaults write ~/Library/Preferences/com.apple.HIToolbox.plist AppleEnabledInputSources -array-add '{ InputSourceKind = "Keyboard Layout"; "KeyboardLayout ID" = 252; "KeyboardLayout Name" = ABC; }'
+    #defaults read com.apple.HIToolbox
 }
 
 set_hostname() {
