@@ -2,16 +2,22 @@ vim.cmd([[
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
+
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'chriskempson/base16-vim'
-Plug 'itchyny/lightline.vim'
+
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-neo-tree/neo-tree.nvim'
+
+Plug 'RRethy/nvim-base16'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'nvim-tree/nvim-web-devicons'
+
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-
 Plug 'neovim/nvim-lspconfig'
 
 Plug 'hrsh7th/nvim-cmp'
@@ -27,14 +33,10 @@ Plug 'rafamadriz/friendly-snippets'
 Plug 'hrsh7th/cmp-vsnip'
 
 Plug 'folke/trouble.nvim'
-
-Plug 'nvim-tree/nvim-web-devicons'
 call plug#end()
 
 set termguicolors
 colorscheme base16-default-dark
-" The default comment hl is really really bad
-highlight! link Comment Special
 
 set number
 set ruler
@@ -79,7 +81,7 @@ command! Format execute 'lua vim.lsp.buf.format({ async = false })'
 autocmd! BufEnter,BufWritePost * silent Format
 
 " Highlight whitespace errors
-autocmd BufWinEnter * if &l:buftype != 'help' | match Error /\s\+$\|\t \| \t/
+autocmd BufWinEnter * if &l:buftype == '' | match Error /\s\+$\|\t \| \t/
 autocmd InsertLeave * match Error /\s\+$\|\t \| \t/
 
 set omnifunc=v:lua.vim.lsp.omnifunc
@@ -91,6 +93,8 @@ augroup END
 
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
 ]])
+
+
 
 vim.o.completeopt = "menu,menuone,noselect"
 
@@ -222,6 +226,23 @@ require('telescope').setup{
 require("trouble").setup {
 }
 
+require('lualine').setup {
+  options = {
+    theme  = 'auto',
+    section_separators = '',
+    component_separators = '',
+  },
+}
+
+vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+require("neo-tree").setup {
+        close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+        popup_border_style = "rounded",
+        enable_git_status = true,
+        enable_diagnostics = true,
+}
+
+
 vim.g.mapleader = ' '
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 vim.keymap.set('', '<leader>l', ':set list! list?<cr>')
@@ -237,6 +258,5 @@ vim.keymap.set('n', '<leader>g', function() telescope_builtin.grep_string() end)
 vim.keymap.set('n', '<C-p>', function() telescope_builtin.git_files() end)
 vim.keymap.set('n', '<C-g>', function() telescope_builtin.live_grep() end)
 
-vim.g.lightline = {
-    colorscheme = 'seoul256'
-}
+-- The default comment hl is really really bad
+vim.api.nvim_set_hl(0, "@comment", { link = "Special" })
