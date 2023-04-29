@@ -1,5 +1,6 @@
 with import <nixpkgs> {}; [
   awscli2
+  aws-sam-cli
   btop
   cfssl
   coreutils-prefixed
@@ -19,6 +20,7 @@ with import <nixpkgs> {}; [
   ripgrep
   shellcheck
   shfmt
+  sad
   socat
   ssm-session-manager-plugin
   starship

@@ -22,6 +22,9 @@ npm_packages=(
     typescript
     aws-cdk
     prettier
+    rdme
+    @redocly/cli
+    @stoplight/spectral-cli
 )
 
 go_packages=(
