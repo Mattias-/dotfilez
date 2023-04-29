@@ -49,10 +49,6 @@
     format = ssh
 [gpg "ssh"]
     allowedSignersFile = ~/config/git/allowed_signers
-#[commit]
-#    gpgsign = true
-#[tag]
-#    gpgsign = true
-#[user]
-#    signingkey = ssh-ed25519 AAAA
-## echo "mattias@a.a ssh-ed25519 AAAA" >~/.config/git/allowed_signers
+
+#echo "[commit]\n    gpgsign = true\n[tag]\n    gpgsign = true\n[user]\n    signingkey = $(cat ~/.ssh/mattias.pub)" >~/.config/git/extraconfig
+#echo "email@example.com $(cat ~/.ssh/mattias.pub)" >~/.config/git/allowed_signers
