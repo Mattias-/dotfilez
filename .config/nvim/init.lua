@@ -142,6 +142,7 @@ lspconfig.efm.setup {
             typescript = { prettier },
             markdown = { prettier },
             sh = { shellcheck, shfmt },
+            zsh = { shellcheck, shfmt },
         }
     }
 }
