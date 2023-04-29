@@ -1,9 +1,0 @@
-[submodule "nvim/pack/my-plugins/start/vim-shfmt"]
-	path = nvim/pack/my-plugins/start/vim-shfmt
-	url = https://github.com/z0mbix/vim-shfmt.git
-[submodule "nvim/pack/my-plugins/start/vim-terraform"]
-	path = nvim/pack/my-plugins/start/vim-terraform
-	url = https://github.com/hashivim/vim-terraform.git
-[submodule "nvim/pack/my-plugins/start/neomake"]
-	path = nvim/pack/my-plugins/start/neomake
-	url = https://github.com/neomake/neomake.git
