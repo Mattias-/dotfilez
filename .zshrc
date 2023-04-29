@@ -1,23 +1,15 @@
 #!/bin/zsh
 # shellcheck shell=bash
 
-if [ -d "/opt/homebrew/share/zsh/site-functions" ]; then
-    fpath=("/opt/homebrew/share/zsh/site-functions" "${fpath[@]}")
-fi
+bindkey -e
 
 unsetopt menu_complete # do not autoselect the first completion entry
 unsetopt flowcontrol
 setopt auto_menu # show completion menu on successive tab press
 setopt complete_in_word
 setopt always_to_end
-
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' list-colors ''
-
-autoload -Uz compinit
-compinit
-
-bindkey -e
 
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
@@ -34,36 +26,41 @@ setopt inc_append_history
 export EDITOR="vi"
 export VISUAL=$EDITOR
 export MANPAGER="nvim +Man!"
-
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
-
 export FZF_DEFAULT_COMMAND="rg --files --hidden --iglob '!.git/'"
-
 export GOPATH=$HOME/go
+export NODE_PATH=$HOME/.npm-packages/lib/node_modules
 
-path=("/usr/local/sbin" "${path[@]}")
-path=("/usr/local/go/bin" "$GOPATH/bin" "${path[@]}")
-path=("$HOME/.local/bin" "$HOME/bin" "${path[@]}")
-path=("${KREW_ROOT:-$HOME/.krew}/bin" "${path[@]}")
-
-if [ -d "$HOME/Library/Python/3.10/bin" ]; then
-    path+=("$HOME/Library/Python/3.10/bin")
+if [ -d "$HOME/.nix-profile/share/man" ]; then
+    manpath=("$HOME/.nix-profile/share/man" "${manpath[@]}")
 fi
 
-if [ -d "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk" ]; then
-    source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
-    source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
+if [ -d "$HOME/.nix-profile/share/zsh/site-functions" ]; then
+    fpath=("$HOME/.nix-profile/share/zsh/site-functions" "${fpath[@]}")
+fi
+
+if [ -d "/opt/homebrew/share/zsh/site-functions" ]; then
+    fpath=("/opt/homebrew/share/zsh/site-functions" "${fpath[@]}")
 fi
 
 if [ -f /opt/homebrew/bin/brew ]; then
-    path=("/opt/homebrew/bin" "/opt/homebrew/sbin" "${path[@]}")
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+path=("$GOPATH/bin" "/usr/local/go/bin" "${path[@]}")
+path=("$HOME/.npm-packages/bin" "${path[@]}")
+
+if [ -d "$HOME/Library/Python/3.11/bin" ]; then
+    path=("$HOME/Library/Python/3.11/bin" "${path[@]}")
+fi
+
+path=("$HOME/bin" "${path[@]}")
+
 typeset -U path
 typeset -U fpath
+typeset -U manpath
 
 if [ -r "$HOME/.functions" ] && [ -f "$HOME/.functions" ]; then
     # shellcheck disable=SC1090
@@ -78,5 +75,7 @@ if [ -r "$HOME/.workaliases" ] && [ -f "$HOME/.workaliases" ]; then
     source "$HOME/.workaliases"
 fi
 
-eval "$(fnm env --shell zsh)"
 eval "$(starship init zsh)"
+
+autoload -Uz compinit
+compinit

@@ -1,0 +1,30 @@
+with import <nixpkgs> {}; [
+  awscli2
+  btop
+  cfssl
+  coreutils-prefixed
+  fd
+  ffmpeg
+  fzf
+  gh
+  gnupg
+  go
+  google-cloud-sdk
+  htop
+  jq
+  neofetch
+  nmap
+  nodejs
+  python3
+  ripgrep
+  shellcheck
+  shfmt
+  socat
+  ssm-session-manager-plugin
+  starship
+  tcpdump
+  terraform
+  tmux
+  tree
+  yq-go
+]
