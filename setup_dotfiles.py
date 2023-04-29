@@ -19,7 +19,7 @@ FILES = [
     ".hyper.js",
     ".grc",
     ".zshrc",
-    ".nvimrc",
+    ".npmrc",
 ]
 
 
