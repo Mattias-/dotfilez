@@ -51,12 +51,7 @@ fi
 
 path=("$GOPATH/bin" "/usr/local/go/bin" "${path[@]}")
 path=("$HOME/.npm-packages/bin" "${path[@]}")
-
-if [ -d "$HOME/Library/Python/3.11/bin" ]; then
-    path=("$HOME/Library/Python/3.11/bin" "${path[@]}")
-fi
-
-path=("$HOME/bin" "${path[@]}")
+path=("$HOME/bin" "$HOME/.local/bin" "${path[@]}")
 
 typeset -U path
 typeset -U fpath

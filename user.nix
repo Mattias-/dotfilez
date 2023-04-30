@@ -1,9 +1,12 @@
 with import <nixpkgs> {}; [
-  awscli2
   aws-sam-cli
+  awscli2
   btop
   cfssl
+  colima
   coreutils-prefixed
+  docker-buildx
+  docker-client
   fd
   ffmpeg
   fzf
@@ -14,13 +17,14 @@ with import <nixpkgs> {}; [
   htop
   jq
   neofetch
+  neovim
   nmap
   nodejs
   python3
   ripgrep
+  sad
   shellcheck
   shfmt
-  sad
   socat
   ssm-session-manager-plugin
   starship
@@ -28,5 +32,6 @@ with import <nixpkgs> {}; [
   terraform
   tmux
   tree
+  tree-sitter
   yq-go
 ]
