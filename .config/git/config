@@ -8,7 +8,8 @@
     excludesfile = ~/.config/git/gitignore_global
     attributesfile = ~/.config/git/gitattributes_global
 [credential]
-    helper = cache --timeout=3600
+#    helper = cache --timeout=3600
+    helper = osxkeychain
 [diff]
     algorithm = patience
 [color]
@@ -37,8 +38,8 @@
     enabled = true
     autoupdate = true
 [alias]
-    lg = log --graph --pretty=format:'%C(auto)%h%d %s %Cgreen(%cr) %Cblue%an%Creset'
-    lgh = log -10 --graph --pretty=format:'%C(auto)%h%d %s %Cgreen(%cr) %Cblue%an%Creset'
+    lg = log --graph --pretty=format:'%C(auto)%h%d %s %Cgreen(%cr) %Cblue%an %C(yellow)%G?'
+    lgh = log -10 --graph --pretty=format:'%C(auto)%h%d %s %Cgreen(%cr) %Cblue%an %C(yellow)%G?'
     assume = update-index --assume-unchanged
     unassume = update-index --no-assume-unchanged
     shw = "!f() { git show $(git rev-list HEAD --max-count=20 | grep -m1 ^$1) ${@:2}; }; f"
@@ -48,7 +49,11 @@
 [gpg]
     format = ssh
 [gpg "ssh"]
-    allowedSignersFile = ~/config/git/allowed_signers
+    allowedSignersFile = ~/.config/git/allowed_signers
+    defaultKeyCommand = ssh-add -L
+[commit]
+    gpgsign = true
+[tag]
+    gpgsign = true
 
-#echo "[commit]\n    gpgsign = true\n[tag]\n    gpgsign = true\n[user]\n    signingkey = $(cat ~/.ssh/mattias.pub)" >~/.config/git/extraconfig
-#echo "email@example.com $(cat ~/.ssh/mattias.pub)" >~/.config/git/allowed_signers
+#echo "email@example.com namespaces="git" $(cat ~/.ssh/KEYFILE.pub)" >~/.config/git/allowed_signers
