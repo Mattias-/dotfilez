@@ -19,6 +19,7 @@ Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'neovim/nvim-lspconfig'
+Plug 'jose-elias-alvarez/null-ls.nvim'
 
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
@@ -76,8 +77,14 @@ set foldlevelstart=10
 
 let NERDTreeIgnore = ['\.pyc$']
 
-command! Format execute 'lua vim.lsp.buf.format({ async = false })'
-autocmd! BufEnter,BufWritePost * silent Format
+command! Format execute 'call Format()'
+autocmd! BufEnter,BufWritePost * silent call Format()
+
+function! Format()
+  if &readonly != 1
+    lua vim.lsp.buf.format({ async = false })
+  endif
+endfunction
 
 " Highlight whitespace errors
 autocmd BufWinEnter * if &l:buftype == '' | match Error /\s\+$\|\t \| \t/
@@ -126,27 +133,56 @@ lspconfig.tsserver.setup{
     end
 }
 
-local black = require "efm/black"
-local prettier = require "efm/prettier"
-local shellcheck = require "efm/shellcheck"
-local shfmt = require "efm/shfmt"
+local null_ls = require("null-ls")
+null_ls.setup({
+    sources = {
+        null_ls.builtins.formatting.prettier,
+        null_ls.builtins.formatting.shfmt.with({ extra_args = { "-i=4" } }),
+        null_ls.builtins.diagnostics.shellcheck,
+        null_ls.builtins.code_actions.shellcheck,
+        null_ls.builtins.diagnostics.zsh,
+        null_ls.builtins.diagnostics.yamllint,
+        null_ls.builtins.formatting.black,
+    },
+})
 
-lspconfig.efm.setup {
-    init_options = {documentFormatting = true},
-    filetypes = { "python", "sh", "markdown", "html", "typescript"},
-    settings = {
-        rootMarkers = {".git/"},
-        languages = {
-            python = { black },
-            html = { prettier },
-            typescript = { prettier },
-            markdown = { prettier },
-            sh = { shellcheck, shfmt },
-            zsh = { shellcheck, shfmt },
-        }
-    }
-}
+-- Global mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
+-- Use LspAttach autocommand to only map the following keys
+-- after the language server attaches to the current buffer
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { buffer = ev.buf }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    --vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+    --vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+    vim.keymap.set('n', '<space>wl', function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, opts)
+    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<space>f', function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
+  end,
+})
 
 
 local cmp = require'cmp'
@@ -231,6 +267,13 @@ require("neo-tree").setup {
         popup_border_style = "rounded",
         enable_git_status = true,
         enable_diagnostics = true,
+        filesystem = {
+        group_empty_dirs = true,
+        filtered_items = {
+            --visible = true,
+            hide_dotfiles = false,
+        },
+        },
 }
 
 
@@ -242,7 +285,8 @@ vim.keymap.set('', '<leader><space>', 'za')
 vim.keymap.set('n', '<leader>h', ':noh<cr>')
 
 vim.keymap.set('', '<leader>n', ':NERDTreeFind<cr>')
-vim.keymap.set('n', '<C-n>', ':NERDTreeToggle<cr>')
+
+vim.keymap.set('n', '<C-n>', ':Neotree toggle<cr>')
 
 local telescope_builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>g', function() telescope_builtin.grep_string() end)
