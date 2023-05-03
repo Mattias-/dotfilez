@@ -53,9 +53,6 @@ path=("$GOPATH/bin" "/usr/local/go/bin" "${path[@]}")
 path=("$HOME/.npm-packages/bin" "${path[@]}")
 path=("$HOME/bin" "$HOME/.local/bin" "${path[@]}")
 
-typeset -U path
-typeset -U fpath
-typeset -U manpath
 
 if [ -r "$HOME/.functions" ] && [ -f "$HOME/.functions" ]; then
     # shellcheck disable=SC1090
@@ -70,7 +67,10 @@ if [ -r "$HOME/.workaliases" ] && [ -f "$HOME/.workaliases" ]; then
     source "$HOME/.workaliases"
 fi
 
-eval "$(starship init zsh)"
-
+typeset -U path
+typeset -U fpath
+typeset -U manpath
 autoload -Uz compinit
 compinit
+
+eval "$(starship init zsh)"
