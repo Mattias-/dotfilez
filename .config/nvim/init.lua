@@ -295,3 +295,4 @@ vim.keymap.set('n', '<C-g>', function() telescope_builtin.live_grep() end)
 
 -- The default comment hl is really really bad
 vim.api.nvim_set_hl(0, "@comment", { link = "Special" })
+vim.api.nvim_set_hl(0, "Comment", { link = "Special" })
