@@ -8,13 +8,13 @@
         "revision": "ae066b844157631be502c719de4c58fa3daf938a"
       },
       "homebrew/cask-drivers": {
-        "revision": "f446464086492bbff85f47fd72519c19027f4f45"
+        "revision": "2d9b5cb5119c5505053deea6f33b7df488076fdc"
       },
       "homebrew/cask-fonts": {
-        "revision": "65afbc122c7e45c8a9bb16200ac7d97543ec24fa"
+        "revision": "d6a879aa4e8b63e5871662b66c2f6bf85c83dca8"
       },
       "homebrew/cask-versions": {
-        "revision": "5b88acd414a385b17c72e259a5ac811f31e19629"
+        "revision": "cd74b847ed817e1fc92b55fd3128f091e36eb7d4"
       },
       "homebrew/core": {
         "revision": "33670ab794b9185c84d5f61f3ee0df6878a00641"
@@ -28,19 +28,19 @@
         }
       },
       "font-hack-nerd-font": {
-        "version": "2.3.3",
+        "version": "3.0.0",
         "options": {
           "full_name": "font-hack-nerd-font"
         }
       },
       "font-symbols-only-nerd-font": {
-        "version": "2.3.3",
+        "version": "3.0.0",
         "options": {
           "full_name": "font-symbols-only-nerd-font"
         }
       },
       "google-chrome": {
-        "version": "112.0.5615.137",
+        "version": "113.0.5672.63",
         "options": {
           "full_name": "google-chrome"
         }
@@ -62,7 +62,7 @@
   "system": {
     "macos": {
       "ventura": {
-        "HOMEBREW_VERSION": "4.0.15",
+        "HOMEBREW_VERSION": "4.0.16",
         "HOMEBREW_PREFIX": "/opt/homebrew",
         "Homebrew/homebrew-core": "api",
         "CLT": "14.3.0.0.1.1679647830",
