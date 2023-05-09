@@ -284,8 +284,7 @@ vim.keymap.set('', '<leader>w', ':set wrap! wrap?<cr>')
 vim.keymap.set('', '<leader><space>', 'za')
 vim.keymap.set('n', '<leader>h', ':noh<cr>')
 
-vim.keymap.set('', '<leader>n', ':NERDTreeFind<cr>')
-
+vim.keymap.set('', '<leader>n', ':Neotree reveal<cr>')
 vim.keymap.set('n', '<C-n>', ':Neotree toggle<cr>')
 
 local telescope_builtin = require('telescope.builtin')
