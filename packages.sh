@@ -25,6 +25,7 @@ npm_packages=(
     rdme
     @redocly/cli
     @stoplight/spectral-cli
+    pnpm
 )
 
 go_packages=(
@@ -35,6 +36,7 @@ go_packages=(
     github.com/aquasecurity/tfsec/cmd/tfsec@latest
     github.com/swaggo/swag/cmd/swag@v1.8.7
     github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest
+    github.com/mrtazz/checkmake/cmd/checkmake@latest
 )
 
 pacman_packages=(
