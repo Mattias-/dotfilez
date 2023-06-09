@@ -125,7 +125,7 @@ lspconfig.tsserver.setup{
     init_options = {documentFormatting = false},
     settings = {documentFormatting = false},
     indent = {
-        enable = false
+        enable = true
     },
     on_attach = function (client, bufnr)
         client.server_capabilities.documentFormattingProvider = false
@@ -137,12 +137,21 @@ local null_ls = require("null-ls")
 null_ls.setup({
     sources = {
         null_ls.builtins.formatting.prettier,
-        null_ls.builtins.formatting.shfmt.with({ extra_args = { "-i=4" } }),
-        null_ls.builtins.diagnostics.shellcheck,
+        null_ls.builtins.formatting.shfmt.with({
+            filetypes = {"sh", "zsh"},
+            extra_args = { "-i=4" },
+        }),
+        null_ls.builtins.diagnostics.shellcheck.with({
+            filetypes = {"sh", "zsh"},
+        }),
         null_ls.builtins.code_actions.shellcheck,
         null_ls.builtins.diagnostics.zsh,
         null_ls.builtins.diagnostics.yamllint,
         null_ls.builtins.formatting.black,
+        null_ls.builtins.diagnostics.golangci_lint,
+        null_ls.builtins.code_actions.eslint,
+        null_ls.builtins.diagnostics.eslint,
+
     },
 })
 
