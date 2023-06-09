@@ -35,9 +35,9 @@ install_go_packages() {
 }
 
 install_python_packages() {
-    python -m ensurepip --default-pip
+    #python -m ensurepip --default-pip
     # shellcheck disable=SC2154
-    pip install --user --upgrade "${pip_packages[@]}"
+    pip install --break-system-packages --user --upgrade "${pip_packages[@]}"
 }
 
 install_node_packages() {
@@ -75,6 +75,9 @@ install_macos_packages() {
         sh <(curl -L https://nixos.org/nix/install)
     fi
 
+    if ! nix-channel --list | grep nixos; then
+        nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixos
+    fi
     nix-channel --update
     diff --label current <(nix-env --query) \
         --label user.nix <(nix-env --query --available -f ./user.nix) || true

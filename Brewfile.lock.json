@@ -2,22 +2,22 @@
   "entries": {
     "tap": {
       "homebrew/bundle": {
-        "revision": "6b01bd338af95db59f1d6db87ebf6416d7518297"
+        "revision": "6e315568a356bbe61eaf4a68022bd4ff62568876"
       },
       "homebrew/cask": {
-        "revision": "70457ad831ffcbd543ddf34437688e0754f5711a"
+        "revision": "ae066b844157631be502c719de4c58fa3daf938a"
       },
       "homebrew/cask-drivers": {
         "revision": "fd0d2af80c01417550e50be99d5bc18330005dac"
       },
       "homebrew/cask-fonts": {
-        "revision": "d1ac34c2e2b0a8120497fc832e78a0dd0fae623c"
+        "revision": "f8dcacb14f6d46180f29a017f0cecde64ed2857e"
       },
       "homebrew/cask-versions": {
         "revision": "9beb9c3695d491ae629e944094a3cf702ebd9784"
       },
       "homebrew/core": {
-        "revision": "3f3bbdd2a6e9d3e82dcd2821f361ef53ce48f294"
+        "revision": "33670ab794b9185c84d5f61f3ee0df6878a00641"
       }
     },
     "cask": {
@@ -28,19 +28,19 @@
         }
       },
       "font-hack-nerd-font": {
-        "version": "3.0.0",
+        "version": "3.0.2",
         "options": {
           "full_name": "font-hack-nerd-font"
         }
       },
       "font-symbols-only-nerd-font": {
-        "version": "3.0.0",
+        "version": "3.0.2",
         "options": {
           "full_name": "font-symbols-only-nerd-font"
         }
       },
       "google-chrome": {
-        "version": "113.0.5672.92",
+        "version": "114.0.5735.106",
         "options": {
           "full_name": "google-chrome"
         }
@@ -62,12 +62,12 @@
   "system": {
     "macos": {
       "ventura": {
-        "HOMEBREW_VERSION": "4.0.17",
+        "HOMEBREW_VERSION": "4.0.21",
         "HOMEBREW_PREFIX": "/opt/homebrew",
         "Homebrew/homebrew-core": "api",
-        "CLT": "14.3.0.0.1.1679647830",
+        "CLT": "14.3.1.0.1.1683849156",
         "Xcode": "14.3",
-        "macOS": "13.3.1"
+        "macOS": "13.4"
       }
     }
   }

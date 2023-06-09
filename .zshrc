@@ -33,6 +33,11 @@ export FZF_DEFAULT_COMMAND="rg --files --hidden --iglob '!.git/'"
 export GOPATH=$HOME/go
 export NODE_PATH=$HOME/.npm-packages/lib/node_modules
 
+if [ -r '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+    # shellcheck disable=SC1091
+    source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+fi
+
 if [ -d "$HOME/.nix-profile/share/man" ]; then
     manpath=("$HOME/.nix-profile/share/man" "${manpath[@]}")
 fi
@@ -53,17 +58,16 @@ path=("$GOPATH/bin" "/usr/local/go/bin" "${path[@]}")
 path=("$HOME/.npm-packages/bin" "${path[@]}")
 path=("$HOME/bin" "$HOME/.local/bin" "${path[@]}")
 
-
-if [ -r "$HOME/.functions" ] && [ -f "$HOME/.functions" ]; then
-    # shellcheck disable=SC1090
+if [ -r "$HOME/.functions" ]; then
+    # shellcheck disable=SC1091
     source "$HOME/.functions"
 fi
-if [ -r "$HOME/.aliases" ] && [ -f "$HOME/.aliases" ]; then
-    # shellcheck disable=SC1090
+if [ -r "$HOME/.aliases" ]; then
+    # shellcheck disable=SC1091
     source "$HOME/.aliases"
 fi
-if [ -r "$HOME/.workaliases" ] && [ -f "$HOME/.workaliases" ]; then
-    # shellcheck disable=SC1090
+if [ -r "$HOME/.workaliases" ]; then
+    # shellcheck disable=SC1091
     source "$HOME/.workaliases"
 fi
 
