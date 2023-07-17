@@ -9,3 +9,5 @@ bin/vi
 bin/vim
 .config/git/extraconfig
 .config/git/allowed_signers
+Brewfile.lock.json
+Brewfile.new

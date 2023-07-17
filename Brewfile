@@ -1,8 +1,6 @@
 # vim: set filetype=ruby
 tap "homebrew/bundle"
-tap "homebrew/cask"
 tap "homebrew/cask-fonts"
-tap "homebrew/core"
 cask "font-fira-code"
 cask "font-hack-nerd-font"
 cask "font-symbols-only-nerd-font"
