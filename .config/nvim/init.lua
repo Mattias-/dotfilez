@@ -88,7 +88,7 @@ endfunction
 
 " Highlight whitespace errors
 autocmd BufWinEnter * if &l:buftype == '' | match Error /\s\+$\|\t \| \t/
-autocmd InsertLeave * match Error /\s\+$\|\t \| \t/
+autocmd InsertLeave * if &l:buftype == '' | match Error /\s\+$\|\t \| \t/
 
 set omnifunc=v:lua.vim.lsp.omnifunc
 
