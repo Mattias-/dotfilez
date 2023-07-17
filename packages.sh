@@ -32,7 +32,7 @@ go_packages=(
     github.com/mattn/efm-langserver@latest
     github.com/goreleaser/goreleaser@latest
     golang.org/x/tools/gopls@latest
-    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.51.0
+    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.53.3
     github.com/aquasecurity/tfsec/cmd/tfsec@latest
     github.com/swaggo/swag/cmd/swag@v1.8.7
     github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest

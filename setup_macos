@@ -1,6 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
+# shellcheck source=./packages.sh
 source ./packages.sh
 
 main() {
