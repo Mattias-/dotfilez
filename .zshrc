@@ -32,6 +32,8 @@ export LC_CTYPE="en_US.UTF-8"
 export FZF_DEFAULT_COMMAND="rg --files --hidden --iglob '!.git/'"
 export GOPATH=$HOME/go
 export NODE_PATH=$HOME/.npm-packages/lib/node_modules
+export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
+export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE="/var/run/docker.sock"
 
 if [ -r '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
     # shellcheck disable=SC1091
