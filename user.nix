@@ -12,7 +12,7 @@ with import <nixpkgs> {}; [
   fzf
   gh
   gnupg
-  go
+  go_1_21
   google-cloud-sdk
   htop
   jq
@@ -29,7 +29,6 @@ with import <nixpkgs> {}; [
   ssm-session-manager-plugin
   starship
   tcpdump
-  terraform
   tmux
   tree
   tree-sitter
