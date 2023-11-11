@@ -21,6 +21,7 @@ with import <nixpkgs> {}; [
   nmap
   nodejs
   python3
+  pipx
   ripgrep
   sad
   shellcheck

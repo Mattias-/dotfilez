@@ -3,15 +3,10 @@
 # shellcheck disable=SC2034
 
 pip_packages=(
-    pip
     black
     yamllint
     pre-commit
     prowler-cloud
-    #wheel
-    #pipenv
-    #neovim
-    #pynvim
 )
 
 npm_packages=(
