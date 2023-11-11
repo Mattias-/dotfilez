@@ -30,7 +30,7 @@ go_packages=(
     github.com/golangci/golangci-lint/cmd/golangci-lint@v1.53.3
     github.com/aquasecurity/tfsec/cmd/tfsec@latest
     github.com/swaggo/swag/cmd/swag@v1.8.7
-    github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest
+    github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen@latest
     github.com/mrtazz/checkmake/cmd/checkmake@latest
 )
 
