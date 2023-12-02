@@ -56,7 +56,15 @@ sigv4curl() {
     creds=$(jq -c -s '. |= sort_by(.Credentials.Expiration) | last | .Credentials' <~/.aws/cli/cache/*.json)
     user=$(jq -r '"\(.AccessKeyId):\(.SecretAccessKey)"' <<<"$creds")
     sesstok=$(jq -r '.SessionToken' <<<"$creds")
+    expiration=$(jq -r '.Expiration' <<<"$creds")
+    # The credential might be stale, refresh by making a call.
+    {
+        if [[ "$expiration" < "$(date -u +"%Y-%m-%dT%H:%M:%SZ")" ]]; then
+            echo "DEBUG: $expiration is before $(date -u +"%Y-%m-%dT%H:%M:%SZ") running: aws sts get-caller-identity"
+            aws sts get-caller-identity
+        fi
+    } >&2
     curl --user "$user" --header "x-amz-security-token: $sesstok" \
-        --aws-sigv4 "aws:amz:eu-west-1:execute-api" \
+        --aws-sigv4 "aws:amz:eu-central-1:execute-api" \
         "$@"
 }
