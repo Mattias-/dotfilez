@@ -94,7 +94,7 @@ set omnifunc=v:lua.vim.lsp.omnifunc
 
 augroup templates
   au!
-  autocmd BufNewFile *.* silent! execute '0r ~/.vim/templates/skeleton.'.expand("<afile>:e")
+  autocmd BufNewFile *.* silent! execute '0r ~/.config/nvim/templates/skeleton.'.expand("<afile>:e")
 augroup END
 
 autocmd BufReadPost quickfix nnoremap <buffer> <CR> <CR>
@@ -116,9 +116,20 @@ require'nvim-treesitter.configs'.setup {
 }
 
 local lspconfig = require'lspconfig'
-lspconfig.gopls.setup{}
+lspconfig.gopls.setup{
+  settings = {
+    gopls = {
+      gofumpt = true,
+      staticcheck = true,
+      --codelenses = {
+      --  tidy: false,
+      --},
+    }
+  }
+}
 lspconfig.pyright.setup{}
 lspconfig.dockerls.setup{}
+lspconfig.bashls.setup{}
 lspconfig.cssls.setup{}
 --lspconfig.html.setup{}
 lspconfig.tsserver.setup{
@@ -141,10 +152,6 @@ null_ls.setup({
             filetypes = {"sh", "zsh"},
             extra_args = { "-i=4" },
         }),
-        null_ls.builtins.diagnostics.shellcheck.with({
-            filetypes = {"sh", "zsh"},
-        }),
-        null_ls.builtins.code_actions.shellcheck,
         null_ls.builtins.diagnostics.zsh,
         null_ls.builtins.diagnostics.yamllint,
         null_ls.builtins.formatting.black,
