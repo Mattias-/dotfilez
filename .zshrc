@@ -78,9 +78,9 @@ typeset -U fpath
 typeset -U manpath
 autoload -Uz compinit
 compinit
-if [ -r "$HOME/.nix-profile/share/zsh/site-functions/aws_zsh_completer.sh" ]; then
+if [ -r "$HOME/.nix-profile/share/zsh/site-functions/_aws" ]; then
     # shellcheck disable=SC1091
-    source "$HOME/.nix-profile/share/zsh/site-functions/aws_zsh_completer.sh"
+    source "$HOME/.nix-profile/share/zsh/site-functions/_aws"
 fi
 
 eval "$(starship init zsh)"
