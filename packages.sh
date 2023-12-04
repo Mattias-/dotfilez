@@ -15,6 +15,7 @@ npm_packages=(
     pyright
     typescript-language-server
     typescript
+    bash-language-server
     aws-cdk
     prettier
     rdme
