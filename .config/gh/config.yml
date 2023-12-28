@@ -1,5 +1,6 @@
 aliases:
-    npr: pr create
-    mpr: pr merge --rebase --delete-branch
+    npr: pr create --draft
+    mpr: pr merge --squash --delete-branch
     ps: pr status
 git_protocol: ssh
+version: "1"

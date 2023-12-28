@@ -121,9 +121,9 @@ lspconfig.gopls.setup{
     gopls = {
       gofumpt = true,
       staticcheck = true,
-      --codelenses = {
-      --  tidy: false,
-      --},
+      codelenses = {
+        tidy = false,
+      },
     }
   }
 }
