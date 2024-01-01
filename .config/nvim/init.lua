@@ -131,6 +131,11 @@ lspconfig.pyright.setup{}
 lspconfig.dockerls.setup{}
 lspconfig.bashls.setup{}
 lspconfig.cssls.setup{}
+lspconfig.biome.setup{
+    cmd = {"./node_modules/@biomejs/biome/bin/biome", "lsp-proxy"},
+    root_dir = lspconfig.util.root_pattern('biome.json'),
+    single_file_support = false,
+}
 --lspconfig.html.setup{}
 lspconfig.tsserver.setup{
     init_options = {documentFormatting = false},
@@ -155,8 +160,8 @@ null_ls.setup({
         null_ls.builtins.diagnostics.zsh,
         null_ls.builtins.diagnostics.yamllint,
         null_ls.builtins.formatting.black,
-        null_ls.builtins.code_actions.eslint,
-        null_ls.builtins.diagnostics.eslint,
+        --null_ls.builtins.code_actions.eslint,
+        --null_ls.builtins.diagnostics.eslint,
 
     },
 })
