@@ -10,9 +10,11 @@ return {
             vim.g.lsp_zero_extend_lspconfig = 0
         end,
     },
-    { 'L3MON4D3/LuaSnip' },
-    { 'hrsh7th/cmp-nvim-lsp' },
-    { 'saadparwaiz1/cmp_luasnip' },
+
+    {
+        "L3MON4D3/LuaSnip",
+        dependencies = { "rafamadriz/friendly-snippets" },
+    },
 
     -- Autocompletion
     {
@@ -20,16 +22,18 @@ return {
         event = 'InsertEnter',
         dependencies = {
             { 'L3MON4D3/LuaSnip' },
+            { 'saadparwaiz1/cmp_luasnip' },
         },
         config = function()
             -- Here is where you configure the autocompletion settings.
             local lsp_zero = require('lsp-zero')
             lsp_zero.extend_cmp()
 
+            require("luasnip.loaders.from_vscode").lazy_load()
+
             -- And you can configure cmp even more, if you want to.
             local cmp = require('cmp')
             local cmp_action = lsp_zero.cmp_action()
-
             cmp.setup({
                 formatting = lsp_zero.cmp_format(),
                 sources = {
