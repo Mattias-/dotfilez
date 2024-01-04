@@ -11,3 +11,4 @@ bin/vim
 .config/git/allowed_signers
 Brewfile.lock.json
 Brewfile.new
+/.config/nvim/lazy-lock.json

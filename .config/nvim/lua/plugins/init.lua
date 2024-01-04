@@ -31,7 +31,7 @@ return {
             'tpope/vim-rhubarb',
         },
         keys = {
-            { "<leader>g", "<cmd>Git<cr>" },
+            { "<leader>g", "<cmd>Git<cr>", desc = "Toggle Git" },
         },
     },
 }

@@ -9,19 +9,21 @@ return {
                 function()
                     require("trouble").toggle()
                 end,
-                desc = "Trouble",
+                desc = "Trouble Toggle",
             },
             {
                 "<leader>tn",
                 function()
                     require("trouble").next({ skip_groups = true, jump = true });
                 end,
+                desc = "Trouble Next",
             },
             {
                 "<leader>tp",
                 function()
                     require("trouble").previous({ skip_groups = true, jump = true });
                 end,
+                desc = "Trouble Previous",
             },
         },
     },

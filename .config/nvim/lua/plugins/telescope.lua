@@ -22,15 +22,15 @@ return {
             })
 
             local builtin = require("telescope.builtin")
-            vim.keymap.set("n", "<leader>pw", builtin.grep_string)
+            vim.keymap.set("n", "<leader>pw", builtin.grep_string, { desc = "Find word" })
             vim.keymap.set("n", "<leader>pW", function()
                 local word = vim.fn.expand("<cWORD>")
                 builtin.grep_string({ search = word })
-            end)
-            vim.keymap.set("n", "<C-p>", builtin.git_files)
-            vim.keymap.set("n", "<C-g>", builtin.live_grep)
-            vim.keymap.set("n", "<leader>pg", builtin.live_grep)
-            vim.keymap.set("n", "<leader>pk", builtin.keymaps)
+            end, { desc = "Find WORD" })
+            vim.keymap.set("n", "<C-p>", builtin.git_files, { desc = "Find git files" })
+            vim.keymap.set("n", "<C-g>", builtin.live_grep, { desc = "Live grep" })
+            vim.keymap.set("n", "<leader>pg", builtin.live_grep, { desc = "Live grep" })
+            vim.keymap.set("n", "<leader>pk", builtin.keymaps, { desc = "Find keymaps" })
         end,
     }
 }

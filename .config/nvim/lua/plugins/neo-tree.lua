@@ -20,9 +20,9 @@ return {
             },
         },
         keys = {
-            { "<C-n>",     "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
-            { "<leader>n", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
-            { '<leader>N', '<cmd>Neotree reveal<cr>' },
+            { "<C-n>",     "<cmd>Neotree toggle<cr>", desc = "Toggle NeoTree" },
+            { "<leader>n", "<cmd>Neotree toggle<cr>", desc = "Toggle NeoTree" },
+            { '<leader>N', '<cmd>Neotree reveal<cr>', desc = "Show file in NeoTree" },
         },
     }
 }
