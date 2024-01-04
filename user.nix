@@ -34,4 +34,5 @@ with import <nixpkgs> {}; [
   tree
   tree-sitter
   yq-go
+  lua-language-server
 ]

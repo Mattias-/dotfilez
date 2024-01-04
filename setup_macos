@@ -20,9 +20,9 @@ main() {
     configure_macos
     set_hostname
 
-    nvim +":PlugInstall" +qall
-    nvim +":PlugUpgrade" +qall
-    nvim +":PlugUpdate" +qall
+    #nvim +":PlugInstall" +qall
+    #nvim +":PlugUpgrade" +qall
+    #nvim +":PlugUpdate" +qall
     nvim +":helptags ALL" +qall
     ln -sf "$(command -v nvim)" "$HOME/bin/vi"
     ln -sf "$(command -v nvim)" "$HOME/bin/vim"

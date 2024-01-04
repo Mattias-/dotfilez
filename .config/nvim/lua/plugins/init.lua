@@ -25,7 +25,13 @@ return {
             },
         }
     },
-    { 'folke/trouble.nvim',          opts = { use_diagnostic_signs = true } },
-    { 'tpope/vim-fugitive' },
-    { 'tpope/vim-rhubarb' },
+    {
+        'tpope/vim-fugitive',
+        dependencies = {
+            'tpope/vim-rhubarb',
+        },
+        keys = {
+            { "<leader>g", "<cmd>Git<cr>" },
+        },
+    },
 }

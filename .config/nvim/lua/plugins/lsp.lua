@@ -10,6 +10,9 @@ return {
             vim.g.lsp_zero_extend_lspconfig = 0
         end,
     },
+    { 'L3MON4D3/LuaSnip' },
+    { 'hrsh7th/cmp-nvim-lsp' },
+    { 'saadparwaiz1/cmp_luasnip' },
 
     -- Autocompletion
     {
@@ -29,12 +32,21 @@ return {
 
             cmp.setup({
                 formatting = lsp_zero.cmp_format(),
+                sources = {
+                    { name = 'nvim_lsp' },
+                    { name = 'luasnip' },
+                },
+                window = {
+                    completion = cmp.config.window.bordered(),
+                    documentation = cmp.config.window.bordered(),
+                },
                 mapping = cmp.mapping.preset.insert({
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-                    ['<C-d>'] = cmp.mapping.scroll_docs(4),
+                    ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
                     ['<C-f>'] = cmp_action.luasnip_jump_forward(),
                     ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+                    ['<Tab>'] = cmp_action.luasnip_supertab(),
+                    ['<S-Tab>'] = cmp_action.luasnip_shift_supertab(),
                 })
             })
         end
@@ -90,6 +102,7 @@ return {
         config = function()
             local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
             require('go').setup({
+                luasnip = true,
                 lsp_cfg = {
                     capabilities = capabilities,
                 },

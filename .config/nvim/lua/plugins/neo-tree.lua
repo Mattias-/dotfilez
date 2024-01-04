@@ -21,7 +21,8 @@ return {
         },
         keys = {
             { "<C-n>",     "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
-            { '<leader>n', '<cmd>Neotree reveal<cr>' },
+            { "<leader>n", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
+            { '<leader>N', '<cmd>Neotree reveal<cr>' },
         },
     }
 }
