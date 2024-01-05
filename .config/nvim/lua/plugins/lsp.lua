@@ -65,31 +65,17 @@ return {
             { 'hrsh7th/cmp-nvim-lsp' },
         },
         config = function()
-            -- This is where all the LSP shenanigans will live
             local lsp_zero = require('lsp-zero')
             lsp_zero.extend_lspconfig()
-
-            lsp_zero.on_attach(function(client, bufnr)
+            lsp_zero.on_attach(function(_, bufnr)
                 -- see :help lsp-zero-keybindings
                 -- to learn the available actions
                 lsp_zero.default_keymaps({ buffer = bufnr })
             end)
-
-            -- (Optional) Configure lua language server for neovim
-            local lspconfig = require 'lspconfig'
             local lua_opts = lsp_zero.nvim_lua_ls()
+
+            local lspconfig = require 'lspconfig'
             lspconfig.lua_ls.setup(lua_opts)
-            --lspconfig.gopls.setup {
-            --    settings = {
-            --        gopls = {
-            --            gofumpt = true,
-            --            staticcheck = true,
-            --            codelenses = {
-            --                tidy = false,
-            --            },
-            --        }
-            --    }
-            --}
             lspconfig.pyright.setup {}
             lspconfig.dockerls.setup {}
             lspconfig.bashls.setup {}
@@ -107,11 +93,22 @@ return {
             local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
             require('go').setup({
                 luasnip = true,
+                trouble = true,
+                lsp_gofumpt = true,
+                lsp_inlay_hints = {
+                    --enable = false,
+                    only_current_line = true,
+                },
                 lsp_cfg = {
                     capabilities = capabilities,
-                },
-                lsp_inlay_hints = {
-                    enable = false,
+                    settings = {
+                        gopls = {
+                            analyses = {
+                                ST1003 = false,
+                                shadow = false,
+                            }
+                        }
+                    }
                 },
             })
         end,
