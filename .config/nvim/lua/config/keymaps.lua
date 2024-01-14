@@ -15,3 +15,6 @@ vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selected lines down"
 
 vim.keymap.set("n", "<Tab>", ":tabnext<cr>", { desc = "Tab next" })
 vim.keymap.set("n", "<S-Tab>", ":tabprevious<cr>", { desc = "Tab previous" })
+
+--vim.keymap.set("n", ":q", "<nop>")
+vim.cmd [[nnoremap q: <nop>]]
