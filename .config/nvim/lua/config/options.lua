@@ -23,6 +23,8 @@ vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
+vim.opt.iskeyword:append("-")
+
 vim.opt.listchars = {
     space = "·",
     trail = "·",

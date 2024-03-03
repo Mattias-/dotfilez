@@ -30,6 +30,7 @@ return {
         dependencies = {
             'tpope/vim-rhubarb',
         },
+        cmd = { "Git", "GBrowse" },
         keys = {
             { "<leader>g", "<cmd>Git<cr>", desc = "Toggle Git" },
         },
