@@ -19,7 +19,7 @@ npm_packages=(
     aws-cdk
     prettier
     rdme
-    @redocly/cli
+    @redocly/cli@v1.6.0
     @stoplight/spectral-cli
     pnpm
 )
@@ -28,7 +28,7 @@ go_packages=(
     github.com/mattn/efm-langserver@latest
     github.com/goreleaser/goreleaser@latest
     golang.org/x/tools/gopls@latest
-    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.55.1
+    github.com/golangci/golangci-lint/cmd/golangci-lint@v1.56.0
     github.com/aquasecurity/tfsec/cmd/tfsec@latest
     github.com/swaggo/swag/cmd/swag@v1.8.7
     github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen@latest
