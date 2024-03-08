@@ -10,7 +10,7 @@ return {
                     comment = 'iris',
                 }
             })
-            vim.cmd([[colorscheme rose-pine]])
+            vim.cmd.colorscheme("rose-pine")
         end,
     },
     { "nvim-tree/nvim-web-devicons", lazy = true },
