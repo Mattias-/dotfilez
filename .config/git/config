@@ -12,6 +12,8 @@
     helper = osxkeychain
 [diff]
     algorithm = patience
+    colormoved = "default"
+    colormovedws = "allow-indentation-change"
 [color]
     branch = auto
     diff = auto
