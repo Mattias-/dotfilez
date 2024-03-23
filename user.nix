@@ -35,4 +35,5 @@ with import <nixpkgs> {}; [
   tree-sitter
   yq-go
   lua-language-server
+  difftastic
 ]

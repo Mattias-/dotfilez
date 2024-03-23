@@ -14,6 +14,11 @@
     algorithm = patience
     colormoved = "default"
     colormovedws = "allow-indentation-change"
+    tool = difftastic
+[difftool]
+    prompt = false
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
 [color]
     branch = auto
     diff = auto
@@ -48,6 +53,7 @@
     grepblame = "!ggb() { git grep -n $@ | while IFS=: read i j k; do git blame -f -L $j,$j $i; done }; ggb"
 [pager]
     lgh = less --QUIT-AT-EOF
+    difftool = true
 [gpg]
     format = ssh
 [gpg "ssh"]
