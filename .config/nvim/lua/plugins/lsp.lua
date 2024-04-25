@@ -103,6 +103,14 @@ return {
         end
     },
     {
+        "pmizio/typescript-tools.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "neovim/nvim-lspconfig",
+        },
+        opts = {},
+    },
+    {
         "ray-x/go.nvim",
         dependencies = { -- optional packages
             "neovim/nvim-lspconfig",
