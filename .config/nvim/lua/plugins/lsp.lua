@@ -100,6 +100,7 @@ return {
             lspconfig.dockerls.setup {}
             lspconfig.bashls.setup {}
             lspconfig.cssls.setup {}
+            lspconfig.eslint.setup {}
         end
     },
     {
