@@ -16,13 +16,14 @@ npm_packages=(
     typescript-language-server
     typescript
     bash-language-server
+    yaml-language-server
     aws-cdk
     prettier
     rdme
     @redocly/cli@v1.6.0
     @stoplight/spectral-cli
     @quobix/vacuum
-    pnpm
+    pnpm@9.0.5
 )
 
 go_packages=(
@@ -32,7 +33,7 @@ go_packages=(
     github.com/golangci/golangci-lint/cmd/golangci-lint@v1.59.0
     github.com/aquasecurity/tfsec/cmd/tfsec@latest
     github.com/swaggo/swag/cmd/swag@v1.8.7
-    github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen@latest
+    github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest
     github.com/mrtazz/checkmake/cmd/checkmake@latest
     github.com/google/ko@latest
 )
