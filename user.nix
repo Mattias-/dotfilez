@@ -1,5 +1,4 @@
 with import <nixpkgs> {}; [
-  aws-sam-cli
   awscli2
   btop
   cfssl
@@ -16,7 +15,6 @@ with import <nixpkgs> {}; [
   google-cloud-sdk
   htop
   jq
-  neofetch
   neovim
   nmap
   nodejs
