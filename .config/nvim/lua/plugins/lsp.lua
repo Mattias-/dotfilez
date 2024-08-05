@@ -124,7 +124,7 @@ return {
                 trouble = true,
                 lsp_gofumpt = true,
                 lsp_inlay_hints = {
-                    --enable = false,
+                    enable = false,
                     only_current_line = true,
                 },
                 lsp_cfg = {
