@@ -16,7 +16,7 @@ HISTSIZE=50000
 # shellcheck disable=SC2034
 SAVEHIST=10000
 # shellcheck disable=SC2034
-HISTORY_IGNORE="(ll|gs)"
+HISTORY_IGNORE="(ls|ll|gs|git lg*|git diff|vim)"
 ## History command configuration
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE

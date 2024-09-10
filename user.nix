@@ -11,7 +11,7 @@ with import <nixpkgs> {}; [
   fzf
   gh
   gnupg
-  go_1_22
+  go_1_23
   google-cloud-sdk
   htop
   jq
