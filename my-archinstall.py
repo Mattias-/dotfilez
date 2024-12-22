@@ -40,11 +40,11 @@ def ask_user_questions():
     if not archinstall.arguments.get("keyboard-language", None):
         while True:
             try:
-                archinstall.arguments[
-                    "keyboard-language"
-                ] = archinstall.select_language(
-                    archinstall.list_keyboard_languages()
-                ).strip()
+                archinstall.arguments["keyboard-language"] = (
+                    archinstall.select_language(
+                        archinstall.list_keyboard_languages()
+                    ).strip()
+                )
                 break
             except archinstall.RequirementError as err:
                 archinstall.log(err, fg="red")
@@ -58,9 +58,9 @@ def ask_user_questions():
     if not archinstall.arguments.get("mirror-region", None):
         while True:
             try:
-                archinstall.arguments[
-                    "mirror-region"
-                ] = archinstall.select_mirror_regions(archinstall.list_mirrors())
+                archinstall.arguments["mirror-region"] = (
+                    archinstall.select_mirror_regions(archinstall.list_mirrors())
+                )
                 break
             except archinstall.RequirementError as e:
                 archinstall.log(e, fg="red")
@@ -209,16 +209,16 @@ def ask_user_questions():
 
             archinstall.log("Using existing partition table reported above.")
         elif option == "format-all":
-            archinstall.arguments[
-                "filesystem"
-            ] = archinstall.ask_for_main_filesystem_format()
+            archinstall.arguments["filesystem"] = (
+                archinstall.ask_for_main_filesystem_format()
+            )
             archinstall.arguments["harddrive"].keep_partitions = False
     elif archinstall.arguments["harddrive"]:
         # If the drive doesn't have any partitions, safely mark the disk with keep_partitions = False
         # and ask the user for a root filesystem.
-        archinstall.arguments[
-            "filesystem"
-        ] = archinstall.ask_for_main_filesystem_format()
+        archinstall.arguments["filesystem"] = (
+            archinstall.ask_for_main_filesystem_format()
+        )
         archinstall.arguments["harddrive"].keep_partitions = False
 
     # Get disk encryption password (or skip if blank)
@@ -230,9 +230,9 @@ def ask_user_questions():
             prompt="Enter disk encryption password (leave blank for no encryption): "
         ):
             archinstall.arguments["!encryption-password"] = passwd
-            archinstall.arguments[
-                "harddrive"
-            ].encryption_password = archinstall.arguments["!encryption-password"]
+            archinstall.arguments["harddrive"].encryption_password = (
+                archinstall.arguments["!encryption-password"]
+            )
 
     # Get the hostname for the machine
     if not archinstall.arguments.get("hostname", None):
@@ -325,9 +325,9 @@ def ask_user_questions():
                 break
             except archinstall.RequirementError as e:
                 archinstall.log(e, fg="red")
-                archinstall.arguments[
-                    "packages"
-                ] = None  # Clear the packages to trigger a new input question
+                archinstall.arguments["packages"] = (
+                    None  # Clear the packages to trigger a new input question
+                )
         else:
             # no additional packages were selected, which we'll allow
             break
