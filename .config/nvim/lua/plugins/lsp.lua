@@ -1,7 +1,7 @@
 return {
     {
         'VonHeikemen/lsp-zero.nvim',
-        branch = 'v3.x',
+        branch = 'v4.x',
         lazy = true,
         config = false,
         init = function()
@@ -95,6 +95,15 @@ return {
             local lua_opts = lsp_zero.nvim_lua_ls()
 
             local lspconfig = require 'lspconfig'
+            local lsp_defaults = lspconfig.util.default_config
+            -- Add cmp_nvim_lsp capabilities settings to lspconfig
+            -- This should be executed before you configure any language server
+            lsp_defaults.capabilities = vim.tbl_deep_extend(
+                'force',
+                lsp_defaults.capabilities,
+                require('cmp_nvim_lsp').default_capabilities()
+            )
+
             lspconfig.lua_ls.setup(lua_opts)
             lspconfig.pyright.setup {}
             lspconfig.dockerls.setup {}
@@ -116,24 +125,27 @@ return {
         dependencies = { -- optional packages
             "neovim/nvim-lspconfig",
             "nvim-treesitter/nvim-treesitter",
+            "ray-x/guihua.lua",
         },
         config = function()
             local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
             require('go').setup({
                 luasnip = true,
                 trouble = true,
-                lsp_gofumpt = true,
+                lsp_gofumpt = false, -- handled by conform instead.
                 lsp_inlay_hints = {
                     enable = false,
-                    only_current_line = true,
+                    show_variable_name = false,
                 },
+                lsp_keymaps = false,
                 lsp_cfg = {
                     capabilities = capabilities,
                     settings = {
                         gopls = {
+                            directoryFilters = { "-**/node_modules", "-**/.git", "-.vscode", "-.idea", "-.vscode-test" },
                             analyses = {
                                 ST1003 = false,
-                                shadow = false,
+                                -- shadow = false,
                             }
                         }
                     }

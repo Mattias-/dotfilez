@@ -7,7 +7,10 @@ return {
             {
                 "<leader>tt",
                 function()
-                    require("trouble").toggle()
+                    require("trouble").toggle({
+                        mode = "diagnostics",
+                        -- filter = { buf = 0 }, -- filter diagnostics to the current buffer
+                    });
                 end,
                 desc = "Trouble Toggle",
             },

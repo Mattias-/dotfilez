@@ -18,3 +18,23 @@ vim.keymap.set("n", "<S-Tab>", ":tabprevious<cr>", { desc = "Tab previous" })
 
 --vim.keymap.set("n", ":q", "<nop>")
 vim.cmd [[nnoremap q: <nop>]]
+
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "Rename" })
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ction" })
+vim.keymap.set("n", "<leader>cc", vim.lsp.codelens.run, { desc = "Run Codelens" })
+
+-- Other keymaps
+-- https://github.com/ray-x/go.nvim/blob/master/lua/go/lsp.lua#L47
+-- lsp-zero.default_keymaps()
+--
+-- https://github.com/neovim/nvim-lspconfig
+--
+-- See also:
+-- https://neovim.io/doc/user/lsp.html#lsp-config
+-- grr gra grn gri i_CTRL-S Some keymaps are created unconditionally when Nvim starts:
+-- "grn" is mapped in Normal mode to vim.lsp.buf.rename()
+-- "gra" is mapped in Normal and Visual mode to vim.lsp.buf.code_action()
+-- "grr" is mapped in Normal mode to vim.lsp.buf.references()
+-- "gri" is mapped in Normal mode to vim.lsp.buf.implementation()
+-- "gO" is mapped in Normal mode to vim.lsp.buf.document_symbol()
+-- CTRL-S is mapped in Insert mode to vim.lsp.buf.signature_help()
