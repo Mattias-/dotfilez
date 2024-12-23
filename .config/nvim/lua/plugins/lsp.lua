@@ -11,16 +11,56 @@ return {
         end,
     },
 
+    --{
+    --    "L3MON4D3/LuaSnip",
+    --    lazy = true,
+    --    dependencies = { "rafamadriz/friendly-snippets" },
+    --},
     {
-        "L3MON4D3/LuaSnip",
-        lazy = true,
-        dependencies = { "rafamadriz/friendly-snippets" },
+        'saghen/blink.cmp',
+        dependencies = { 'rafamadriz/friendly-snippets' },
+        version = 'v0.8.1',
+
+        opts = {
+            -- 'default' for mappings similar to built-in completion
+            -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
+            -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
+            -- See the full "keymap" documentation for information on defining your own keymap.
+            keymap = { preset = 'super-tab' },
+
+            appearance = {
+                -- Sets the fallback highlight groups to nvim-cmp's highlight groups
+                -- Useful for when your theme doesn't support blink.cmp
+                -- Will be removed in a future release
+                use_nvim_cmp_as_default = true,
+                -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+                -- Adjusts spacing to ensure icons are aligned
+                nerd_font_variant = 'mono'
+            },
+
+            completion = {
+                menu = {
+                    draw = {
+                        columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
+                    }
+                }
+            },
+
+            -- Default list of enabled providers defined so that you can extend it
+            -- elsewhere in your config, without redefining it, due to `opts_extend`
+            sources = {
+                default = { 'lsp', 'snippets', 'path', 'buffer' },
+                cmdline = {},
+            },
+        },
+        opts_extend = { "sources.default" }
     },
 
     -- Autocompletion
     {
         'hrsh7th/nvim-cmp',
-        event = 'InsertEnter',
+        enabled = false,
+        --event = 'InsertEnter',
         dependencies = {
             { 'L3MON4D3/LuaSnip' },
             { 'saadparwaiz1/cmp_luasnip' },
@@ -82,19 +122,8 @@ return {
         'neovim/nvim-lspconfig',
         cmd = 'LspInfo',
         event = { 'BufReadPre', 'BufNewFile' },
-        dependencies = {
-            { 'hrsh7th/cmp-nvim-lsp' },
-        },
+        dependencies = { 'saghen/blink.cmp' },
         config = function()
-            local lsp_zero = require('lsp-zero')
-            lsp_zero.extend_lspconfig()
-            lsp_zero.on_attach(function(_, bufnr)
-                -- see :help lsp-zero-keybindings
-                -- to learn the available actions
-                lsp_zero.default_keymaps({ buffer = bufnr })
-            end)
-            local lua_opts = lsp_zero.nvim_lua_ls()
-
             local lspconfig = require 'lspconfig'
             local lsp_defaults = lspconfig.util.default_config
             -- Add cmp_nvim_lsp capabilities settings to lspconfig
@@ -102,10 +131,10 @@ return {
             lsp_defaults.capabilities = vim.tbl_deep_extend(
                 'force',
                 lsp_defaults.capabilities,
-                require('cmp_nvim_lsp').default_capabilities()
+                require('blink.cmp').get_lsp_capabilities()
             )
 
-            lspconfig.lua_ls.setup(lua_opts)
+            lspconfig.lua_ls.setup {}
             lspconfig.pyright.setup {}
             lspconfig.dockerls.setup {}
             lspconfig.bashls.setup {}
