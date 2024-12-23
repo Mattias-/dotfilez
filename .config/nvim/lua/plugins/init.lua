@@ -37,6 +37,8 @@ return {
     },
     {
         "github/copilot.vim",
+        lazy = true,
+        event = "InsertEnter",
         config = function()
             vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
                 expr = true,

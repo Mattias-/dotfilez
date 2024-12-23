@@ -13,6 +13,7 @@ return {
 
     {
         "L3MON4D3/LuaSnip",
+        lazy = true,
         dependencies = { "rafamadriz/friendly-snippets" },
     },
 
@@ -119,6 +120,7 @@ return {
             "neovim/nvim-lspconfig",
         },
         opts = {},
+        ft = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
     },
     {
         "ray-x/go.nvim",
@@ -152,7 +154,7 @@ return {
                 },
             })
         end,
-        event = { "CmdlineEnter" },
+        lazy = true,
         ft = { "go", 'gomod' },
         build = ':lua require("go.install").update_all_sync()',
     },
