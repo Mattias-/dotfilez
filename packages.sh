@@ -36,6 +36,7 @@ go_packages=(
     github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest
     github.com/mrtazz/checkmake/cmd/checkmake@latest
     github.com/google/ko@latest
+    github.com/bufbuild/buf/cmd/buf@v1.46.0
 )
 
 pacman_packages=(
