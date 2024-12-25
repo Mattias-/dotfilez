@@ -61,7 +61,15 @@ return {
         dependencies = { 'saghen/blink.cmp' },
         opts = {
             servers = {
-                lua_ls = {},
+                lua_ls = {
+                    settings = {
+                        Lua = {
+                            diagnostics = {
+                                globals = { "vim" },
+                            },
+                        },
+                    },
+                },
                 pyright = {},
                 dockerls = {},
                 bashls = {},

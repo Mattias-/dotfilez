@@ -4,33 +4,52 @@ return {
         dependencies = { 'nvim-lua/plenary.nvim' },
         cmd = "Telescope",
         event = "VeryLazy",
-        config = function()
-            require('telescope').setup({
-                defaults = {
-                    vimgrep_arguments = {
-                        'rg',
-                        '--color=never',
-                        '--no-heading',
-                        '--with-filename',
-                        '--line-number',
-                        '--column',
-                        '--smart-case',
-                        '--hidden',
-                        '--glob=!.git/'
-                    },
-                }
-            })
-
-            local builtin = require("telescope.builtin")
-            vim.keymap.set("n", "<leader>pw", builtin.grep_string, { desc = "Find word" })
-            vim.keymap.set("n", "<leader>pW", function()
-                local word = vim.fn.expand("<cWORD>")
-                builtin.grep_string({ search = word })
-            end, { desc = "Find WORD" })
-            vim.keymap.set("n", "<C-p>", builtin.git_files, { desc = "Find git files" })
-            vim.keymap.set("n", "<C-g>", builtin.live_grep, { desc = "Live grep" })
-            vim.keymap.set("n", "<leader>pg", builtin.live_grep, { desc = "Live grep" })
-            vim.keymap.set("n", "<leader>pk", builtin.keymaps, { desc = "Find keymaps" })
-        end,
+        opts = {
+            defaults = {
+                vimgrep_arguments = {
+                    'rg',
+                    '--color=never',
+                    '--no-heading',
+                    '--with-filename',
+                    '--line-number',
+                    '--column',
+                    '--smart-case',
+                    '--hidden',
+                    '--glob=!.git/'
+                },
+            }
+        },
+        keys = {
+            {
+                "<leader>pw",
+                "<cmd>lua require('telescope.builtin').grep_string()<cr>",
+                desc = "Find word"
+            },
+            {
+                "<leader>pW",
+                "<cmd>lua require('telescope.builtin').grep_string({ search = vim.fn.expand('<cWORD>') })<cr>",
+                desc = "Find WORD"
+            },
+            {
+                "<C-p>",
+                "<cmd>lua require('telescope.builtin').git_files()<cr>",
+                desc = "Find git files"
+            },
+            {
+                "<C-g>",
+                "<cmd>lua require('telescope.builtin').live_grep()<cr>",
+                desc = "Live grep"
+            },
+            {
+                "<leader>pg",
+                "<cmd>lua require('telescope.builtin').live_grep()<cr>",
+                desc = "Live grep"
+            },
+            {
+                "<leader>pk",
+                "<cmd>lua require('telescope.builtin').keymaps()<cr>",
+                desc = "Find keymaps"
+            },
+        },
     }
 }

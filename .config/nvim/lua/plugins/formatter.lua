@@ -12,6 +12,16 @@ return {
             mode = "",
             desc = "Format buffer",
         },
+        {
+            -- Toggle autoformat
+            "<leader>F",
+            function()
+                vim.g.disable_autoformat = not vim.g.disable_autoformat
+                print("Autoformat is now " .. (vim.g.disable_autoformat and "disabled" or "enabled"))
+            end,
+            mode = "",
+            desc = "Toggle autoformat",
+        },
     },
     -- Everything in opts will be passed to setup()
     opts = {
@@ -27,8 +37,12 @@ return {
             xml = { "xmllint" },
             sh = { "shfmt" },
         },
-        -- Set up format-on-save
-        format_on_save = { timeout_ms = 500, lsp_fallback = true },
+        format_on_save = function(bufnr)
+            if vim.g.disable_autoformat then
+                return
+            end
+            return { timeout_ms = 500, lsp_format = "fallback" }
+        end,
         -- Customize formatters
         formatters = {
             shfmt = {
@@ -37,7 +51,7 @@ return {
         },
     },
     init = function()
-        -- If you want the formatexpr, here is the place to set it
+        vim.g.disable_autoformat = false
         vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
     end,
 }
