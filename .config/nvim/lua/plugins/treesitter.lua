@@ -1,9 +1,10 @@
 return {
     {
         'nvim-treesitter/nvim-treesitter',
-        build = ':TSUpdate',
-        lazy = true,
-        event = "BufRead",
+        version = false, -- last release is way too old and doesn't work on Windows
+        build = ":TSUpdate",
+        event = { "VeryLazy" },
+        cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
         config = function()
             local configs = require("nvim-treesitter.configs")
             configs.setup({

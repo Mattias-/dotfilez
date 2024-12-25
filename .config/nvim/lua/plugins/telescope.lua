@@ -2,9 +2,8 @@ return {
     {
         'nvim-telescope/telescope.nvim',
         dependencies = { 'nvim-lua/plenary.nvim' },
-        lazy = true,
         cmd = "Telescope",
-        event = "BufEnter",
+        event = "VeryLazy",
         config = function()
             require('telescope').setup({
                 defaults = {
