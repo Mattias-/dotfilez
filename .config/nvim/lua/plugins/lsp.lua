@@ -1,48 +1,23 @@
 return {
-    --{
-    --    "L3MON4D3/LuaSnip",
-    --    lazy = true,
-    --    dependencies = { "rafamadriz/friendly-snippets" },
-    --    version = 'v2.*',
-    --    config = function()
-    --        require("luasnip/loaders/from_vscode").lazy_load()
-    --        require("luasnip/loaders/from_vscode").lazy_load({ paths = { "./snippets" } })
-    --    end
-    --},
     {
         'saghen/blink.cmp',
         lazy = true,
-        version = 'v0.8.1',
-        --dependencies = { "L3MON4D3/LuaSnip" },
+        --version = 'v0.8.1',
         opts = {
-            --snippets = {
-            --    expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
-            --    active = function(filter)
-            --        if filter and filter.direction then
-            --            return require('luasnip').jumpable(filter.direction)
-            --        end
-            --        return require('luasnip').in_snippet()
-            --    end,
-            --    jump = function(direction) require('luasnip').jump(direction) end,
-            --},
-            -- 'default' for mappings similar to built-in completion
-            -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
-            -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
-            -- See the full "keymap" documentation for information on defining your own keymap.
-            keymap = { preset = 'super-tab' },
-
-            appearance = {
-                nerd_font_variant = 'mono'
+            fuzzy = {
+                prebuilt_binaries = {
+                    force_version = 'v0.8.2'
+                }
             },
-
+            keymap = { preset = 'super-tab' },
             completion = {
                 menu = {
                     draw = {
                         columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
                     }
-                }
+                },
+                documentation = { auto_show = true, auto_show_delay_ms = 500 },
             },
-
             -- Default list of enabled providers defined so that you can extend it
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
