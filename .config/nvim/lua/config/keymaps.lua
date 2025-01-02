@@ -22,6 +22,7 @@ vim.cmd [[nnoremap q: <nop>]]
 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP: Rename" })
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP: [C]ode [A]ction" })
 vim.keymap.set("n", "<leader>cc", vim.lsp.codelens.run, { desc = "LSP: Run Codelens" })
+vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "LSP: References" })
 
 -- Other keymaps
 -- https://github.com/ray-x/go.nvim/blob/master/lua/go/lsp.lua#L47
