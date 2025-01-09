@@ -2,13 +2,8 @@ return {
     {
         'saghen/blink.cmp',
         lazy = true,
-        --version = 'v0.8.1',
+        version = 'v0.9.3',
         opts = {
-            fuzzy = {
-                prebuilt_binaries = {
-                    force_version = 'v0.8.2'
-                }
-            },
             keymap = { preset = 'super-tab' },
             completion = {
                 menu = {
