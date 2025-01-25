@@ -13,7 +13,12 @@ return {
                 enable = true,
                 additional_vim_regex_highlighting = false,
             },
-            indent = { enable = true },
+            indent = {
+                enable = true,
+                disable = {
+                    'typescript' -- So that: indentexpr=GetTypescriptIndent()
+                }
+            },
         },
         config = function(_, opts)
             local configs = require("nvim-treesitter.configs")
