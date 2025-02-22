@@ -38,4 +38,5 @@ in [
   unstable.lua-language-server
   unstable.difftastic
   unstable.aws-sam-cli
+  unstable.uv
 ]

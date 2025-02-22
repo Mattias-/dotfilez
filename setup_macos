@@ -13,7 +13,7 @@ main() {
     install_macos_packages
 
     install_go_packages
-    install_python_packages
+    install_python_packages_uv
     #setup_node
     install_node_packages
 
@@ -35,7 +35,7 @@ install_go_packages() {
     done
 }
 
-install_python_packages() {
+install_python_packages_pipx() {
     local installed
     installed=$(pipx list --short | cut -d" " -f1)
     # shellcheck disable=SC2154
@@ -45,6 +45,20 @@ install_python_packages() {
         fi
     done
     pipx upgrade-all
+}
+
+install_python_packages_uv() {
+    local installed
+    installed=$(uv tool list --show-paths | grep -v '^- ' | cut -d ' ' -f1)
+    # shellcheck disable=SC2154
+    for pip_package in "${pip_packages[@]}"; do
+        if ! grep -q "$pip_package" <<<"$installed"; then
+            uv tool install "$pip_package"
+        else
+            echo "Already installed pip_package: $pip_package"
+        fi
+    done
+    uv tool upgrade --all
 }
 
 install_node_packages() {
