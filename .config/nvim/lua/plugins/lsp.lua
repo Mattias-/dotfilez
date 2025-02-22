@@ -2,7 +2,9 @@ return {
     {
         'saghen/blink.cmp',
         lazy = true,
-        version = 'v0.9.3',
+        version = 'v0.12.4',
+        ---@module 'blink.cmp'
+        ---@type blink.cmp.Config
         opts = {
             keymap = { preset = 'super-tab' },
             completion = {
@@ -17,8 +19,11 @@ return {
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
                 default = { 'lsp', 'snippets', 'path', 'buffer' },
-                cmdline = {},
             },
+            cmdline = {
+                sources = {},
+            },
+            signature = { enabled = true },
         },
         opts_extend = { "sources.default" }
     },

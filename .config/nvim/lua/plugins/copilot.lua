@@ -20,6 +20,12 @@ return {
                 keymap = {
                     accept = "<C-J>",
                 }
+            },
+            filetypes = {
+                help = false,
+                gitcommit = false,
+                gitrebase = false,
+                ["."] = false,
             }
         }
     },
