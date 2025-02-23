@@ -46,7 +46,7 @@
     autoupdate = true
 [alias]
     lg = log --graph --pretty=format:'%C(auto)%h%d %s %Cgreen(%cr) %Cblue%an %C(yellow)%G?'
-    lgh = log -10 --graph --pretty=format:'%C(auto)%h%d %s %Cgreen(%cr) %Cblue%an %C(yellow)%G?'
+    lgh = lg -10
     assume = update-index --assume-unchanged
     unassume = update-index --no-assume-unchanged
     shw = "!f() { git show $(git rev-list HEAD --max-count=20 | grep -m1 ^$1) ${@:2}; }; f"
