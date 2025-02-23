@@ -49,7 +49,9 @@ install_python_packages_pipx() {
 
 install_python_packages_uv() {
     local installed
+    set +e
     installed=$(uv tool list --show-paths | grep -v '^- ' | cut -d ' ' -f1)
+    set -e
     # shellcheck disable=SC2154
     for pip_package in "${pip_packages[@]}"; do
         if ! grep -q "$pip_package" <<<"$installed"; then
