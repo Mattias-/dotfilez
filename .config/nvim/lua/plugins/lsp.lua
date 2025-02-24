@@ -20,9 +20,6 @@ return {
             sources = {
                 default = { 'lsp', 'snippets', 'path', 'buffer' },
             },
-            cmdline = {
-                sources = {},
-            },
             signature = { enabled = true },
         },
         opts_extend = { "sources.default" }
