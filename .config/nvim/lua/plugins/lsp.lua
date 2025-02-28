@@ -2,7 +2,7 @@ return {
     {
         'saghen/blink.cmp',
         lazy = true,
-        version = 'v0.12.4',
+        version = 'v0.13.1',
         ---@module 'blink.cmp'
         ---@type blink.cmp.Config
         opts = {
@@ -65,7 +65,9 @@ return {
             "nvim-lua/plenary.nvim",
             "neovim/nvim-lspconfig",
         },
-        opts = {},
+        opts = {
+            expose_as_code_action = { "all" },
+        },
         ft = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
     },
     {
