@@ -11,9 +11,11 @@
 #    helper = cache --timeout=3600
     helper = osxkeychain
 [diff]
-    algorithm = patience
+    algorithm = histogram
     colormoved = "default"
     colormovedws = "allow-indentation-change"
+    mnemonicPrefix = true
+    renames = true
     tool = difftastic
 [difftool]
     prompt = false
@@ -61,6 +63,7 @@
     defaultKeyCommand = ssh-add -L
 [commit]
     gpgsign = true
+    verbose = true
 [tag]
     gpgsign = true
 
