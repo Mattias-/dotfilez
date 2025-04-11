@@ -22,6 +22,7 @@ return {
                 }
             },
             filetypes = {
+                yaml = true,
                 help = false,
                 gitcommit = false,
                 gitrebase = false,

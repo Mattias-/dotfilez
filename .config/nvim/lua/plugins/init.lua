@@ -14,6 +14,7 @@ return {
         end,
     },
     { "nvim-tree/nvim-web-devicons", lazy = true },
+    {'b0o/schemastore.nvim'},
     {
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",

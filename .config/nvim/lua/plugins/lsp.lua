@@ -30,7 +30,7 @@ return {
         'neovim/nvim-lspconfig',
         cmd = 'LspInfo',
         event = { 'BufReadPre', 'BufNewFile' },
-        dependencies = { 'saghen/blink.cmp' },
+        dependencies = { 'saghen/blink.cmp', 'b0o/schemastore.nvim', },
         opts = {
             servers = {
                 lua_ls = {
@@ -47,6 +47,29 @@ return {
                 bashls = {},
                 cssls = {},
                 eslint = {},
+                yamlls = {
+                    settings = {
+                        yaml = {
+                            schemaStore = {
+                                -- You must disable built-in schemaStore support if you want to use
+                                -- this plugin and its advanced options like `ignore`.
+                                enable = false,
+                                -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+                                url = "",
+                            },
+                            schemas = require('schemastore').yaml.schemas {
+                                extra = {
+                                    {
+                                        name = "openapi.json",
+                                        description = "OAS",
+                                        fileMatch = { "spec31.input.yaml" },
+                                        url = "https://spec.openapis.org/oas/3.1/schema/2022-10-07",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
             }
         },
         config = function(_, opts)

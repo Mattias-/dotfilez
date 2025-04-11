@@ -50,6 +50,11 @@ return {
                 "<cmd>lua require('telescope.builtin').keymaps()<cr>",
                 desc = "Find keymaps"
             },
+            {
+                "<leader>b",
+                "<cmd>lua require('telescope.builtin').buffers()<cr>",
+                desc = "Find buffers"
+            },
         },
     }
 }
