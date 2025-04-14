@@ -2,7 +2,7 @@ return {
     {
         'saghen/blink.cmp',
         lazy = true,
-        version = 'v0.13.1',
+        version = '1.*',
         ---@module 'blink.cmp'
         ---@type blink.cmp.Config
         opts = {
