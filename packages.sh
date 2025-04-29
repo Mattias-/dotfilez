@@ -28,16 +28,16 @@ npm_packages=(
 
 go_packages=(
     github.com/mattn/efm-langserver@latest
-    github.com/goreleaser/goreleaser@latest
+    github.com/goreleaser/goreleaser/v2@latest
     golang.org/x/tools/gopls@latest
-    #github.com/golangci/golangci-lint/cmd/golangci-lint@v1.64.8
     github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.0.2
     github.com/aquasecurity/tfsec/cmd/tfsec@latest
     github.com/swaggo/swag/cmd/swag@v1.8.7
     github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest
     github.com/mrtazz/checkmake/cmd/checkmake@latest
     github.com/google/ko@latest
-    github.com/bufbuild/buf/cmd/buf@v1.46.0
+    github.com/bufbuild/buf/cmd/buf@v1.53.0
+    github.com/sigstore/cosign/v2/cmd/cosign@latest
 )
 
 pacman_packages=(
