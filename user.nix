@@ -39,4 +39,5 @@ in [
   unstable.difftastic
   unstable.aws-sam-cli
   unstable.uv
+  unstable.xan
 ]

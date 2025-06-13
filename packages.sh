@@ -24,6 +24,7 @@ npm_packages=(
     @stoplight/spectral-cli
     @quobix/vacuum
     pnpm@9.9.0
+    @biomejs/biome
 )
 
 go_packages=(
