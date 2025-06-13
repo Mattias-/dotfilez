@@ -47,6 +47,7 @@ return {
                 bashls = {},
                 cssls = {},
                 eslint = {},
+                biome = {},
                 yamlls = {
                     settings = {
                         yaml = {
