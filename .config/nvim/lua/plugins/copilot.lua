@@ -15,6 +15,12 @@ return {
         "zbirenbaum/copilot.lua",
         event = "InsertEnter",
         opts = {
+            should_attach = function(_, bufname)
+                if string.match(bufname, "Downloads") then
+                    return false
+                end
+                return true
+            end,
             suggestion = {
                 auto_trigger = true,
                 keymap = {
