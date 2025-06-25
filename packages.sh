@@ -6,7 +6,6 @@ pip_packages=(
     black
     yamllint
     pre-commit
-    prowler-cloud
 )
 
 npm_packages=(
