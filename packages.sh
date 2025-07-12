@@ -24,6 +24,7 @@ npm_packages=(
     @quobix/vacuum
     pnpm@9.9.0
     @biomejs/biome
+    @getgrit/cli
 )
 
 go_packages=(

@@ -68,3 +68,7 @@ sigv4curl() {
         --aws-sigv4 "aws:amz:eu-central-1:execute-api" \
         "$@"
 }
+
+scanimage() {
+    docker run --rm -it aquasec/trivy image --scanners vuln --ignore-unfixed "$@"
+}

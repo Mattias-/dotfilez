@@ -30,7 +30,7 @@ return {
             filetypes = {
                 yaml = true,
                 help = false,
-                gitcommit = false,
+                --gitcommit = false,
                 gitrebase = false,
                 ["."] = false,
             }
