@@ -35,10 +35,11 @@ go_packages=(
     github.com/aquasecurity/tfsec/cmd/tfsec@latest
     github.com/swaggo/swag/cmd/swag@v1.8.7
     github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest
-    github.com/mrtazz/checkmake/cmd/checkmake@latest
     github.com/google/ko@latest
     github.com/bufbuild/buf/cmd/buf@v1.53.0
     github.com/sigstore/cosign/v2/cmd/cosign@latest
+    github.com/air-verse/air@latest
+    filippo.io/mkcert@latest
 )
 
 pacman_packages=(

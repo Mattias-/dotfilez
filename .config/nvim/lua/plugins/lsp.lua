@@ -46,7 +46,6 @@ return {
                 dockerls = {},
                 bashls = {},
                 cssls = {},
-                eslint = {},
                 biome = {},
                 yamlls = {
                     settings = {

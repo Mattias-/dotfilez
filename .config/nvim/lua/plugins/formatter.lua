@@ -30,12 +30,13 @@ return {
             lua = { "stylua" },
             go = { "goimports", "gofumpt" },
             python = { "black" },
-            javascript = { "prettier" },
-            json = { "prettier" },
-            typescript = { "prettier" },
-            typescriptreact = { "prettier" },
+            javascript = { "biome" },
+            json = { "biome" },
+            typescript = { "biome" },
+            typescriptreact = { "biome" },
             xml = { "xmllint" },
             sh = { "shfmt" },
+            yaml = { "prettier" },
         },
         format_on_save = function(bufnr)
             if vim.g.disable_autoformat then
