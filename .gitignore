@@ -12,3 +12,4 @@ bin/vim
 Brewfile.lock.json
 Brewfile.new
 /.config/nvim/lazy-lock.json
+flake.lock

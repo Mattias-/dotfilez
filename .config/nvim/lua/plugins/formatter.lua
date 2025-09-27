@@ -37,6 +37,7 @@ return {
             xml = { "xmllint" },
             sh = { "shfmt" },
             yaml = { "prettier" },
+            nix = { "nixfmt" },
         },
         format_on_save = function(bufnr)
             if vim.g.disable_autoformat then

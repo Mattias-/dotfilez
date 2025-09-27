@@ -98,16 +98,10 @@ install_macos_packages() {
         sh <(curl -L https://nixos.org/nix/install)
     fi
 
-    if ! nix-channel --list | grep '^nixpkgs'; then
-        nix-channel --add https://nixos.org/channels/nixpkgs-unstable nixpkgs
-    fi
-    if ! nix-channel --list | grep '^stable'; then
-        nix-channel --add https://nixos.org/channels/nixos-24.11 stable
-    fi
-    nix-channel --update
-    diff --label current <(nix-env --query) \
-        --label user.nix <(nix-env --query --available -f ./user.nix) || true
-    nix-env --install --remove-all -f ./user.nix
+    nix flake update
+    nix profile upgrade dotfilez
+    nix profile diff-closures | tail -30
+    nix store gc
 }
 
 configure_macos() {
