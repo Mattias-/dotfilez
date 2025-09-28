@@ -2,11 +2,7 @@
 
 alias gs='git status'
 
-if ls --color >/dev/null 2>&1; then # GNU `ls`
-    alias ls="ls --color=auto"
-else # OS X `ls`
-    alias ls="ls -G"
-fi
+alias ls="ls --color=auto"
 alias ll='ls -ltrh'
 alias la='ll -A'
 
