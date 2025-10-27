@@ -2,5 +2,8 @@ aliases:
     npr: pr create --draft
     mpr: pr merge --squash --delete-branch
     ps: pr status
+    approved: pr list --author "@me" --search "review:approved"
+    apr: pr list --author "@me" --search "review:approved"
+    mappr: '!gh mpr $(gh apr | fzf --accept-nth 1)'
 git_protocol: ssh
 version: "1"
