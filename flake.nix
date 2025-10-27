@@ -64,7 +64,7 @@
             unstablePkgs.yq-go
             unstablePkgs.lua-language-server
             unstablePkgs.difftastic
-            unstablePkgs.aws-sam-cli
+            pkgs.aws-sam-cli
             unstablePkgs.uv
             unstablePkgs.xan
             unstablePkgs.nixfmt-rfc-style

@@ -31,7 +31,7 @@ go_packages=(
     github.com/mattn/efm-langserver@latest
     github.com/goreleaser/goreleaser/v2@latest
     golang.org/x/tools/gopls@latest
-    github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.0.2
+    github.com/golangci/golangci-lint/v2/cmd/golangci-lint@v2.5.0
     github.com/aquasecurity/tfsec/cmd/tfsec@latest
     github.com/swaggo/swag/cmd/swag@v1.8.7
     github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest
@@ -40,6 +40,7 @@ go_packages=(
     github.com/sigstore/cosign/v2/cmd/cosign@latest
     github.com/air-verse/air@latest
     filippo.io/mkcert@latest
+    github.com/grafana/grafanactl/cmd/grafanactl@latest
 )
 
 pacman_packages=(
