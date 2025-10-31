@@ -29,7 +29,7 @@
         pkgs.buildEnv {
           name = "home-packages";
           paths = [
-            go_1_25_1
+            pkgs.go_1_25
             unstablePkgs.awscli2
             unstablePkgs.btop
             unstablePkgs.cfssl
