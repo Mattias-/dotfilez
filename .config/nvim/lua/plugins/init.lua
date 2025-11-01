@@ -14,7 +14,7 @@ return {
         end,
     },
     { "nvim-tree/nvim-web-devicons", lazy = true },
-    {'b0o/schemastore.nvim'},
+    { 'b0o/schemastore.nvim' },
     {
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
@@ -31,7 +31,7 @@ return {
         dependencies = {
             'tpope/vim-rhubarb',
         },
-        cmd = { "Git", "GBrowse", "Gread" },
+        cmd = { "Git", "GBrowse", "Gread", "Gvdiffsplit" },
         keys = {
             { "<leader>g", "<cmd>Git<cr>", desc = "Toggle Git" },
         },
