@@ -1,3 +1,5 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
 add_newline = false
 format = """
 $username\
@@ -65,14 +67,14 @@ $shell\
 $character"""
 
 [username]
-format = "[$user]($style) @ "
+format = "[$user]($style) "
 style_user = "yellow"
 show_always = true
 
 [hostname]
-format = "[$hostname]($style) "
+format = "@ [$hostname]($style) "
 style = "blue"
-ssh_only = false
+ssh_only = true
 
 [directory]
 style = ""
@@ -91,12 +93,13 @@ symbol = "☁️ "
 format = '[$symbol$project]($style) '
 
 [kubernetes]
-disabled = false
+disabled = true
 format = '[$symbol$context( \($namespace\))]($style) '
 [kubernetes.context_aliases]
 "gke_.*_(?P<cluster>[\\w-]+)" = "gke-$cluster"
 
 [nodejs]
+disabled = true
 #symbol=""
 format="[$symbol($version )]($style)"
 
