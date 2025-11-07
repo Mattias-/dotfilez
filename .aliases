@@ -13,5 +13,5 @@ alias mv='mv -i'
 
 alias myip='dig +short myip.opendns.com @resolver1.opendns.com'
 alias grep='grep --color=auto'
-
 alias npm-upgrade-outdated='npm outdated --parseable | cut -d: -f4 | xargs npm install --save-exact'
+alias syft='nix-shell -p syft --run syft'

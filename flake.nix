@@ -31,25 +31,25 @@
           paths = [
             pkgs.go_1_25
             unstablePkgs.awscli2
-            unstablePkgs.btop
-            unstablePkgs.cfssl
+            #unstablePkgs.btop
+            #unstablePkgs.cfssl
             unstablePkgs.colima
             unstablePkgs.coreutils-prefixed
             unstablePkgs.docker-buildx
             unstablePkgs.docker-client
             unstablePkgs.fd
-            unstablePkgs.ffmpeg
+            #unstablePkgs.ffmpeg
             unstablePkgs.fzf
             unstablePkgs.gh
             unstablePkgs.gnupg
-            unstablePkgs.google-cloud-sdk
-            unstablePkgs.htop
+            #unstablePkgs.google-cloud-sdk
+            #unstablePkgs.htop
             unstablePkgs.jq
             unstablePkgs.neovim
-            unstablePkgs.nmap
+            #unstablePkgs.nmap
             unstablePkgs.nodejs
             unstablePkgs.python3
-            unstablePkgs.pipx
+            #unstablePkgs.pipx
             unstablePkgs.ripgrep
             unstablePkgs.sad
             unstablePkgs.shellcheck
@@ -57,16 +57,16 @@
             unstablePkgs.socat
             unstablePkgs.ssm-session-manager-plugin
             unstablePkgs.starship
-            unstablePkgs.tcpdump
+            #unstablePkgs.tcpdump
             unstablePkgs.tmux
             unstablePkgs.tree
             unstablePkgs.tree-sitter
-            unstablePkgs.yq-go
+            #unstablePkgs.yq-go
             unstablePkgs.lua-language-server
-            unstablePkgs.difftastic
+            #unstablePkgs.difftastic
             pkgs.aws-sam-cli
             unstablePkgs.uv
-            unstablePkgs.xan
+            #unstablePkgs.xan
             unstablePkgs.nixfmt-rfc-style
           ];
         };

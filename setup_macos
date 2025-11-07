@@ -35,18 +35,6 @@ install_go_packages() {
     done
 }
 
-install_python_packages_pipx() {
-    local installed
-    installed=$(pipx list --short | cut -d" " -f1)
-    # shellcheck disable=SC2154
-    for pip_package in "${pip_packages[@]}"; do
-        if ! grep -q "$pip_package" <<<"$installed"; then
-            pipx install -f "$pip_package"
-        fi
-    done
-    pipx upgrade-all
-}
-
 install_python_packages_uv() {
     local installed
     set +e

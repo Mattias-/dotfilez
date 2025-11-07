@@ -38,6 +38,7 @@ return {
             sh = { "shfmt" },
             yaml = { "prettier" },
             nix = { "nixfmt" },
+            --markdown = { "injected" },
         },
         format_on_save = function(bufnr)
             if vim.g.disable_autoformat then
