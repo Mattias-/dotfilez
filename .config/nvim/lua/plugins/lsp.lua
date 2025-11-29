@@ -47,6 +47,10 @@ return {
                 bashls = {},
                 cssls = {},
                 biome = {},
+                templ = {},
+                html = {
+                    filetypes = { "html", "templ" }
+                },
                 yamlls = {
                     settings = {
                         yaml = {

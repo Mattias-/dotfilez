@@ -41,6 +41,7 @@ go_packages=(
     github.com/air-verse/air@latest
     filippo.io/mkcert@latest
     github.com/grafana/grafanactl/cmd/grafanactl@latest
+    github.com/a-h/templ/cmd/templ@latest
 )
 
 pacman_packages=(

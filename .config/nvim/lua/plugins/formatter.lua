@@ -38,6 +38,7 @@ return {
             sh = { "shfmt" },
             yaml = { "prettier" },
             nix = { "nixfmt" },
+            templ = { "templ" }
             --markdown = { "injected" },
         },
         format_on_save = function(bufnr)
