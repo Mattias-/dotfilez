@@ -1,6 +1,8 @@
 #! /usr/bin/env nix-shell
 #! nix-shell -i bash -p postgresql
 
+# shellcheck shell=bash disable=SC1008
+
 # Function to print usage
 usage() {
     echo "Usage: $0 --hostname <hostname> --region <region> --database <database> --username <username>"
@@ -68,9 +70,3 @@ fi
 
 # Set up the connection command
 PGSSLNEGOTIATION=direct PGPASSWORD="$auth_token" PGSSLMODE=require psql --dbname "$database" --host "$hostname" --username "$username" --quiet
-
-# Check if the connection was successful
-if [[ $? -ne 0 ]]; then
-    echo "Error: Failed to connect to the database"
-    exit 1
-fi
