@@ -102,7 +102,7 @@ return {
         config = function()
             local capabilities = require('blink.cmp').get_lsp_capabilities({}, true)
             require('go').setup({
-                luasnip = true,
+                luasnip = false,
                 trouble = true,
                 lsp_gofumpt = false, -- handled by conform instead.
                 lsp_inlay_hints = {
@@ -116,9 +116,10 @@ return {
                         gopls = {
                             directoryFilters = { "-**/node_modules", "-**/.git", "-.vscode", "-.idea", "-.vscode-test" },
                             analyses = {
+                                ST1000 = false,
                                 ST1003 = false,
                                 -- shadow = false,
-                            }
+                            },
                         }
                     }
                 },

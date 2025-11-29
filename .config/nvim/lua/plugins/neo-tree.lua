@@ -29,6 +29,12 @@ return {
                         end,
                         desc = "Copy Path to Clipboard",
                     },
+                    ["c"] = {
+                        "copy",
+                        config = {
+                            show_path = "absolute" -- "none", "relative", "absolute"
+                        }
+                    }
                 },
             },
         },
