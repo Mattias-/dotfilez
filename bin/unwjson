@@ -1,0 +1,25 @@
+#!/bin/bash
+set -euo pipefail
+
+jq 'walk(
+  if type == "object" then
+    (to_entries
+     | reduce .[] as $e ({};
+         . + { ($e.key): $e.value }
+           + (
+               if ($e.value | type == "string" and startswith("ey")) then
+                 (try
+                    (($e.value | @base64d) as $d
+                     | { ($e.key + "__decoded"): (try ($d | fromjson) catch $d) })
+                  catch
+                    {})
+               else
+                 {}
+               end
+             )
+       )
+    )
+  else
+    .
+  end
+)' "$@"

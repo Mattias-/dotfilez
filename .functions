@@ -72,7 +72,3 @@ sigv4curl() {
 scanimage() {
     docker run --rm -it aquasec/trivy image --scanners vuln --ignore-unfixed "$@"
 }
-
-jwtpayload() {
-    jq --raw-input 'split(".") | .[1] | @base64d | fromjson'
-}
