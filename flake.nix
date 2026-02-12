@@ -55,7 +55,7 @@
             unstablePkgs.shellcheck
             unstablePkgs.shfmt
             unstablePkgs.socat
-            unstablePkgs.ssm-session-manager-plugin
+            pkgs.ssm-session-manager-plugin
             unstablePkgs.starship
             #unstablePkgs.tcpdump
             unstablePkgs.tmux
@@ -67,7 +67,7 @@
             pkgs.aws-sam-cli
             unstablePkgs.uv
             #unstablePkgs.xan
-            unstablePkgs.nixfmt-rfc-style
+            unstablePkgs.nixfmt
           ];
         };
     };

@@ -1,3 +1,5 @@
-#!/usr/bin/env
+#!/bin/bash
+set -euo pipefail
 
-jq --raw-input 'split(".") | .[1] | @base64d | fromjson'
+part="${1:-0,1}"
+jq --raw-input "split(\".\") | .[$part] | @base64d | fromjson"

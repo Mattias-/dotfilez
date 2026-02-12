@@ -72,3 +72,7 @@ sigv4curl() {
 scanimage() {
     docker run --rm -it aquasec/trivy image --scanners vuln --ignore-unfixed "$@"
 }
+
+clean_copycurl() {
+    pbpaste | grep -vE "\-H '(sec-|referer:|priority:|origin:|accept-language:|user-agent:)" | pbcopy
+}
