@@ -5,7 +5,7 @@ return {
     keys = {
         {
             -- Customize or remove this keymap to your liking
-            "<leader>f",
+            "<leader>FF",
             function()
                 require("conform").format({ async = true, lsp_fallback = true })
             end,
@@ -14,7 +14,7 @@ return {
         },
         {
             -- Toggle autoformat
-            "<leader>F",
+            "<leader>Ff",
             function()
                 vim.g.disable_autoformat = not vim.g.disable_autoformat
                 print("Autoformat is now " .. (vim.g.disable_autoformat and "disabled" or "enabled"))
