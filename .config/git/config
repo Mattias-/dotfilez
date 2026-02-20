@@ -5,7 +5,6 @@
     path = ~/.config/git/extraconfig
 [core]
     editor = vi
-    excludesfile = ~/.config/git/gitignore_global
     attributesfile = ~/.config/git/gitattributes_global
 [credential]
 #    helper = cache --timeout=3600
@@ -53,6 +52,9 @@
     unassume = update-index --no-assume-unchanged
     shw = "!f() { git show $(git rev-list HEAD --max-count=20 | grep -m1 ^$1) ${@:2}; }; f"
     grepblame = "!ggb() { git grep -n $@ | while IFS=: read i j k; do git blame -f -L $j,$j $i; done }; ggb"
+    wtrm = "!f() { git worktree remove $(git worktree list | fzf --accept-nth 1); }; f"
+    wtadd = "!f() { git worktree add ../wt/$1; }; f"
+
 [pager]
     lgh = less --QUIT-AT-EOF
     difftool = true
