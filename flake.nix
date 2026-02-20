@@ -17,11 +17,11 @@
           unstablePkgs = unstable.legacyPackages."aarch64-darwin";
 
           # Add package overrides here
-          go_1_25_1 = unstablePkgs.go.overrideAttrs (old: {
-            version = "1.25.1";
+          go_1_25_7 = unstablePkgs.go.overrideAttrs (old: {
+            version = "1.25.7";
             src = pkgs.fetchurl {
-              url = "https://go.dev/dl/go1.25.1.src.tar.gz";
-              hash = "sha256-0BDBCc7pTYDv5oHqtGvepJGskGv0ZYPDLp8NuwvRpZQ=";
+              url = "https://go.dev/dl/go1.25.7.src.tar.gz";
+              hash = "sha256-F48oMoICdLQ+F30y8Go+uwEp5CfdIKXkyI3ywXY88Qo=";
             };
             patches = [ ];
           });
@@ -29,7 +29,7 @@
         pkgs.buildEnv {
           name = "home-packages";
           paths = [
-            pkgs.go_1_25
+            go_1_25_7
             unstablePkgs.awscli2
             #unstablePkgs.btop
             #unstablePkgs.cfssl

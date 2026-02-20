@@ -22,7 +22,7 @@ npm_packages=(
     @redocly/cli@v1.6.0
     @stoplight/spectral-cli
     @quobix/vacuum
-    pnpm@9.9.0
+    pnpm@10.29.3
     @biomejs/biome
     @getgrit/cli
 )
