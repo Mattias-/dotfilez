@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
   };
@@ -25,11 +25,12 @@
             };
             patches = [ ];
           });
+          go_1_26 = pkgs.callPackage ./go_1_26.nix { };
         in
         pkgs.buildEnv {
           name = "home-packages";
           paths = [
-            go_1_25_7
+            go_1_26
             unstablePkgs.awscli2
             #unstablePkgs.btop
             #unstablePkgs.cfssl
