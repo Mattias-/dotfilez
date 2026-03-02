@@ -52,8 +52,9 @@
     unassume = update-index --no-assume-unchanged
     shw = "!f() { git show $(git rev-list HEAD --max-count=20 | grep -m1 ^$1) ${@:2}; }; f"
     grepblame = "!ggb() { git grep -n $@ | while IFS=: read i j k; do git blame -f -L $j,$j $i; done }; ggb"
-    wtrm = "!f() { git worktree remove $(git worktree list | fzf --accept-nth 1); }; f"
-    wtadd = "!f() { git worktree add ../wt/$1; }; f"
+    wtrm = "!f() { b=$(git worktree list | fzf --accept-nth 1); git worktree remove $b && git branch -D $(basename $b); }; f"
+    wtadd = "!f() { git worktree add -b $1 ../wt/$1 origin/main; }; f"
+    wtco = "!f() { git worktree add ../wt/$1; }; f"
 
 [pager]
     lgh = less --QUIT-AT-EOF
