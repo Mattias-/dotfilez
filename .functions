@@ -74,5 +74,45 @@ scanimage() {
 }
 
 clean_copycurl() {
-    pbpaste | grep -vE "\-H '(sec-|referer:|priority:|origin:|accept-language:|user-agent:)" | pbcopy
+    buffer=$(pbpaste)
+    if [[ "$buffer" == curl* ]]; then
+        :
+    else
+        echo "Buffer does not start with curl, exiting."
+        return 1
+    fi
+
+    newbuf=""
+    # Loop over each line
+    while IFS= read -r line; do
+        # Check if the line contains the Authorization header
+        if [[ "$line" =~ -H\ \'[aA]uthorization:\ Bearer\ (.+)\' ]]; then
+            #echo "Found Authorization header: $line"
+            # Extract the token using regex
+            token=$(echo "$line" | grep -oE "[aA]uthorization: Bearer ([^']+)" | cut -d ' ' -f 3)
+            #echo "Extracted token: $token"
+            # Replace the token with a variable
+            line="  --oauth2-bearer \"\$TOKEN\" \\"
+            #line=$(echo "$line" | sed -E "s/Authorization: Bearer [^']+/Authorization: Bearer \$TOKEN/")
+        fi
+
+        # Skip lines that contain certain headers
+        if [[ "$line" =~ -H\ \'(sec-|[rR]eferer:|priority:|origin:|accept-language:|[uU]ser-[aA]gent:) ]]; then
+            #echo "Skipping line with unwanted header: $line"
+            continue
+        fi
+
+        # Append the processed line to the new buffer
+        newbuf+="$line"$'\n'
+    done <<<"$buffer"
+
+    # If the last line ends with a backslash, remove it and the newline
+    if [[ "$newbuf" == *\\$'\n' ]]; then
+        newbuf="${newbuf%\\$'\n'}"
+    fi
+
+    #echo "TOKEN=\"$token\""
+    #echo "$newbuf"
+    #printf 'TOKEN="%s"\n%s' "$token" "$newbuf"
+    printf 'TOKEN="%s"\n%s' "$token" "$newbuf" | pbcopy
 }
