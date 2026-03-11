@@ -43,6 +43,7 @@
             unstablePkgs.fzf
             unstablePkgs.gh
             unstablePkgs.gnupg
+            unstablePkgs.git-lfs
             #unstablePkgs.google-cloud-sdk
             #unstablePkgs.htop
             unstablePkgs.jq
