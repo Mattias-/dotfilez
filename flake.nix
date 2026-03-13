@@ -31,45 +31,46 @@
           name = "home-packages";
           paths = [
             go_1_26
-            unstablePkgs.awscli2
+            #pkgs.aws-sam-cli
             #unstablePkgs.btop
             #unstablePkgs.cfssl
+            #unstablePkgs.difftastic
+            #unstablePkgs.ffmpeg
+            #unstablePkgs.google-cloud-sdk
+            #unstablePkgs.htop
+            #unstablePkgs.nmap
+            #unstablePkgs.pipx
+            #unstablePkgs.tcpdump
+            #unstablePkgs.xan
+            #unstablePkgs.yq-go
+            pkgs.ssm-session-manager-plugin
+            unstablePkgs.awscli2
             unstablePkgs.colima
             unstablePkgs.coreutils-prefixed
+            unstablePkgs.direnv
             unstablePkgs.docker-buildx
             unstablePkgs.docker-client
             unstablePkgs.fd
-            #unstablePkgs.ffmpeg
             unstablePkgs.fzf
             unstablePkgs.gh
-            unstablePkgs.gnupg
             unstablePkgs.git-lfs
-            #unstablePkgs.google-cloud-sdk
-            #unstablePkgs.htop
+            unstablePkgs.gnupg
             unstablePkgs.jq
+            unstablePkgs.lua-language-server
             unstablePkgs.neovim
-            #unstablePkgs.nmap
+            unstablePkgs.nixfmt
             unstablePkgs.nodejs
             unstablePkgs.python3
-            #unstablePkgs.pipx
             unstablePkgs.ripgrep
             unstablePkgs.sad
             unstablePkgs.shellcheck
             unstablePkgs.shfmt
             unstablePkgs.socat
-            pkgs.ssm-session-manager-plugin
             unstablePkgs.starship
-            #unstablePkgs.tcpdump
             unstablePkgs.tmux
             unstablePkgs.tree
             unstablePkgs.tree-sitter
-            #unstablePkgs.yq-go
-            unstablePkgs.lua-language-server
-            #unstablePkgs.difftastic
-            #pkgs.aws-sam-cli
             unstablePkgs.uv
-            #unstablePkgs.xan
-            unstablePkgs.nixfmt
           ];
         };
     };
