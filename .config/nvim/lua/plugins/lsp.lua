@@ -64,7 +64,7 @@ return {
                             schemas = require('schemastore').yaml.schemas {
                                 extra = {
                                     {
-                                        name = "openapi.json",
+                                        name = "oas-spec-input",
                                         description = "OAS",
                                         fileMatch = { "spec31.input.yaml" },
                                         url = "https://spec.openapis.org/oas/3.1/schema/2022-10-07",
