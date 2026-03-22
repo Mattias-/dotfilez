@@ -18,10 +18,7 @@ npm_packages=(
     yaml-language-server
     aws-cdk
     prettier
-    rdme
-    @redocly/cli@v1.6.0
-    @stoplight/spectral-cli
-    @quobix/vacuum
+    @redocly/cli@v2.24.1
     pnpm@10.29.3
     @biomejs/biome
     @getgrit/cli
@@ -42,6 +39,7 @@ go_packages=(
     filippo.io/mkcert@latest
     github.com/grafana/grafanactl/cmd/grafanactl@latest
     github.com/a-h/templ/cmd/templ@latest
+    github.com/daveshanley/vacuum@latest
 )
 
 pacman_packages=(
