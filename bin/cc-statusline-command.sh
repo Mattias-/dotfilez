@@ -14,4 +14,4 @@ reset='\033[0m'
 ctx_used_fmt=$(printf "%.0f%%" "$used")
 cost_fmt=$(printf "$%.2f" "$cost")
 
-echo "${currentdir##*/} ${cyan}$model${reset} ${green}${cost_fmt}${reset} ${yellow}${ctx_used_fmt}${reset}"
+echo "${currentdir##*/} · ${cyan}$model${reset} ${yellow}${ctx_used_fmt}${reset} · ${green}${cost_fmt}${reset}"
