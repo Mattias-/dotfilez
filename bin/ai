@@ -6,18 +6,11 @@ WORKTREE_BASE_DIR="$HOME/work/wt/ai"
 AI_CMD="claude"
 AI_CMD_RESUME="claude --resume"
 
-# Require GIT_REPO_DIR to be set and to be a git repository.
-if [ ! -d "$GIT_REPO_DIR/.git" ]; then
-    echo "GIT_REPO_DIR is not set to a git repository."
-fi
-
 session_dir() {
     local ai_session_name="$1"
 
     if [ -d "$WORKTREE_BASE_DIR/$ai_session_name" ]; then
         echo "$WORKTREE_BASE_DIR/$ai_session_name"
-    elif [ -d "$GIT_REPO_DIR/.claude/worktrees/$ai_session_name" ]; then
-        echo "$GIT_REPO_DIR/.claude/worktrees/$ai_session_name"
     else
         echo "Session directory for '$ai_session_name' not found." >&2
         exit 1
@@ -30,12 +23,20 @@ new_session_dir() {
 }
 
 wal_append() {
-    mkdir -p "$(dirname "$WAL_FILE")"
+    if [ ! -f "$WAL_FILE" ]; then
+        mkdir -p "$(dirname "$WAL_FILE")"
+    fi
     local sess="$1"
-    # remaining arguments are joined by tab
-    shift
+    local action="$2"
+    local data="$3"
     # shellcheck disable=SC2086,SC2048
-    join_by_tab "${sess}" "$(date +%s)" $* >>"$WAL_FILE"
+    join_by_tab "${sess}" "$(date +%s)" "$action" "$data" >>"$WAL_FILE"
+    jq --null-input --compact-output \
+        --arg sess "$sess" \
+        --arg action "$action" \
+        --arg data "$data" \
+        ' { session: $sess, timestamp: (now | floor), action: $action, data: $data }' \
+        >>"${WAL_FILE}.jsonl"
 }
 
 join_by_tab() {
@@ -50,8 +51,9 @@ cmd_switch() {
 
     # If there is a window with the same name, abort.
     # This is to prevent accidentally overwriting an existing session.
-    if tmux list-windows -F '#{window_name}' | grep -q "^$ai_session_name$"; then
-        echo "A tmux window with the name '$ai_session_name' is already open."
+    tmux_window=$(_tmux_window_for_session "$ai_session_name")
+    if [ -n "$tmux_window" ]; then
+        echo "A tmux window with the AI session name '$ai_session_name' is already open."
         exit 1
     fi
 
@@ -75,6 +77,9 @@ _switch() {
     fi
 
     tmux new-window -c "$ai_session_dir" -n "$ai_session_name"
+    tmux set -wq @ai_session 1
+    tmux set -wq @ai_session_name "$ai_session_name"
+
     # Three panes:
     # .0 editor (left)
     # .1 AI CLI (top-right)
@@ -99,29 +104,38 @@ cmd_create() {
 
     # If there is a window with the same name, abort.
     # This is to prevent accidentally overwriting an existing session.
-    if tmux list-windows -F '#{window_name}' | grep -q "^$ai_session_name$"; then
-        echo "A tmux window with the name '$ai_session_name' already exists. Please choose a different name or close the existing window."
+    tmux_window=$(_tmux_window_for_session "$ai_session_name")
+    if [ -n "$tmux_window" ]; then
+        echo "A tmux window with the AI session name '$ai_session_name' is already open."
         exit 1
     fi
 
     # If the directory already exist, abort.
-    if [ -d "$WORKTREE_BASE_DIR/$ai_session_name" ] || [ -d "$GIT_REPO_DIR/.claude/worktrees/$ai_session_name" ]; then
+    if [ -d "$WORKTREE_BASE_DIR/$ai_session_name" ]; then
         echo "A directory with the name '$ai_session_name' already exists. Please choose a different name or delete the existing directory."
         exit 1
     fi
 
     ai_session_dir=$(new_session_dir "$ai_session_name")
 
-    if git -C "$GIT_REPO_DIR" rev-parse --verify "$ai_session_name" >/dev/null 2>&1; then
+    if git rev-parse --verify "$ai_session_name" >/dev/null 2>&1; then
         echo "Branch '$ai_session_name' already exists. Creating worktree from existing branch."
-        git -C "$GIT_REPO_DIR" worktree add "$ai_session_dir" "$ai_session_name"
+        git worktree add "$ai_session_dir" "$ai_session_name"
     else
         echo "Branch '$ai_session_name' does not exist. Creating new branch and worktree."
-        git -C "$GIT_REPO_DIR" worktree add -b "$ai_session_name" "$ai_session_dir" origin/main
+        git fetch origin main
+        git worktree add -b "$ai_session_name" "$ai_session_dir" origin/main
     fi
 
     wal_append "$ai_session_name" "CREATE" "$ai_session_dir"
     _switch "$ai_session_name"
+}
+
+_tmux_window_for_session() {
+    local ai_session_name="$1"
+    tmux list-windows \
+        -f "#{==:#{@ai_session_name},${ai_session_name}}" \
+        -F "#{window_id}" 2>/dev/null | head -1
 }
 
 _pr_for_session() (
@@ -140,13 +154,23 @@ _pr_for_session() (
     fi
 )
 
+_list_prs() {
+    gh pr list \
+        --author "@me" \
+        --limit 200 \
+        "$@" \
+        --json number,state,closed,mergeStateStatus,mergeable,headRefName,url \
+        --jq '[.[] | . + {ai_mergeable: (.mergeStateStatus == "CLEAN" and .mergeable == "MERGEABLE" and .state == "OPEN")}]' 2>/dev/null || echo '[]'
+}
+
 cmd_rm() {
     local ai_session_name="$1"
     ai_session_dir=$(session_dir "$ai_session_name")
 
     # If there is a window with the same name, abort.
-    if tmux list-windows -F '#{window_name}' | grep -q "^$ai_session_name$"; then
-        echo "A tmux window with the name '$ai_session_name' is still open. Please close it first."
+    tmux_window=$(_tmux_window_for_session "$ai_session_name")
+    if [ -n "$tmux_window" ]; then
+        echo "A tmux window with the AI session name '$ai_session_name' is open."
         exit 1
     fi
 
@@ -166,15 +190,17 @@ cmd_rm() {
 
     wal_append "$ai_session_name" "REMOVE" "$ai_session_dir"
 
-    git -C "$GIT_REPO_DIR" worktree remove "$ai_session_dir"
-    git -C "$GIT_REPO_DIR" branch -d "$ai_session_name" 2>/dev/null
+    git worktree remove "$ai_session_dir"
+    git branch -d "$ai_session_name" 2>/dev/null
 }
 
 cmd_mergeable() (
-    cd "$GIT_REPO_DIR"
-    gh pr list --author "@me" \
-        --json number,state,closed,mergeStateStatus,mergeable,mergedAt,headRefName \
-        --jq '.[] | select(.mergeStateStatus == "CLEAN" and .mergeable == "MERGEABLE" and .state == "OPEN") | {number, state, closed, mergeStateStatus, mergeable, mergedAt, headRefName}'
+    prs=$(_list_prs "$@")
+    echo "All PRs:"
+    jq '.' <<<"$prs"
+
+    echo "Mergeable PRs:"
+    jq '.[] | select(.ai_mergeable == true)' <<<"$prs"
 
     # TODO: Filter PRs related to sessions.
     # TODO: Add select with fzf then continue with cmd_merge for the selected PR
@@ -193,28 +219,129 @@ cmd_merge() {
         exit 1
     fi
 
+    # If there is a window with the same name, abort.
+    tmux_window=$(_tmux_window_for_session "$ai_session_name")
+    if [ -n "$tmux_window" ]; then
+        echo "A tmux window with the AI session name '$ai_session_name' is open."
+        exit 1
+    fi
+
     # Merge the PR.
     pr_number=$(jq -r '.number' <<<"$pr_info")
     echo "Merging PR #${pr_number} for branch '$ai_session_name'..."
 
-    gh pr merge --squash --delete-branch "$ai_session_name"
-    # TODO: After merge the branch will change to the base branch (usually main). This will fail in a woktree context.
+    # After merge the branch will change to the base branch (usually main). This will fail in a woktree context like this:
+    # failed to delete local branch <branch name>: failed to run git: error: cannot delete branch '<branch name>' used by worktree at '<worktree path>'
+    # This is handled by ignoring the error and then checkin if the pr was merged.
+    gh pr merge --squash --delete-branch "$ai_session_name" || true
+
+    pr_info=$(_pr_for_session "$ai_session_name")
+    if [ "$(jq -r '.number' <<<"$pr_info")" == "null" ]; then
+        echo "No PR found for branch '$ai_session_name'. Not expected after merging."
+        exit 1
+    else
+        merged=$(jq '.state == "MERGED" and .closed == true' <<<"$pr_info")
+        if [ "$merged" != "true" ]; then
+            echo "PR for branch '$ai_session_name' is not merged. Please merge the PR before removing the session."
+            echo "PR info: $pr_info"
+            exit 1
+        fi
+    fi
 
     wal_append "$ai_session_name" "MERGED_PR" "$pr_info"
 
-    # Remove the worktree and branch.
-    cmd_rm "$ai_session_name"
+    git worktree remove "$ai_session_dir"
+    git branch -d "$ai_session_name" 2>/dev/null
+}
+
+_collect_list_data() {
+    local tmux_windows
+    tmux_windows=$(tmux list-windows -f '#{@ai_session}' -F "#{@ai_session_name} #{window_active}" 2>/dev/null || true)
+
+    local pr_data
+    pr_data=$(_list_prs --state=all)
+
+    local rows='[]'
+
+    for wt_dir in "$WORKTREE_BASE_DIR"/*/; do
+        [ -d "$wt_dir" ] || continue
+        local session_name
+        session_name=$(basename "$wt_dir")
+
+        # Git info from the worktree HEAD
+        local commit_hash="" commit_date=""
+        if commit_info=$(git for-each-ref --format='%(objectname:short)@%(committerdate:relative)' "refs/heads/$session_name" 2>/dev/null) && [ -n "$commit_info" ]; then
+            IFS='@' read -r commit_hash commit_date <<<"$commit_info"
+        fi
+
+        # Tmux window status
+        local window_status=""
+        if echo "$tmux_windows" | grep -q "^${session_name} "; then
+            if echo "$tmux_windows" | grep -q "^${session_name} 1$"; then
+                window_status="open (active)"
+            else
+                window_status="open"
+            fi
+        fi
+
+        # Claude project dir exists
+        local claude_status=""
+        local claude_project_dir
+        claude_project_dir="$HOME/.claude/projects/$(tr '/.' '--' <<<"${wt_dir%/}")"
+        if [ -d "$claude_project_dir" ]; then
+            claude_status="yes"
+        fi
+
+        # PR info
+        local pr_number="" pr_state="" pr_merge_status="" pr_url="" ai_mergeable=""
+        local pr_match
+        pr_match=$(jq -r --arg branch "$session_name" '.[] | select(.headRefName == $branch) | "\(.number)\t\(.state)\t\(.mergeStateStatus)\t\(.url)\t\(.ai_mergeable)"' <<<"$pr_data")
+        if [ -n "$pr_match" ]; then
+            IFS=$'\t' read -r pr_number pr_state pr_merge_status pr_url ai_mergeable <<<"$pr_match"
+        fi
+
+        rows=$(jq --arg session "$session_name" \
+            --arg commit "$commit_hash" \
+            --arg committed "$commit_date" \
+            --arg window "$window_status" \
+            --arg claude "$claude_status" \
+            --arg pr_number "$pr_number" \
+            --arg pr_state "$pr_state" \
+            --arg pr_merge_status "$pr_merge_status" \
+            --arg pr_url "$pr_url" \
+            --argjson ai_mergeable "${ai_mergeable:-false}" \
+            '. += [{session: $session, commit: $commit, committed: $committed, window: $window, claude: $claude, pr_number: ($pr_number | if . == "" then null else tonumber end), pr_state: $pr_state, pr_merge_status: $pr_merge_status, pr_url: $pr_url, ai_mergeable: $ai_mergeable}]' <<<"$rows")
+    done
+
+    echo "$rows"
 }
 
 cmd_list() {
-    echo "Existing worktrees:"
-    ls "$WORKTREE_BASE_DIR"
+    local json_output=false
+    if [ "${1:-}" = "--json" ]; then
+        json_output=true
+    fi
 
-    echo "Existing tmux windows:"
-    tmux list-windows -F '#{window_name}'
+    local data
+    data=$(_collect_list_data)
 
-    #echo "Claude sessions:"
-    #find "$HOME/.claude/projects" -type dir -name "-Users-mattias-work-wt-ai-*"
+    if [ "$json_output" = true ]; then
+        jq '.' <<<"$data"
+        return
+    fi
+
+    # Table output with auto-detected column widths
+    {
+        echo "SESSION|COMMIT|COMMITTED|WINDOW|CLAUDE|PR"
+        jq -r '.[] |
+            [ .session,
+              (.commit // "-"),
+              (.committed // "-"),
+              (.window | if . == "" then "-" else . end),
+              (.claude | if . == "" then "-" else . end),
+              (if .pr_number then "#\(.pr_number) \(.pr_state) \(.pr_merge_status) \(.pr_url)" else "-" end)
+            ] | join("|")' <<<"$data"
+    } | column -t -s '|'
 }
 
 cmd_help() {
@@ -224,7 +351,7 @@ cmd_help() {
     echo "  switch <session_name>   Switch to an existing AI session with the given name."
     echo "  remove <session_name>   Remove an existing AI session with the given name. This will delete the git branch and worktree if branch is merged."
     echo "  merge <session_name>    Merge the PR for the given AI session. This will check if the PR is mergeable and then merge it. After merging, the session will be removed."
-    echo "  list                    List existing AI sessions and tmux windows."
+    echo "  list [--json]           List existing AI sessions and tmux windows."
     echo "  help                    Show this help message."
 }
 
@@ -235,7 +362,6 @@ fi
 while [ "$#" -ge 1 ]; do
     case "$1" in
     --debug)
-        shift
         set -x
         # shellcheck disable=2034
         DEBUG=true
