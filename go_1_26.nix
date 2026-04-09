@@ -4,20 +4,22 @@
   fetchurl,
 }:
 let
+  version = "1.26.2";
   platform = "${stdenv.hostPlatform.go.GOOS}-${stdenv.hostPlatform.go.GOARCH}";
   hashes = {
     # Checksums from https://go.dev/dl/
-    darwin-arm64 = "353df43a7811ce284c8938b5f3c7df40b7bfb6f56cb165b150bc40b5e2dd541f";
+    # https://go.dev/dl/#:~:text=darwin%2Darm64.tar.gz
+    darwin-arm64 = "32af1522bf3e3ff3975864780a429cc0b41d190ec7bf90faa661d6d64566e7af";
     linux-amd64 = "";
     linux-arm64 = "";
   };
 in
 stdenv.mkDerivation {
   pname = "go";
-  version = "1.26.1";
+  version = version;
 
   src = fetchurl {
-    url = "https://go.dev/dl/go1.26.1.${platform}.tar.gz";
+    url = "https://go.dev/dl/go${version}.${platform}.tar.gz";
     sha256 = hashes.${platform} or (throw "Missing Go hash for platform ${platform}");
   };
 
