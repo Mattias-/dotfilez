@@ -23,8 +23,6 @@ vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
-vim.opt.foldmethod = "expr"
-vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldlevel = 99
 
 vim.opt.iskeyword:append("-")
@@ -51,3 +49,6 @@ vim.diagnostic.config({
         },
     }
 })
+
+vim.lsp.codelens.enable(true)
+require('vim._core.ui2').enable({})

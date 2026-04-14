@@ -28,12 +28,9 @@ return {
     },
     {
         'tpope/vim-fugitive',
-        dependencies = {
-            'tpope/vim-rhubarb',
-        },
         cmd = { "Git", "GBrowse", "Gread", "Gvdiffsplit" },
         keys = {
-            { "<leader>g", "<cmd>Git<cr>", desc = "Toggle Git" },
+            --{ "<leader>g", "<cmd>Git<cr>", desc = "Toggle Git" },
         },
     },
 }

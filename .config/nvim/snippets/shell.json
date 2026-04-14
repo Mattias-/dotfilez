@@ -14,13 +14,13 @@
   },
 	"helpfn": {
 		"prefix": "helpfn",
-		"body": "help() {\n    cat <<EOF\nUsage: $0 COMMAND\nEOF\n}"
+		"body": "cmd_help() {\n    cat <<EOF\nUsage: $0 COMMAND\nEOF\n}"
 	},
 	"argparse": {
 		"prefix": "argparse",
 		"body": [
 "if [ \"\\$#\" -le 0 ]; then",
-"    help",
+"    cmd_help",
 "    exit 1",
 "fi",
 "while [ \"\\$#\" -ge 1 ]; do",
@@ -34,12 +34,12 @@
 "        ;;",
 "    #${1:cmd})",
 "    #    shift",
-"    #    ${1:cmd} \"\\$@\"",
+"    #    ${1:cmd_action} \"\\$@\"",
 "    #    break",
 "    #    ;;",
 "    help | *)",
 "        shift",
-"        help",
+"        cmd_help",
 "        break",
 "        ;;",
 "    esac",
