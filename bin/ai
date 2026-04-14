@@ -338,8 +338,8 @@ cmd_list() {
               (.commit // "-"),
               (.committed // "-"),
               (.window | if . == "" then "-" else . end),
-              (.claude | if . == "" then "-" else . end),
-              (if .pr_number then "#\(.pr_number) \(.pr_state) \(.pr_merge_status) \(.pr_url)" else "-" end)
+              (.claude | if . == "" then "" elif . == "yes" then "✓" else . end),
+              (if .pr_number then "#\(.pr_number) \(if .ai_mergeable then "✅" else "" end) \(.pr_url)" else "-" end)
             ] | join("|")' <<<"$data"
     } | column -t -s '|'
 }
