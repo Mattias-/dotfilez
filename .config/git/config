@@ -15,11 +15,11 @@
     colormovedws = "allow-indentation-change"
     mnemonicPrefix = true
     renames = true
-    tool = difftastic
+    tool = nvim_difftool
 [difftool]
     prompt = false
-[difftool "difftastic"]
-    cmd = difft "$LOCAL" "$REMOTE"
+[difftool "nvim_difftool"]
+    cmd = nvim -c "packadd nvim.difftool" -c "DiffTool $LOCAL $REMOTE"
 [color]
     branch = auto
     diff = auto
