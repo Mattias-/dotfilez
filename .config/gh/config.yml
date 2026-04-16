@@ -1,6 +1,6 @@
 aliases:
     npr: pr create --draft
-    mpr: pr merge --squash --delete-branch
+    mpr: pr merge --rebase --delete-branch
     ps: pr status
     approved: pr list --author "@me" --search "review:approved"
     apr: pr list --author "@me" --search "review:approved"

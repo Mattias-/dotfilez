@@ -233,7 +233,8 @@ cmd_merge() {
     # After merge the branch will change to the base branch (usually main). This will fail in a woktree context like this:
     # failed to delete local branch <branch name>: failed to run git: error: cannot delete branch '<branch name>' used by worktree at '<worktree path>'
     # This is handled by ignoring the error and then checkin if the pr was merged.
-    gh pr merge --squash --delete-branch "$ai_session_name" || true
+    # TODO: Verify remote branch is deleted?
+    gh pr merge --rebase "$ai_session_name" || true
 
     pr_info=$(_pr_for_session "$ai_session_name")
     if [ "$(jq -r '.number' <<<"$pr_info")" == "null" ]; then
