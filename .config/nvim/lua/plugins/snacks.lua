@@ -3,10 +3,14 @@ return {
         "folke/snacks.nvim",
         priority = 1000,
         lazy = false,
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
         ---@type snacks.Config
         opts = {
             input = { enabled = true },
-            explorer = { enabled = true },
+            ---@class snacks.explorer.Config
+            explorer = {
+                enabled = true,
+            },
             notifier = { enabled = true },
             gitbrowse = { enabled = true },
             indent = {
@@ -26,6 +30,7 @@ return {
                             list = {
                                 keys = {
                                     ["v"] = "edit_vsplit",
+                                    ["<C-n>"] = "cancel",
                                 },
                             },
                         },
@@ -50,8 +55,8 @@ return {
             --{ "<leader>,",       function() Snacks.picker.buffers() end,                                 desc = "Buffers" },
             { "<leader>:",       function() Snacks.picker.command_history() end,                         desc = "Command History" },
             --{ "<leader>n",       function() Snacks.picker.notifications() end,                           desc = "Notification History" },
-            { "<leader>e",       function() Snacks.explorer() end,                                       desc = "File Explorer" },
-            { "<leader>n",       function() Snacks.explorer() end,                                       desc = "File Explorer" },
+            --{ "<leader>e",       function() Snacks.explorer() end,                                       desc = "File Explorer" },
+            --{ "<leader>n",       function() Snacks.explorer() end,                                       desc = "File Explorer" },
             { "<C-n>",           function() Snacks.explorer() end,                                       desc = "File Explorer" },
             -- find
             { "<leader>fb",      function() Snacks.picker.buffers() end,                                 desc = "Buffers" },

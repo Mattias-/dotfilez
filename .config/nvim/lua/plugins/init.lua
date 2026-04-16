@@ -8,22 +8,34 @@ return {
             require('rose-pine').setup({
                 groups = {
                     comment = 'iris',
+                },
+                highlight_groups = {
+                    SnacksPickerPathHidden = { fg = 'iris' },
                 }
             })
             vim.cmd.colorscheme("rose-pine")
         end,
     },
-    { "nvim-tree/nvim-web-devicons", lazy = true },
     { 'b0o/schemastore.nvim' },
     {
         "nvim-lualine/lualine.nvim",
         event = "VeryLazy",
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
         opts = {
-            options = {
+            options    = {
                 theme                = 'auto',
                 section_separators   = '',
                 component_separators = '',
             },
+            sections   = {
+                lualine_a = { 'mode' },
+                lualine_b = { 'branch', 'diff', 'diagnostics' },
+                lualine_c = { 'filename' },
+                lualine_x = { 'encoding', 'fileformat', 'filetype', 'lsp_status' },
+                lualine_y = { 'progress' },
+                lualine_z = { 'location' }
+            },
+            extensions = { 'quickfix', 'man', 'trouble' }
         }
     },
     {
