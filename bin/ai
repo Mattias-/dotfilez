@@ -100,7 +100,25 @@ _switch() {
 
 cmd_create() {
     # The name of the AI session, not to be confused with a tmux session. This is used to name the tmux window and the directory, worktree, branch.
-    local ai_session_name="$1"
+    local ai_session_name=""
+    local issue_ref=""
+    while [ $# -gt 0 ]; do
+        case "$1" in
+        --issue)
+            issue_ref="$2"
+            shift 2
+            ;;
+        *)
+            ai_session_name="$1"
+            shift
+            ;;
+        esac
+    done
+
+    if [ -z "$ai_session_name" ]; then
+        echo "Usage: ai create <session_name> [--issue <issue_ref>]" >&2
+        exit 1
+    fi
 
     # If there is a window with the same name, abort.
     # This is to prevent accidentally overwriting an existing session.
@@ -128,6 +146,12 @@ cmd_create() {
     fi
 
     wal_append "$ai_session_name" "CREATE" "$ai_session_dir"
+
+    if [ -n "$issue_ref" ]; then
+        _set_issue "$ai_session_name" "$issue_ref"
+        wal_append "$ai_session_name" "SET_ISSUE" "$issue_ref"
+    fi
+
     _switch "$ai_session_name"
 }
 
@@ -161,6 +185,39 @@ _list_prs() {
         "$@" \
         --json number,state,closed,mergeStateStatus,mergeable,headRefName,url \
         --jq '[.[] | . + {ai_mergeable: (.mergeStateStatus == "CLEAN" and .mergeable == "MERGEABLE" and .state == "OPEN")}]' 2>/dev/null || echo '[]'
+}
+
+_get_issue() {
+    local ai_session_name="$1"
+    git config --get "branch.${ai_session_name}.aiIssue" 2>/dev/null || true
+}
+
+_set_issue() {
+    local ai_session_name="$1"
+    local issue_ref="$2"
+    git config "branch.${ai_session_name}.aiIssue" "$issue_ref"
+}
+
+_clear_issue() {
+    local ai_session_name="$1"
+    git config --unset "branch.${ai_session_name}.aiIssue" 2>/dev/null || true
+}
+
+# Build a URL for the given issue ref. Pass-through if the ref is already a URL.
+# Linear workspace is read from $AI_LINEAR_WORKSPACE; without it, we can't build a
+# URL and this returns empty.
+_linear_url() {
+    local ref="$1"
+    if [ -z "$ref" ]; then
+        return
+    fi
+    if [[ "$ref" == http* ]]; then
+        echo "$ref"
+        return
+    fi
+    if [ -n "${AI_LINEAR_WORKSPACE:-}" ]; then
+        echo "https://linear.app/${AI_LINEAR_WORKSPACE}/issue/${ref}"
+    fi
 }
 
 cmd_rm() {
@@ -255,6 +312,39 @@ cmd_merge() {
     git branch -d "$ai_session_name" 2>/dev/null
 }
 
+cmd_issue() {
+    local ai_session_name="${1:-}"
+    if [ -z "$ai_session_name" ]; then
+        echo "Usage: ai issue <session_name> [<issue_ref>|--clear]" >&2
+        exit 1
+    fi
+
+    # Ensure the session exists before touching config.
+    session_dir "$ai_session_name" >/dev/null
+
+    if [ "$#" -lt 2 ]; then
+        local issue
+        issue=$(_get_issue "$ai_session_name")
+        if [ -n "$issue" ]; then
+            echo "$issue"
+        else
+            echo "No issue associated with session '$ai_session_name'." >&2
+            exit 1
+        fi
+        return
+    fi
+
+    if [ "$2" = "--clear" ]; then
+        _clear_issue "$ai_session_name"
+        wal_append "$ai_session_name" "CLEAR_ISSUE" ""
+        echo "Cleared issue for session '$ai_session_name'."
+    else
+        _set_issue "$ai_session_name" "$2"
+        wal_append "$ai_session_name" "SET_ISSUE" "$2"
+        echo "Set issue for session '$ai_session_name' to '$2'."
+    fi
+}
+
 _collect_list_data() {
     local tmux_windows
     tmux_windows=$(tmux list-windows -f '#{@ai_session}' -F "#{@ai_session_name} #{window_active}" 2>/dev/null || true)
@@ -301,17 +391,24 @@ _collect_list_data() {
             IFS=$'\t' read -r pr_number pr_state pr_merge_status pr_url ai_mergeable <<<"$pr_match"
         fi
 
+        # Issue ref (Linear or other tracker) stored in branch config
+        local issue_ref="" issue_url=""
+        issue_ref=$(_get_issue "$session_name")
+        issue_url=$(_linear_url "$issue_ref")
+
         rows=$(jq --arg session "$session_name" \
             --arg commit "$commit_hash" \
             --arg committed "$commit_date" \
             --arg window "$window_status" \
             --arg claude "$claude_status" \
+            --arg issue "$issue_ref" \
+            --arg issue_url "$issue_url" \
             --arg pr_number "$pr_number" \
             --arg pr_state "$pr_state" \
             --arg pr_merge_status "$pr_merge_status" \
             --arg pr_url "$pr_url" \
             --argjson ai_mergeable "${ai_mergeable:-false}" \
-            '. += [{session: $session, commit: $commit, committed: $committed, window: $window, claude: $claude, pr_number: ($pr_number | if . == "" then null else tonumber end), pr_state: $pr_state, pr_merge_status: $pr_merge_status, pr_url: $pr_url, ai_mergeable: $ai_mergeable}]' <<<"$rows")
+            '. += [{session: $session, commit: $commit, committed: $committed, window: $window, claude: $claude, issue: $issue, issue_url: $issue_url, pr_number: ($pr_number | if . == "" then null else tonumber end), pr_state: $pr_state, pr_merge_status: $pr_merge_status, pr_url: $pr_url, ai_mergeable: $ai_mergeable}]' <<<"$rows")
     done
 
     echo "$rows"
@@ -331,29 +428,47 @@ cmd_list() {
         return
     fi
 
-    # Table output with auto-detected column widths
-    {
-        echo "SESSION|COMMIT|COMMITTED|WINDOW|CLAUDE|PR"
-        jq -r '.[] |
-            [ .session,
-              (.commit // "-"),
-              (.committed // "-"),
-              (.window | if . == "" then "-" else . end),
-              (.claude | if . == "" then "" elif . == "yes" then "✓" else . end),
-              (if .pr_number then "#\(.pr_number) \(if .ai_mergeable then "✅" else "" end) \(.pr_url)" else "-" end)
-            ] | join("|")' <<<"$data"
-    } | column -t -s '|'
+    # Only emit OSC-8 hyperlinks when stdout is a terminal.
+    local use_osc8=false
+    if [ -t 1 ]; then
+        use_osc8=true
+    fi
+
+    # Static column widths. Content that overflows its width pushes later
+    # columns to the right on that row only; the PR column is unbounded.
+    jq -r --argjson osc8 "$use_osc8" '
+        def link(url; text):
+            if $osc8 and (url // "") != ""
+            then "\u001b]8;;\(url)\u0007\(text)\u001b]8;;\u0007"
+            else text end;
+        def pad(s; w): s + (" " * ([w - (s | length), 0] | max));
+        def padlink(visible; wrapped; w): wrapped + (" " * ([w - (visible | length), 0] | max));
+
+        ([pad("SESSION"; 30), pad("COMMIT"; 8), pad("COMMITTED"; 16), pad("WINDOW"; 14), pad("CLAUDE"; 6), pad("ISSUE"; 12), "PR"] | join("  ")),
+        (.[] |
+          (if .issue == "" then "-" else .issue end) as $issue |
+          [ pad(.session; 30),
+            pad((.commit // "-"); 8),
+            pad((.committed // "-"); 16),
+            pad((.window | if . == "" then "-" else . end); 14),
+            pad((.claude | if . == "" then "" elif . == "yes" then "✓" else . end); 6),
+            padlink($issue; link(.issue_url; $issue); 12),
+            (if .pr_number then link(.pr_url; "#\(.pr_number) \(if .ai_mergeable then "✅" else "" end) \(.pr_url)") else "-" end)
+          ] | join("  ")
+        )
+    ' <<<"$data"
 }
 
 cmd_help() {
     echo "Usage: ai <command> [options]"
     echo "Commands:"
-    echo "  create <session_name>   Create a new AI session with the given name."
-    echo "  switch <session_name>   Switch to an existing AI session with the given name."
-    echo "  remove <session_name>   Remove an existing AI session with the given name. This will delete the git branch and worktree if branch is merged."
-    echo "  merge <session_name>    Merge the PR for the given AI session. This will check if the PR is mergeable and then merge it. After merging, the session will be removed."
-    echo "  list [--json]           List existing AI sessions and tmux windows."
-    echo "  help                    Show this help message."
+    echo "  create <session_name> [--issue <ref>]   Create a new AI session. Optionally associate a tracker issue (e.g. Linear ID)."
+    echo "  switch <session_name>                   Switch to an existing AI session with the given name."
+    echo "  remove <session_name>                   Remove an existing AI session with the given name. This will delete the git branch and worktree if branch is merged."
+    echo "  merge <session_name>                    Merge the PR for the given AI session. This will check if the PR is mergeable and then merge it. After merging, the session will be removed."
+    echo "  issue <session_name> [<ref>|--clear]    Get, set, or clear the tracker issue ref for the given session."
+    echo "  list [--json]                           List existing AI sessions and tmux windows."
+    echo "  help                                    Show this help message."
 }
 
 if [ "$#" -le 0 ]; then
@@ -386,6 +501,11 @@ while [ "$#" -ge 1 ]; do
     merge)
         shift
         cmd_merge "$@"
+        break
+        ;;
+    issue)
+        shift
+        cmd_issue "$@"
         break
         ;;
     mergeable)
