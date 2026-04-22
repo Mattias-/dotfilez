@@ -7,3 +7,4 @@ aliases:
     mappr: '!gh mpr $(gh apr | fzf --accept-nth 1)'
 git_protocol: ssh
 version: "1"
+telemetry: disabled
