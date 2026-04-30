@@ -9,7 +9,11 @@
       {
       "language": ["shellscript", "shell", "sh", "zsh"],
       "path": "./shell.json"
-  }
+      },
+      {
+      "language": ["go"],
+      "path": "./go.json"
+      }
 		]
 	}
 }
