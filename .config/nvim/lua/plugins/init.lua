@@ -45,4 +45,10 @@ return {
             --{ "<leader>g", "<cmd>Git<cr>", desc = "Toggle Git" },
         },
     },
+    {
+        "chrisgrieser/nvim-scissors",
+        -- opts = {
+        --     snippetDir = "path/to/your/snippetFolder",
+        -- }
+    },
 }
