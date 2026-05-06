@@ -226,6 +226,16 @@
     "description": "Register multiple handlers to demonstrate ServeMux pattern matching",
     "prefix": "muxpatterns"
   },
+  "httpfakeclient": {
+    "body": [
+      "s := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {",
+      "    w.WriteHeader(http.StatusOK)",
+      "    w.Write([]byte(`{}`))",
+      "}))",
+      "// TODO use s.URL and s.Client()"
+    ],
+    "prefix": "httpfakeclient"
+  },
   "httpjsonerrorresponse": {
     "body": [
       "func jsonErrorResponse(w http.ResponseWriter, status int, detail string) {",
