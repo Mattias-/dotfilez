@@ -47,7 +47,7 @@
             unstablePkgs.awscli2
             unstablePkgs.colima
             unstablePkgs.coreutils-prefixed
-            unstablePkgs.direnv
+            pkgs.direnv
             unstablePkgs.docker-buildx
             unstablePkgs.docker-client
             unstablePkgs.fd
