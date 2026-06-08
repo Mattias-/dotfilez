@@ -1,0 +1,30 @@
+#!/bin/bash
+
+echo "Running pre-push hook..."
+
+remote="$1"
+url="$2"
+
+z40=0000000000000000000000000000000000000000
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+    if [ "$local_sha" = $z40 ]; then
+        # Handle delete
+        :
+    else
+        if [ "$remote_sha" = $z40 ]; then
+            # New branch, examine all commits
+            range="$local_sha"
+        else
+            # Update to existing branch, examine new commits
+            range="$remote_sha..$local_sha"
+        fi
+
+        # Check for WIP commit
+        commit=$(git rev-list -n 1 --extended-regexp --grep '^WIP|^fixup!' "$range")
+        if [ -n "$commit" ]; then
+            echo >&2 "Found WIP|fixup! commit in $local_ref at $commit, not pushing $remote to $url:$remote_ref"
+            exit 1
+        fi
+    fi
+done
