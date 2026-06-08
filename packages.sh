@@ -19,7 +19,7 @@ npm_packages=(
     aws-cdk
     prettier
     @redocly/cli@v2.24.1
-    pnpm@10.29.3
+    pnpm@11.0.8
     @biomejs/biome
     @getgrit/cli
 )
@@ -40,6 +40,7 @@ go_packages=(
     github.com/grafana/grafanactl/cmd/grafanactl@latest
     github.com/a-h/templ/cmd/templ@latest
     github.com/daveshanley/vacuum@latest
+    mvdan.cc/gofumpt@latest
 )
 
 pacman_packages=(
