@@ -1,70 +1,77 @@
 {
-	"shebang": {
-		"prefix": "she",
-		"body": [
-			"#!/bin/bash",
-			"set -euo pipefail",
-			"",
-      "$0"
-		]
-	},
-  "mainfn": {
-    "prefix": "mainfn",
-    "body": "main() {\n    ${1:STMT}\n}\n\nmain \"\\$@\""
+  "argparse": {
+    "body": [
+      "if [ \"\\$#\" -le 0 ]; then",
+      "    cmd_help",
+      "    exit 1",
+      "fi",
+      "while [ \"\\$#\" -ge 1 ]; do",
+      "    case \"\\$1\" in",
+      "    --debug)",
+      "        shift",
+      "        set -x",
+      "        # shellcheck disable=2034",
+      "        DEBUG=true",
+      "        ;;",
+      "    #cmd)",
+      "    #    shift",
+      "    #    cmd_action \"\\$@\"",
+      "    #    break",
+      "    #    ;;",
+      "    help | *)",
+      "        shift",
+      "        cmd_help",
+      "        break",
+      "        ;;",
+      "    esac",
+      "done"
+    ],
+    "prefix": "argparse"
   },
-	"helpfn": {
-		"prefix": "helpfn",
-		"body": "cmd_help() {\n    cat <<EOF\nUsage: $0 COMMAND\nEOF\n}"
-	},
-	"argparse": {
-		"prefix": "argparse",
-		"body": [
-"if [ \"\\$#\" -le 0 ]; then",
-"    cmd_help",
-"    exit 1",
-"fi",
-"while [ \"\\$#\" -ge 1 ]; do",
-"    case \"\\$1\" in",
-"    --debug)",
-"        shift",
-"        set -x",
-"        # shellcheck disable=2034",
-"        DEBUG=true",
-"        shift",
-"        ;;",
-"    #${1:cmd})",
-"    #    shift",
-"    #    ${1:cmd_action} \"\\$@\"",
-"    #    break",
-"    #    ;;",
-"    help | *)",
-"        shift",
-"        cmd_help",
-"        break",
-"        ;;",
-"    esac",
-"done"
-		]
-	},
-	"trapfn": {
-		"prefix": "trapfn",
-		"body": [
-"finish() {",
-"    :$0",
-"}",
-"trap finish EXIT"
-		]
-	},
-	"scriptdir": {
-		"prefix": "scriptdir",
-		"body": [
-"scriptdir() {",
-"    (cd \"\\$(dirname \"\\$(readlink -f \"\\$0\")\")\" && pwd)",
-"}\n${0}"
-		]
-	},
-	"echoerr": {
-		"prefix": "echoerr",
-		"body": "echo_err_blue() {\n(\ntput setaf 033\necho \"\\$@\"\ntput sgr0\n) 1>&2\n}\n${0}"
-	}
+  "echoerr": {
+    "body": [
+      "echo_err_blue() {",
+      "    (",
+      "        tput setaf 033",
+      "        echo \"\\$@\"",
+      "        tput sgr0",
+      "    ) 1>&2",
+      "}"
+    ],
+    "prefix": "echoerr"
+  },
+  "helpfn": {
+    "body": "cmd_help() {\n    cat <<EOF\nUsage: $0 COMMAND\nEOF\n}",
+    "prefix": "helpfn"
+  },
+  "mainfn": {
+    "body": "main() {\n    ${1:STMT}\n}\n\nmain \"\\$@\"",
+    "prefix": "mainfn"
+  },
+  "scriptdir": {
+    "body": [
+      "scriptdir() {",
+      "    (cd \"\\$(dirname \"\\$(readlink -f \"\\$0\")\")\" && pwd)",
+      "}\n${0}"
+    ],
+    "prefix": "scriptdir"
+  },
+  "shebang": {
+    "body": [
+      "#!/bin/bash",
+      "set -euo pipefail",
+      "",
+      "$0"
+    ],
+    "prefix": "she"
+  },
+  "trapfn": {
+    "body": [
+      "finish() {",
+      "    :$0",
+      "}",
+      "trap finish EXIT"
+    ],
+    "prefix": "trapfn"
+  }
 }
