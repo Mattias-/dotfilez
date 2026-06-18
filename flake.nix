@@ -59,7 +59,7 @@
             unstablePkgs.lua-language-server
             unstablePkgs.neovim
             unstablePkgs.nixfmt
-            unstablePkgs.nodejs
+            unstablePkgs.nodejs_24
             unstablePkgs.python3
             unstablePkgs.ripgrep
             unstablePkgs.sad
