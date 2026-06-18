@@ -94,6 +94,7 @@ install_macos_packages() {
     nix flake update
     nix profile upgrade dotfilez
     nix profile diff-closures | tail -30
+    nix-env --delete-generations 90d
     nix store gc
 }
 
