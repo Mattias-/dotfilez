@@ -7,9 +7,11 @@ source ./packages.sh
 main() {
     mkdir -p ~/screenshots
     mkdir -p ~/projects
+    mkdir -p ~/work
     mkdir -p ~/mnt
     mkdir -p ~/bin
 
+    set_hostname
     install_macos_packages
 
     install_go_packages
@@ -18,12 +20,8 @@ main() {
     install_node_packages
 
     configure_macos
-    set_hostname
 
-    #nvim +":PlugInstall" +qall
-    #nvim +":PlugUpgrade" +qall
-    #nvim +":PlugUpdate" +qall
-    nvim +":helptags ALL" +qall
+    #nvim +":helptags ALL" +qall
     ln -sf "$(command -v nvim)" "$HOME/bin/vi"
     ln -sf "$(command -v nvim)" "$HOME/bin/vim"
 }
@@ -77,25 +75,30 @@ install_macos_packages() {
         bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         eval "$(/opt/homebrew/bin/brew shellenv)"
     fi
-    #arch -arm64 brew update
-    #arch -arm64 brew upgrade
-    #arch -arm64 brew bundle
     brew update
     brew upgrade
     brew bundle
 
-    brew bundle dump --file - >>Brewfile.new
+    brew bundle dump --file - >Brewfile.new
 
     if ! command -v nix >/dev/null; then
-        #sh <(curl -L https://nixos.org/nix/install)
         curl -fsSL https://install.determinate.systems/nix | sh -s -- install
+        if [ -r '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
+            # shellcheck disable=SC1091
+            source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh'
+        fi
     fi
 
+    if ! nix profile list --json | grep dotfilez >/dev/null; then
+        nix profile add .
+    fi
     nix flake update
     nix profile upgrade dotfilez
     nix profile diff-closures | tail -30
+    nix profile wipe-history --older-than 90d
     nix-env --delete-generations 90d
     nix store gc
+
 }
 
 configure_macos() {
@@ -141,6 +144,7 @@ EOF
         scutil --set LocalHostName "$new_hn"
         scutil --set ComputerName "$new_hn"
         scutil --set HostName "$new_hn"
+        exit 1
     else
         echo "Hostname OK"
     fi

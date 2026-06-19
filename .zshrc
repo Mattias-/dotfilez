@@ -89,6 +89,8 @@ fi
 
 find "$HOME/.local/state/nvim" -name 'lsp.log' -size +500M -exec truncate -s 0 {} \;
 
-eval "$(starship init zsh)"
+if command -v starship >/dev/null; then
+    eval "$(starship init zsh)"
+fi
 #eval "$(direnv hook zsh)"
 #eval "$(ai install-completions)"
