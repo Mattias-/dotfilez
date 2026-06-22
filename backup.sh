@@ -6,31 +6,27 @@ encrypt=true
 
 restore_paths=(
     .ssh
-    kp
     work
     projects
-    .config/rclone
+    .aws/config
 )
 
 backup_paths=(
-    background.png
     .config
-    #    .aws
+    .aws
     .ssh
-    kp
+    .claude
     projects
-    screenshots
+    work
     bin
     dotfilez
-    work
+    screenshots
 )
 
 exclude_paths=(
-    .config/spotify
-    .config/VirtualBox
-    .config/google-chrome
-    .config/yarn
-    .config/Code
+    .ssh/agent
+    .config/github-copilot
+    node_modules
 )
 
 backup() {
