@@ -14,22 +14,22 @@ zstyle ':completion:*' list-colors ''
 HISTFILE="$HOME/.zsh_history"
 HISTSIZE=50000
 # shellcheck disable=SC2034
-SAVEHIST=10000
+SAVEHIST=50000
 # shellcheck disable=SC2034
-HISTORY_IGNORE="(ls|ll|la|gs|git lg*|git diff|vim)"
+HISTORY_IGNORE="(ls|ll|la|gs|vim|git lg*|git diff)( *|)"
 ## History command configuration
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
 setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
-setopt inc_append_history
+setopt hist_reduce_blanks     # remove superfluous blanks from commands before recording
+setopt share_history          # share history across sessions (implies inc_append_history)
 
 export EDITOR="vi"
 export VISUAL=$EDITOR
 export MANPAGER="nvim +Man!"
 export LANG="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 export FZF_DEFAULT_COMMAND="rg --files --hidden --iglob '!.git/'"
 export GOPATH=$HOME/go
@@ -87,10 +87,14 @@ if [ -r "$HOME/.nix-profile/share/zsh/site-functions/_aws" ]; then
     source "$HOME/.nix-profile/share/zsh/site-functions/_aws"
 fi
 
-find "$HOME/.local/state/nvim" -name 'lsp.log' -size +500M -exec truncate -s 0 {} \;
+if [ -f "$HOME/.local/state/nvim/lsp.log" ]; then
+    find "$HOME/.local/state/nvim" -name 'lsp.log' -size +500M -exec truncate -s 0 {} \;
+fi
 
 if command -v starship >/dev/null; then
     eval "$(starship init zsh)"
 fi
+if command -v ai >/dev/null; then
+    eval "$(ai install-completions)"
+fi
 #eval "$(direnv hook zsh)"
-#eval "$(ai install-completions)"
