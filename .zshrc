@@ -87,10 +87,6 @@ if [ -r "$HOME/.nix-profile/share/zsh/site-functions/_aws" ]; then
     source "$HOME/.nix-profile/share/zsh/site-functions/_aws"
 fi
 
-if [ -f "$HOME/.local/state/nvim/lsp.log" ]; then
-    find "$HOME/.local/state/nvim" -name 'lsp.log' -size +500M -exec truncate -s 0 {} \;
-fi
-
 if command -v starship >/dev/null; then
     eval "$(starship init zsh)"
 fi

@@ -21,7 +21,6 @@ main() {
 
     configure_macos
 
-    #nvim +":helptags ALL" +qall
     ln -sf "$(command -v nvim)" "$HOME/bin/vi"
     ln -sf "$(command -v nvim)" "$HOME/bin/vim"
 }

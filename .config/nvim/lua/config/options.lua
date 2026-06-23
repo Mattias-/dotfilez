@@ -52,3 +52,19 @@ vim.diagnostic.config({
 
 vim.lsp.codelens.enable(true)
 require('vim._core.ui2').enable({})
+
+-- Truncate the LSP log on startup if it has grown beyond 500 MiB.
+vim.api.nvim_create_autocmd("VimEnter", {
+    callback = function()
+        vim.schedule(function()
+            local log = vim.lsp.log.get_filename()
+            local stat = vim.uv.fs_stat(log)
+            if stat and stat.size > 500 * 1024 * 1024 then
+                local fd = vim.uv.fs_open(log, "w", tonumber("644", 8))
+                if fd then
+                    vim.uv.fs_close(fd)
+                end
+            end
+        end)
+    end,
+})
