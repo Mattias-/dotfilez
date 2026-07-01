@@ -23,6 +23,30 @@ main() {
 
     ln -sf "$(command -v nvim)" "$HOME/bin/vi"
     ln -sf "$(command -v nvim)" "$HOME/bin/vim"
+
+    if ! [ -f "$HOME/.config/git/extraconfig" ]; then
+        echo_err_blue "Please create a config in ~/.config/git/extraconfig"
+        echo 'git config set --file ~/.config/git/extraconfig user.name "Mattias Appelgren"'
+        echo 'git config set --file ~/.config/git/extraconfig user.email "mail@example.com"'
+        echo 'git config set --file ~/.config/git/extraconfig user.signingkey "~/.ssh/key.pub"'
+    fi
+    if ! [ -f "$HOME/.config/git/allowed_signers" ]; then
+        echo_err_blue "Please add allowed signers to ~/.config/git/allowed_signers"
+        extraconfig_email="$(git config get --file ~/.config/git/extraconfig user.email)"
+        extraconfig_signingkey_data="$(cat "$(git config get --file ~/.config/git/extraconfig --path user.signingkey)")"
+        printf 'echo "%s namespaces=\\"git\\" %s" >~/.config/git/allowed_signers\n' "$extraconfig_email" "$extraconfig_signingkey_data"
+    fi
+    if ! [ -f "$HOME/.config/git/extraconfig" ] || ! [ -f "$HOME/.config/git/allowed_signers" ]; then
+        exit 1
+    fi
+}
+
+echo_err_blue() {
+    (
+        tput setaf 033
+        echo "$@"
+        tput sgr0
+    ) 1>&2
 }
 
 install_go_packages() {

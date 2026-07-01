@@ -28,6 +28,7 @@
 [push]
     default = simple
     autoSetupRemote = true
+    useForceIfIncludes = true
 [mergetool]
     keepBackup = false
 [mergetool "nvimdiff"]
@@ -56,7 +57,6 @@
     wtrm = "!f() { b=$(git worktree list | fzf --accept-nth 1); git worktree remove $b && git branch -d $(basename $b); }; f"
     wtadd = "!f() { git worktree add -b $1 ../wt/$1 origin/main; }; f"
     wtco = "!f() { git worktree add ../wt/$1; }; f"
-
 [pager]
     lgh = less --QUIT-AT-EOF
     difftool = true
@@ -70,5 +70,3 @@
     verbose = true
 [tag]
     gpgsign = true
-
-#echo "email@example.com namespaces="git" $(cat ~/.ssh/KEYFILE.pub)" >~/.config/git/allowed_signers
