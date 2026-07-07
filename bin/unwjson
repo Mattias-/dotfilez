@@ -1,25 +1,117 @@
 #!/bin/bash
 set -euo pipefail
 
-jq 'walk(
-  if type == "object" then
-    (to_entries
-     | reduce .[] as $e ({};
-         . + { ($e.key): $e.value }
-           + (
-               if ($e.value | type == "string" and startswith("ey")) then
-                 (try
-                    (($e.value | @base64d) as $d
-                     | { ($e.key + "__decoded"): (try ($d | fromjson) catch $d) })
-                  catch
-                    {})
-               else
-                 {}
-               end
-             )
-       )
-    )
-  else
-    .
-  end
-)' "$@"
+# shellcheck disable=SC2016
+JQ_PROGRAM='
+def is_container: (type == "object" or type == "array");
+
+# Try to interpret a string as embedded JSON: either JSON text directly,
+# or base64(-url) encoded JSON. Only unwraps to objects/arrays so plain
+# strings that happen to parse as a JSON scalar (e.g. "123", "true") are
+# left alone.
+def try_decode:
+  . as $s
+  | (try ($s | fromjson) catch null) as $direct
+  | if ($direct != null and ($direct | is_container)) then
+      $direct
+    else
+      (try ($s | @base64d | fromjson) catch null) as $b64
+      | if ($b64 != null and ($b64 | is_container)) then $b64 else null end
+    end;
+
+def unwjson:
+  walk(
+    if type == "object" then
+      reduce to_entries[] as $e (
+        {};
+        . + { ($e.key): $e.value }
+        + (
+            if ($e.value | type) == "string" then
+              ($e.value | try_decode) as $decoded
+              | if $decoded != null then
+                  { ($e.key + "__decoded"): ($decoded | unwjson) }
+                else
+                  {}
+                end
+            else
+              {}
+            end
+          )
+      )
+    else
+      .
+    end
+  );
+
+unwjson
+'
+
+main() {
+    jq "$JQ_PROGRAM" "$@"
+}
+
+run_tests() {
+    local pass=0 fail=0
+
+    # Compares actual vs expected as JSON values (key order / whitespace independent).
+    assert_json() {
+        local name="$1" input="$2" expected="$3"
+        local actual
+        actual="$(echo "$input" | main)"
+        if diff <(jq -S . <<<"$actual") <(jq -S . <<<"$expected") >/dev/null; then
+            echo "ok   - $name"
+            pass=$((pass + 1))
+        else
+            echo "FAIL - $name"
+            echo "  input:    $input"
+            echo "  expected: $expected"
+            echo "  actual:   $actual"
+            fail=$((fail + 1))
+        fi
+    }
+
+    assert_json "nested JSON string is decoded into a sibling field" \
+        '{"a": "{\"b\":1}"}' \
+        '{"a": "{\"b\":1}", "a__decoded": {"b": 1}}'
+
+    assert_json "base64-encoded JSON object is decoded" \
+        "$(jq -n --arg p "$(echo -n '{"sub":"123"}' | base64)" '{payload: $p}')" \
+        "$(jq -n --arg p "$(echo -n '{"sub":"123"}' | base64)" --argjson d '{"sub":"123"}' '{payload: $p, payload__decoded: $d}')"
+
+    assert_json "base64-encoded JSON array is decoded (no 'ey' prefix required)" \
+        "$(jq -n --arg p "$(echo -n '[1,2,3]' | base64)" '{payload: $p}')" \
+        "$(jq -n --arg p "$(echo -n '[1,2,3]' | base64)" '{payload: $p, payload__decoded: [1,2,3]}')"
+
+    assert_json "double-encoded values are recursively unwrapped" \
+        "$(
+            inner=$(echo -n '{"x":1}' | base64)
+            outer=$(jq -n --arg i "$inner" '{nested:$i}' | base64)
+            jq -n --arg o "$outer" '{a:$o}'
+        )" \
+        "$(
+            inner=$(echo -n '{"x":1}' | base64)
+            jq -n --arg i "$inner" --arg o "$(jq -n --arg i "$inner" '{nested:$i}' | base64)" '{a:$o, a__decoded: {nested:$i, nested__decoded: {x:1}}}'
+        )"
+
+    assert_json "plain scalar-looking strings are left untouched" \
+        '{"a": "123", "b": "true", "c": "hello world"}' \
+        '{"a": "123", "b": "true", "c": "hello world"}'
+
+    assert_json "arrays of objects are handled" \
+        '[{"a":"{\"b\":2}"}, {"c":"plain"}]' \
+        '[{"a":"{\"b\":2}", "a__decoded": {"b":2}}, {"c":"plain"}]'
+
+    assert_json "plain base64 text that is not JSON is left untouched" \
+        '{"a": "aGVsbG8gd29ybGQ="}' \
+        '{"a": "aGVsbG8gd29ybGQ="}'
+
+    echo
+    echo "$pass passed, $fail failed"
+    [ "$fail" -eq 0 ]
+}
+
+if [ "${TEST:-false}" = "true" ]; then
+    run_tests
+else
+    main "$@"
+fi
