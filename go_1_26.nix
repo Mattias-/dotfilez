@@ -5,11 +5,11 @@
 }:
 let
   platform = "${stdenv.hostPlatform.go.GOOS}-${stdenv.hostPlatform.go.GOARCH}";
-  version = "1.26.4";
+  version = "1.26.5";
   hashes = {
     # Checksums from https://go.dev/dl/
     # https://go.dev/dl/#:~:text=darwin%2Darm64.tar.gz
-    darwin-arm64 = "b62ad2b6d7d2464f12a5bcad7ff47f19d08325773b5efd21610e445a05a9bf53";
+    darwin-arm64 = "efb87ff28af9a188d0536ef5d42e63dd52ba8263cd7344a993cc48dd11dedb6a";
     linux-amd64 = "";
     linux-arm64 = "";
   };
