@@ -6,6 +6,7 @@ pip_packages=(
     black
     yamllint
     pre-commit
+    awscurl
 )
 
 npm_packages=(
