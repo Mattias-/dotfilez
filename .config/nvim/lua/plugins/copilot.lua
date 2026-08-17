@@ -2,7 +2,8 @@ return {
     {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
-        event = "InsertEnter",
+        --event = "InsertEnter",
+        enabled = false,
         opts = {
             should_attach = function(_, bufname)
                 if string.match(bufname, "Downloads") then
@@ -11,6 +12,7 @@ return {
                 return true
             end,
             suggestion = {
+
                 auto_trigger = true,
                 keymap = {
                     accept = "<C-J>",
