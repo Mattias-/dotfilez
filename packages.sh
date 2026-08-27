@@ -20,7 +20,7 @@ npm_packages=(
     aws-cdk
     prettier
     @redocly/cli@v2.24.1
-    pnpm@11.0.8
+    pnpm@11.18.0
     @biomejs/biome
     @getgrit/cli
 )
