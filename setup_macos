@@ -21,22 +21,38 @@ main() {
 
     configure_macos
 
-    ln -sf "$(command -v nvim)" "$HOME/bin/vi"
-    ln -sf "$(command -v nvim)" "$HOME/bin/vim"
+    local nvim_path
+    if nvim_path="$(command -v nvim)"; then
+        ln -sf "$nvim_path" "$HOME/bin/vi"
+        ln -sf "$nvim_path" "$HOME/bin/vim"
+    else
+        echo_err_blue "nvim not found, skipping the ~/bin/vi and ~/bin/vim symlinks"
+    fi
 
+    # allowed_signers is derived from extraconfig, so only attempt it once
+    # extraconfig exists. Otherwise create extraconfig and run the script again.
+    local git_config_ok=1
     if ! [ -f "$HOME/.config/git/extraconfig" ]; then
+        git_config_ok=0
         echo_err_blue "Please create a config in ~/.config/git/extraconfig"
         echo 'git config set --file ~/.config/git/extraconfig user.name "Mattias Appelgren"'
         echo 'git config set --file ~/.config/git/extraconfig user.email "mail@example.com"'
         echo 'git config set --file ~/.config/git/extraconfig user.signingkey "~/.ssh/key.pub"'
-    fi
-    if ! [ -f "$HOME/.config/git/allowed_signers" ]; then
+    elif ! [ -f "$HOME/.config/git/allowed_signers" ]; then
+        git_config_ok=0
         echo_err_blue "Please add allowed signers to ~/.config/git/allowed_signers"
-        extraconfig_email="$(git config get --file ~/.config/git/extraconfig user.email)"
-        extraconfig_signingkey_data="$(cat "$(git config get --file ~/.config/git/extraconfig --path user.signingkey)")"
-        printf 'echo "%s namespaces=\\"git\\" %s" >~/.config/git/allowed_signers\n' "$extraconfig_email" "$extraconfig_signingkey_data"
+        local email signingkey
+        email="$(git config get --file "$HOME/.config/git/extraconfig" user.email || true)"
+        signingkey="$(git config get --file "$HOME/.config/git/extraconfig" --path user.signingkey || true)"
+        if [ -z "$email" ] || [ -z "$signingkey" ]; then
+            echo_err_blue "Set user.email and user.signingkey in ~/.config/git/extraconfig first"
+        elif ! [ -r "$signingkey" ]; then
+            echo_err_blue "Cannot read the signing key: $signingkey"
+        else
+            printf 'echo "%s namespaces=\\"git\\" %s" >~/.config/git/allowed_signers\n' "$email" "$(cat "$signingkey")"
+        fi
     fi
-    if ! [ -f "$HOME/.config/git/extraconfig" ] || ! [ -f "$HOME/.config/git/allowed_signers" ]; then
+    if [ "$git_config_ok" -eq 0 ]; then
         exit 1
     fi
 }
@@ -126,7 +142,7 @@ install_macos_packages() {
 }
 
 configure_macos() {
-    defaults write .GlobalPreferences com.apple.mouse.scaling 0.5
+    defaults write .GlobalPreferences com.apple.mouse.scaling -float 0.5
     defaults write NSGlobalDomain AppleShowAllExtensions -bool true
     defaults write NSGlobalDomain InitialKeyRepeat -int 12
     defaults write NSGlobalDomain KeyRepeat -int 1
@@ -162,7 +178,7 @@ HostName:      $(scutil --get HostName)
 EOF
 
     # If computer name contains unwanted characters
-    if [[ $current_cn != $(tr -d '[:upper:][:digit:]- ()' <<<"$current_cn") ]]; then
+    if [[ $current_cn != "$(tr -d '[:upper:][:digit:]- ()' <<<"$current_cn")" ]]; then
         read -r -p "Enter a new hostname: " new_hn
         echo "Setting hostname to: $new_hn"
         scutil --set LocalHostName "$new_hn"
