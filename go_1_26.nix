@@ -15,8 +15,8 @@ let
   };
 in
 stdenv.mkDerivation {
+  inherit version;
   pname = "go";
-  version = version;
 
   src = fetchurl {
     url = "https://go.dev/dl/go${version}.${platform}.tar.gz";

@@ -1,8 +1,17 @@
 #!/bin/bash
-set -euo pipefail
+# -E so that the ERR trap below is inherited by functions.
+set -Eeuo pipefail
+
+# Run from the repo root, packages.sh, the Brewfile, setup_dotfiles.py and the
+# nix flake are all referenced relative to it.
+cd "$(dirname "${BASH_SOURCE[0]}")"
 
 # shellcheck source=./packages.sh
 source ./packages.sh
+
+# $LINENO is useless here, with errtrace it reports the line the function was
+# defined on, so report the failing command and the function it was in instead.
+trap 'echo_err_blue "Failed in ${FUNCNAME[0]:-main}: $BASH_COMMAND"' ERR
 
 usage() {
     cat <<EOF
@@ -109,12 +118,13 @@ setup_git() {
     fi
 }
 
+# Colour is best effort. tput fails when TERM is dumb or unset, which under
+# set -e would otherwise take the whole script down instead of printing.
 echo_err_blue() {
-    (
-        tput setaf 033
-        echo "$@"
-        tput sgr0
-    ) 1>&2
+    local blue reset
+    blue="$(tput setaf 33 2>/dev/null || true)"
+    reset="$(tput sgr0 2>/dev/null || true)"
+    printf '%s%s%s\n' "$blue" "$*" "$reset" >&2
 }
 
 # Domains that defaults_write actually changed the value of, space separated.
@@ -158,16 +168,18 @@ install_go_packages() {
 }
 
 install_python_packages_uv() {
-    local installed
-    set +e
-    installed=$(uv tool list --show-paths | grep -v '^- ' | cut -d ' ' -f1)
-    set -e
+    local installed pip_package
+    # grep exits 1 when nothing is installed yet, which pipefail would turn
+    # into a failure of the whole pipeline.
+    installed="$(uv tool list --show-paths | grep -v '^- ' | cut -d ' ' -f1 || true)"
     # shellcheck disable=SC2154
     for pip_package in "${pip_packages[@]}"; do
-        if ! grep -q "$pip_package" <<<"$installed"; then
-            uv tool install "$pip_package"
-        else
+        # -x -F so that a name is not matched as a substring or a regex,
+        # otherwise an installed ruff-lsp would look like an installed ruff.
+        if grep -qxF -- "$pip_package" <<<"$installed"; then
             echo "Already installed pip_package: $pip_package"
+        else
+            uv tool install "$pip_package"
         fi
     done
     uv tool upgrade --all
@@ -176,15 +188,6 @@ install_python_packages_uv() {
 install_node_packages() {
     # shellcheck disable=SC2154
     npm install -g "${npm_packages[@]}"
-}
-
-setup_node() {
-    fnm install --lts
-    fnm default lts-latest
-    eval "$(fnm env --shell bash)"
-    npm install -g npm@latest
-    #npm completion | sudo tee /etc/bash_completion.d/npm >/dev/null
-    corepack enable
 }
 
 install_macos_packages() {
@@ -220,8 +223,9 @@ install_macos_packages() {
     nix flake update
     nix profile upgrade dotfilez
     nix profile diff-closures | tail -30
+    # ~/.nix-profile is a symlink to the profile nix profile manages, so the
+    # wipe-history above already covers what nix-env --delete-generations did.
     nix profile wipe-history --older-than 90d
-    nix-env --delete-generations 90d
     nix store gc
 
 }
@@ -269,6 +273,7 @@ configure_macos() {
 }
 
 set_hostname() {
+    local current_cn new_hn
     current_cn="$(scutil --get ComputerName)"
     cat <<EOF
 LocalHostName: $(scutil --get LocalHostName)
@@ -276,24 +281,28 @@ ComputerName:  ${current_cn}
 HostName:      $(scutil --get HostName)
 EOF
 
-    # If computer name contains unwanted characters
-    if [[ $current_cn != "$(tr -d '[:upper:][:digit:]- ()' <<<"$current_cn")" ]]; then
-        read -r -p "Enter a new hostname: " new_hn
-        echo "Setting hostname to: $new_hn"
-        # scutil --set needs super-user access and authenticates per invocation,
-        # so run all three in a single sudo to only be asked for the password
-        # once. The name is passed as an argument rather than interpolated.
-        # shellcheck disable=SC2016
-        sudo bash -c '
-            set -e
-            scutil --set LocalHostName "$1"
-            scutil --set ComputerName "$1"
-            scutil --set HostName "$1"
-        ' _ "$new_hn"
-        exit 1
-    else
+    # A clean hostname is lowercase letters, digits and dashes. The name macOS
+    # picks by default, "Mattias's MacBook Pro", is not.
+    local valid_hostname='^[a-z0-9][a-z0-9-]*$'
+    if [[ $current_cn =~ $valid_hostname ]]; then
         echo "Hostname OK"
+        return 0
     fi
+
+    read -r -p "Enter a new hostname (lowercase letters, digits and dashes): " new_hn
+    echo "Setting hostname to: $new_hn"
+    # scutil --set needs super-user access and authenticates per invocation, so
+    # run all three in a single sudo to only be asked for the password once.
+    # The name is passed as an argument rather than interpolated.
+    # shellcheck disable=SC2016
+    sudo bash -c '
+        set -e
+        scutil --set LocalHostName "$1"
+        scutil --set ComputerName "$1"
+        scutil --set HostName "$1"
+    ' _ "$new_hn"
+    echo_err_blue "Hostname changed, run the script again to continue the setup"
+    exit 1
 }
 
 main "$@"
