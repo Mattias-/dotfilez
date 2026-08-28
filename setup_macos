@@ -4,23 +4,71 @@ set -euo pipefail
 # shellcheck source=./packages.sh
 source ./packages.sh
 
+usage() {
+    cat <<EOF
+Usage: ${0##*/} [--dev|--no-dev]
+
+  --dev      Install the go, python and node packages, symlink vi/vim to nvim
+             and check the git signing config. This is the default.
+  --no-dev   Skip all of the above. The toolchains take a while to build, so
+             this makes the initial run of a new machine a lot faster.
+EOF
+}
+
 main() {
+    local dev=1
+    while [ $# -gt 0 ]; do
+        case "$1" in
+        --dev) dev=1 ;;
+        --no-dev) dev=0 ;;
+        -h | --help)
+            usage
+            return 0
+            ;;
+        *)
+            echo_err_blue "Unknown argument: $1"
+            usage >&2
+            exit 2
+            ;;
+        esac
+        shift
+    done
+
     mkdir -p ~/screenshots
     mkdir -p ~/projects
     mkdir -p ~/work
-    mkdir -p ~/mnt
+    #mkdir -p ~/mnt
     mkdir -p ~/bin
 
     set_hostname
     install_macos_packages
-
-    install_go_packages
-    install_python_packages_uv
-    #setup_node
-    install_node_packages
-
+    setup_dotfiles
     configure_macos
 
+    if [ "$dev" -eq 1 ]; then
+        install_go_packages
+        install_python_packages_uv
+        install_node_packages
+    else
+        echo "Skipping the dev packages, run again without --no-dev to install them"
+    fi
+
+    setup_nvim
+    setup_git
+}
+
+# A symlinked ~/.zshrc is a good enough hint that setup_dotfiles.py has already
+# been run. It is idempotent, this just keeps the common case quiet.
+setup_dotfiles() {
+    if [ -L "$HOME/.zshrc" ]; then
+        echo "Dotfiles already linked, skipping setup_dotfiles.py"
+        return 0
+    fi
+    echo "Linking dotfiles"
+    ./setup_dotfiles.py
+}
+
+setup_nvim() {
     local nvim_path
     if nvim_path="$(command -v nvim)"; then
         ln -sf "$nvim_path" "$HOME/bin/vi"
@@ -29,6 +77,9 @@ main() {
         echo_err_blue "nvim not found, skipping the ~/bin/vi and ~/bin/vim symlinks"
     fi
 
+}
+
+setup_git() {
     # allowed_signers is derived from extraconfig, so only attempt it once
     # extraconfig exists. Otherwise create extraconfig and run the script again.
     local git_config_ok=1
@@ -38,6 +89,7 @@ main() {
         echo 'git config set --file ~/.config/git/extraconfig user.name "Mattias Appelgren"'
         echo 'git config set --file ~/.config/git/extraconfig user.email "mail@example.com"'
         echo 'git config set --file ~/.config/git/extraconfig user.signingkey "~/.ssh/key.pub"'
+        echo 'ssh-keygen -t ed25519 -f ~/.ssh/key -C "extra-key-comment"'
     elif ! [ -f "$HOME/.config/git/allowed_signers" ]; then
         git_config_ok=0
         echo_err_blue "Please add allowed signers to ~/.config/git/allowed_signers"
@@ -63,6 +115,39 @@ echo_err_blue() {
         echo "$@"
         tput sgr0
     ) 1>&2
+}
+
+# Domains that defaults_write actually changed the value of, space separated.
+changed_domains=""
+
+# Both the value and its type, so that rewriting "0.5" as a float counts as a
+# change. Missing keys read as empty.
+defaults_value() {
+    defaults read-type "$1" "$2" 2>/dev/null || true
+    defaults read "$1" "$2" 2>/dev/null || true
+}
+
+# defaults write, but records the domain when the stored value really changed,
+# so we only restart the apps that need it.
+defaults_write() {
+    local domain="$1" key="$2"
+    shift 2
+    local before after
+    before="$(defaults_value "$domain" "$key")"
+    defaults write "$domain" "$key" "$@"
+    after="$(defaults_value "$domain" "$key")"
+    [ "$before" = "$after" ] && return 0
+    case " $changed_domains " in
+    *" $domain "*) ;;
+    *) changed_domains="$changed_domains $domain" ;;
+    esac
+}
+
+domain_changed() {
+    case " $changed_domains " in
+    *" $1 "*) return 0 ;;
+    *) return 1 ;;
+    esac
 }
 
 install_go_packages() {
@@ -142,31 +227,45 @@ install_macos_packages() {
 }
 
 configure_macos() {
-    defaults write .GlobalPreferences com.apple.mouse.scaling -float 0.5
-    defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-    defaults write NSGlobalDomain InitialKeyRepeat -int 12
-    defaults write NSGlobalDomain KeyRepeat -int 1
-    defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
-    defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-    defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
-    defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
-    defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
-    defaults write com.apple.dock autohide -bool true
-    defaults write com.apple.dock orientation -string "right"
-    defaults write com.apple.dock persistent-apps -array
-    defaults write com.apple.dock show-recents -bool false
-    defaults write com.apple.finder AppleShowAllFiles -bool true
-    defaults write com.apple.finder QuitMenuItem -bool true
-    defaults write com.apple.finder ShowPathbar -bool true
-    defaults write com.apple.finder ShowStatusBar -bool true
-    defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
-    defaults write com.apple.screencapture location ~/screenshots
-    defaults write com.apple.screensaver askForPassword -int 1
-    defaults write com.apple.screensaver askForPasswordDelay -int 0
-    defaults write NSGlobalDomain AppleInterfaceStyle Dark
-    defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool false
+    defaults_write .GlobalPreferences com.apple.mouse.scaling -float 0.5
+    defaults_write NSGlobalDomain AppleShowAllExtensions -bool true
+    defaults_write NSGlobalDomain InitialKeyRepeat -int 12
+    defaults_write NSGlobalDomain KeyRepeat -int 1
+    defaults_write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+    defaults_write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+    defaults_write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+    defaults_write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+    defaults_write com.apple.desktopservices DSDontWriteUSBStores -bool true
+    defaults_write com.apple.dock autohide -bool true
+    defaults_write com.apple.dock orientation -string "right"
+    defaults_write com.apple.dock persistent-apps -array
+    defaults_write com.apple.dock show-recents -bool false
+    defaults_write com.apple.finder AppleShowAllFiles -bool true
+    defaults_write com.apple.finder QuitMenuItem -bool true
+    defaults_write com.apple.finder ShowPathbar -bool true
+    defaults_write com.apple.finder ShowStatusBar -bool true
+    defaults_write com.apple.finder _FXShowPosixPathInTitle -bool true
+    defaults_write com.apple.screencapture location ~/screenshots
+    defaults_write com.apple.screensaver askForPassword -int 1
+    defaults_write com.apple.screensaver askForPasswordDelay -int 0
+    defaults_write NSGlobalDomain AppleInterfaceStyle Dark
+    defaults_write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool false
     #defaults write ~/Library/Preferences/com.apple.HIToolbox.plist AppleEnabledInputSources -array-add '{ InputSourceKind = "Keyboard Layout"; "KeyboardLayout ID" = 252; "KeyboardLayout Name" = ABC; }'
     #defaults read com.apple.HIToolbox
+
+    # These two only pick up the new values when the app is restarted, so only
+    # pay for the restart when something above actually changed.
+    if domain_changed com.apple.dock; then
+        echo "Dock preferences changed, restarting Dock"
+        # launchd only respawns these on an unsuccessful exit (KeepAlive
+        # SuccessfulExit=false), so make sure the Dock really comes back.
+        killall Dock || true
+        open -a Dock
+    fi
+    if domain_changed com.apple.finder; then
+        echo "Finder preferences changed, restarting Finder"
+        killall Finder || true
+    fi
 }
 
 set_hostname() {
@@ -181,9 +280,16 @@ EOF
     if [[ $current_cn != "$(tr -d '[:upper:][:digit:]- ()' <<<"$current_cn")" ]]; then
         read -r -p "Enter a new hostname: " new_hn
         echo "Setting hostname to: $new_hn"
-        scutil --set LocalHostName "$new_hn"
-        scutil --set ComputerName "$new_hn"
-        scutil --set HostName "$new_hn"
+        # scutil --set needs super-user access and authenticates per invocation,
+        # so run all three in a single sudo to only be asked for the password
+        # once. The name is passed as an argument rather than interpolated.
+        # shellcheck disable=SC2016
+        sudo bash -c '
+            set -e
+            scutil --set LocalHostName "$1"
+            scutil --set ComputerName "$1"
+            scutil --set HostName "$1"
+        ' _ "$new_hn"
         exit 1
     else
         echo "Hostname OK"
