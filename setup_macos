@@ -91,26 +91,29 @@ setup_nvim() {
 setup_git() {
     # allowed_signers is derived from extraconfig, so only attempt it once
     # extraconfig exists. Otherwise create extraconfig and run the script again.
+    local git_extraconfig_file="$HOME/.config/git/extraconfig"
+    local allowed_signers_file="$HOME/.config/git/allowed_signers"
     local git_config_ok=1
-    if ! [ -f "$HOME/.config/git/extraconfig" ]; then
+    if ! [ -f "$git_extraconfig_file" ]; then
         git_config_ok=0
-        echo_err_blue "Please create a config in ~/.config/git/extraconfig"
-        echo 'git config set --file ~/.config/git/extraconfig user.name "Mattias Appelgren"'
-        echo 'git config set --file ~/.config/git/extraconfig user.email "mail@example.com"'
-        echo 'git config set --file ~/.config/git/extraconfig user.signingkey "~/.ssh/key.pub"'
+        echo_err_blue "Please create a config in $git_extraconfig_file"
+        echo "git config set --file \"$git_extraconfig_file\" user.name 'Mattias Appelgren'"
+        echo "git config set --file \"$git_extraconfig_file\" user.email 'mail@example.com'"
+        echo "git config set --file \"$git_extraconfig_file\" user.signingkey '~/.ssh/key.pub'"
         echo 'ssh-keygen -t ed25519 -f ~/.ssh/key -C "extra-key-comment"'
-    elif ! [ -f "$HOME/.config/git/allowed_signers" ]; then
+    elif ! [ -f "$allowed_signers_file" ]; then
         git_config_ok=0
-        echo_err_blue "Please add allowed signers to ~/.config/git/allowed_signers"
-        local email signingkey
-        email="$(git config get --file "$HOME/.config/git/extraconfig" user.email || true)"
-        signingkey="$(git config get --file "$HOME/.config/git/extraconfig" --path user.signingkey || true)"
+        echo_err_blue "Please add allowed signers to $allowed_signers_file"
+        local email signingkey keydata
+        email="$(git config get --file "$git_extraconfig_file" user.email || true)"
+        signingkey="$(git config get --file "$git_extraconfig_file" --path user.signingkey || true)"
         if [ -z "$email" ] || [ -z "$signingkey" ]; then
-            echo_err_blue "Set user.email and user.signingkey in ~/.config/git/extraconfig first"
+            echo_err_blue "Set user.email and user.signingkey in $git_extraconfig_file first"
         elif ! [ -r "$signingkey" ]; then
             echo_err_blue "Cannot read the signing key: $signingkey"
         else
-            printf 'echo "%s namespaces=\\"git\\" %s" >~/.config/git/allowed_signers\n' "$email" "$(cat "$signingkey")"
+            keydata=$(cut -d' ' -f1-2 <"$signingkey")
+            printf 'echo "%s namespaces=\\"git\\" %s" >"%s"\n' "$email" "$keydata" "$allowed_signers_file"
         fi
     fi
     if [ "$git_config_ok" -eq 0 ]; then
