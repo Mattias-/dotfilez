@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
   };
@@ -13,8 +13,12 @@
     {
       packages."aarch64-darwin".default =
         let
-          pkgs = nixpkgs.legacyPackages."aarch64-darwin";
-          unstablePkgs = unstable.legacyPackages."aarch64-darwin";
+          system = "aarch64-darwin";
+          config = {
+            allowUnfree = true;
+          };
+          pkgs = import nixpkgs { inherit system config; };
+          unstablePkgs = import unstable { inherit system config; };
 
           # Add package overrides here
           go_1_25_7 = unstablePkgs.go.overrideAttrs (old: {
@@ -26,6 +30,7 @@
             patches = [ ];
           });
           go_1_26 = pkgs.callPackage ./go_1_26.nix { };
+          go_1_27 = pkgs.callPackage ./go_1_27.nix { };
         in
         pkgs.buildEnv {
           name = "home-packages";
@@ -36,7 +41,7 @@
             #unstablePkgs.cfssl
             #unstablePkgs.difftastic
             #unstablePkgs.ffmpeg
-            #unstablePkgs.google-cloud-sdk
+            unstablePkgs.google-cloud-sdk
             #unstablePkgs.htop
             #unstablePkgs.nmap
             #unstablePkgs.pipx
@@ -72,6 +77,7 @@
             unstablePkgs.tree-sitter
             unstablePkgs.uv
             unstablePkgs.skopeo
+            unstablePkgs.terraform
           ];
         };
     };
