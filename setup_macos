@@ -13,19 +13,28 @@ source ./packages.sh
 # defined on, so report the failing command and the function it was in instead.
 trap 'echo_err_blue "Failed in ${FUNCNAME[0]:-main}: $BASH_COMMAND"' ERR
 
+# Written once install_macos_packages has succeeded, so that we can tell a
+# first run on a fresh machine from a repeat run.
+bootstrapped_marker="$HOME/.local/state/dotfilez/macos-packages-installed"
+
 usage() {
     cat <<EOF
 Usage: ${0##*/} [--dev|--no-dev]
 
-  --dev      Install the go, python and node packages, symlink vi/vim to nvim
-             and check the git signing config. This is the default.
+  --dev      Install the go, python and node packages.
   --no-dev   Skip all of the above. The toolchains take a while to build, so
              this makes the initial run of a new machine a lot faster.
+
+  Without either flag the default is --no-dev until the macOS configuration
+  been set up once ($bootstrapped_marker),
+  and --dev after that.
 EOF
 }
 
 main() {
-    local dev=1
+    # Empty means unset, so that an explicit flag always wins over the default
+    # derived from the marker below.
+    local dev=""
     while [ $# -gt 0 ]; do
         case "$1" in
         --dev) dev=1 ;;
@@ -43,6 +52,17 @@ main() {
         shift
     done
 
+    if [ -z "$dev" ]; then
+        # The dev packages need the toolchains that install_macos_packages
+        # brings in, so on a machine that has never got that far, skip them.
+        if [ -f "$bootstrapped_marker" ]; then
+            dev=1
+        else
+            dev=0
+            echo "First run on this machine, defaulting to --no-dev"
+        fi
+    fi
+
     mkdir -p ~/screenshots
     mkdir -p ~/projects
     mkdir -p ~/work
@@ -54,12 +74,15 @@ main() {
     setup_dotfiles
     configure_macos
 
+    mkdir -p "$(dirname "$bootstrapped_marker")"
+    touch "$bootstrapped_marker"
+
     if [ "$dev" -eq 1 ]; then
         install_go_packages
         install_python_packages_uv
         install_node_packages
     else
-        echo "Skipping the dev packages, run again without --no-dev to install them"
+        echo "Skipping the dev packages, run again with --dev to install them"
     fi
 
     setup_nvim
