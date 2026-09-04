@@ -6,7 +6,6 @@ pip_packages=(
     black
     yamllint
     pre-commit
-    awscurl
 )
 
 npm_packages=(
@@ -19,10 +18,10 @@ npm_packages=(
     yaml-language-server
     aws-cdk
     prettier
-    @redocly/cli@v2.24.1
+    #@redocly/cli@v2.24.1
     pnpm@11.18.0
     @biomejs/biome
-    @getgrit/cli
+    #@getgrit/cli
 )
 
 go_packages=(
