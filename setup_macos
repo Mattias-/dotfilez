@@ -239,6 +239,19 @@ install_node_packages() {
     npm install -g "${npm_packages[@]}"
 }
 
+# Both installers only put themselves on PATH by appending to the shell
+# profiles, which does nothing for a shell that is already running. The shell
+# this script was started from is exactly that after the first run, so a second
+# run in the same terminal finds nothing on PATH and would install on top of a
+# perfectly good installation. Ask for a new shell instead.
+exit_if_installed_but_not_on_path() {
+    local name="$1" path="$2"
+    [ -x "$path" ] || return 0
+    echo_err_blue "$name is not on PATH but is installed in $path"
+    echo_err_blue "Start a new shell and run this script again"
+    exit 1
+}
+
 install_macos_packages() {
     if ! xcode-select -p >/dev/null || ! [ -d "/Library/Developer/CommandLineTools/usr/bin" ]; then
         echo "Install Xcode command line tools and run script again"
@@ -249,6 +262,7 @@ install_macos_packages() {
     export HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS=1
     export HOMEBREW_NO_ASK=1
     if ! command -v brew >/dev/null; then
+        exit_if_installed_but_not_on_path brew /opt/homebrew/bin/brew
         bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
         eval "$(/opt/homebrew/bin/brew shellenv)"
     fi
@@ -259,6 +273,7 @@ install_macos_packages() {
     brew bundle dump --file - >Brewfile.new
 
     if ! command -v nix >/dev/null; then
+        exit_if_installed_but_not_on_path nix /nix/var/nix/profiles/default/bin/nix
         curl -fsSL https://install.determinate.systems/nix | sh -s -- install
         if [ -r '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
             # shellcheck disable=SC1091
