@@ -22,6 +22,7 @@ npm_packages=(
     pnpm@11.18.0
     @biomejs/biome
     #@getgrit/cli
+    @earendil-works/pi-coding-agent
 )
 
 go_packages=(
