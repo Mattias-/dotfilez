@@ -93,4 +93,4 @@ fi
 if command -v ai >/dev/null; then
     eval "$(ai install-completions)"
 fi
-#eval "$(direnv hook zsh)"
+eval "$(direnv hook zsh)"

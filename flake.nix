@@ -35,13 +35,13 @@
         pkgs.buildEnv {
           name = "home-packages";
           paths = [
-            go_1_26
+            go_1_27
             #pkgs.aws-sam-cli
             #unstablePkgs.btop
             #unstablePkgs.cfssl
             #unstablePkgs.difftastic
             #unstablePkgs.ffmpeg
-            #unstablePkgs.google-cloud-sdk
+            unstablePkgs.google-cloud-sdk
             #unstablePkgs.htop
             #unstablePkgs.nmap
             #unstablePkgs.pipx
@@ -52,7 +52,7 @@
             unstablePkgs.awscli2
             unstablePkgs.colima
             unstablePkgs.coreutils-prefixed
-            #pkgs.direnv
+            pkgs.direnv
             unstablePkgs.docker-buildx
             unstablePkgs.docker-client
             unstablePkgs.fd
@@ -76,6 +76,7 @@
             unstablePkgs.tree
             unstablePkgs.tree-sitter
             unstablePkgs.uv
+            unstablePkgs.azure-cli
             #unstablePkgs.skopeo
             #unstablePkgs.terraform
           ];

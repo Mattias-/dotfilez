@@ -8,13 +8,9 @@ end_of_line = lf
 insert_final_newline = true
 charset = utf-8
 
-[*.{js,css,html,hcl,tf,yaml,yml,json}]
+[*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,css,scss,html,hcl,tf,yaml,yml,json,jsonc,json5,webmanifest,gql,graphql,toml,md,mdx}]
 indent_style = space
 indent_size = 2
-
-[*.{yml,yaml}]
-indent_style = space
-indent_size = 4
 
 # Tab indentation (no size specified)
 [{Makefile,*.mk}]

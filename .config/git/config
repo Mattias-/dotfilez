@@ -70,3 +70,14 @@
     verbose = true
 [tag]
     gpgsign = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[url "ssh://git@github.com/"]
+	insteadOf = https://github.com/
+[credential "https://github.com"]
+	helper = !/Users/mattias/.nix-profile/bin/.gh-wrapped auth git-credential
+[credential "https://gist.github.com"]
+	helper = !/Users/mattias/.nix-profile/bin/.gh-wrapped auth git-credential
