@@ -8,6 +8,7 @@ nvim/black
 bin/vi
 bin/vim
 .config/git/extraconfig
+.config/git/local
 .config/git/allowed_signers
 Brewfile.lock.json
 Brewfile.new

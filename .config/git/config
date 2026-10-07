@@ -3,6 +3,8 @@
     email = mattias@ppelgren.se
 [includeIf "gitdir:~/work/"]
     path = ~/.config/git/extraconfig
+[include]
+    path = ~/.config/git/local
 [core]
     editor = vi
     attributesfile = ~/.config/git/gitattributes_global
