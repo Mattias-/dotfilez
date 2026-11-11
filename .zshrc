@@ -37,7 +37,7 @@ export NODE_PATH=$HOME/.npm-packages/lib/node_modules
 export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
 export TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE="/var/run/docker.sock"
 export GH_TELEMETRY=false
-export DO_NOT_TRACK=true
+#export DO_NOT_TRACK=true
 
 if [ -r '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' ]; then
     # shellcheck disable=SC1091
