@@ -76,7 +76,7 @@
             unstablePkgs.tree
             unstablePkgs.tree-sitter
             unstablePkgs.uv
-            unstablePkgs.azure-cli
+            pkgs.azure-cli
             #unstablePkgs.skopeo
             #unstablePkgs.terraform
           ];
